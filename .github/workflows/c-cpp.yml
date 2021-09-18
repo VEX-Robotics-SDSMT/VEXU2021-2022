@@ -13,11 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    #- name: configure
-    #  run: ./configure
-    - name: MyProject1/make
-      run: MyProject1/make
-    - name: MyProject1/make check
-      run: MyProject1/make check
-    - name: MyProject1/make distcheck
-      run: MyProject1/make distcheck
+    - name: make
+      run: make
+      working-directory: MyProject1
