@@ -7,5 +7,5 @@ This repo contains code for the 2021-2022 SDSMT VEX Robotics Club.
 Be sure to check to following if you have issues:
 
 1. Update the vexOS on the brain you are working with, [linked here](https://www.vexrobotics.com/v5/products/firmware).
-2. Be sure to check out the VEX C++ documentation [here](https://help.vexcodingstudio.com/index.html#pro).
+2. Be sure to check out the VEX C++ documentation [here](https://www.robotmesh.com/studio/content/docs/vexv5-cpp//html/annotated.html).
 
