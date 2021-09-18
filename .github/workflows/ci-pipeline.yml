@@ -9,7 +9,7 @@ on:
         - main
 
 jobs:
-  build:
+  try-vex-build:
 
     runs-on: ubuntu-latest
 
