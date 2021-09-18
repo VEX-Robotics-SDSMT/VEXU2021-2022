@@ -13,7 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - uses: schineaj23/vex-build@v1
+
+    - name: VEX Build
+      uses: schineaj23/vex-build@v1.0
       with:
         path: MyProject1/
