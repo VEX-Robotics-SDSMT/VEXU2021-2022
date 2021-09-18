@@ -1,4 +1,4 @@
-name: 2021-2022 VEX CI
+name: 2021-2022 CI
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
         - main
 
 jobs:
-  try-vex-build:
+  vex-build:
 
     runs-on: ubuntu-latest
 
