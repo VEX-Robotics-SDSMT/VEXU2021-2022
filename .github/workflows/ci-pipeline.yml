@@ -1,13 +1,15 @@
-name: C/C++ CI
+name: 2021-2022 VEX CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+        - '**'
   pull_request:
-    branches: [ main ]
+    branches:
+        - main
 
 jobs:
-  build:
+  try-vex-build:
 
     runs-on: ubuntu-latest
 
