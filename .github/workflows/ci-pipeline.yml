@@ -1,4 +1,4 @@
-name: 2021-2022 CI
+name: 2021-2022 VEX CI
 
 on:
   push:
