@@ -1,14 +1,11 @@
-# VEX Robotics SDSMT
+# 2021-2022 VEX Robotics SDSMT [![2021-2022 VEX CI](https://github.com/VEX-Robotics-SDSMT/VEXU2021-2022/actions/workflows/ci-pipeline.yml/badge.svg)](https://github.com/VEX-Robotics-SDSMT/VEXU2021-2022/actions/workflows/ci-pipeline.yml)
 
-This repo contains code for VEX robotics RobotC language, and will also contain the new robotC++ language soon. 
-http://www.robotc.net/
+This repo contains code for the 2021-2022 SDSMT VEX Robotics Club.
 
 # Troubleshooting
 
-When updating, there are 3 seperate that need to be done.
+Be sure to check to following if you have issues:
 
-1) Get the latest version of the PROS CLI,  (explained here)[https://pros.cs.purdue.edu/v5/getting-started/installation.html] 
+1. Update the vexOS on the brain you are working with, [linked here](https://www.vexrobotics.com/v5/products/firmware).
+2. Be sure to check out the VEX C++ documentation [here](https://help.vexcodingstudio.com/index.html#pro).
 
-2) Update the the project's kernel, done in the provided PROS Atom by selecting Pros->Update Project and then navigating the the current project's folder.
-
-3) Update the vexOS on the brain you are working with, (linked here)[https://www.vexrobotics.com/v5/products/firmware]
