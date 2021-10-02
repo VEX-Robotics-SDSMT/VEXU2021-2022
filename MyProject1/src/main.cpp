@@ -91,8 +91,6 @@ void usercontrol(void) {
 }
 
 
-
-
 //
 // Main will set up the competition functions and callbacks.
 //
