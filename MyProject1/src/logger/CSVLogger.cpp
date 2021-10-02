@@ -1,7 +1,7 @@
 #include "csvLogger.h"
 
 
-CSVLogger::ScreenLogger()
+CSVLogger::CSVLogger()
 {
   
 }
