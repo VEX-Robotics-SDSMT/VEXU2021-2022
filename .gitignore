@@ -1,5 +1,5 @@
 *.v5code
-/.vscode
-/bin
-/build
-compile_commands.json
+MyProject1/.vscode
+MyProject1/bin
+MyProject1/build
+MyProject1/compile_commands.json
