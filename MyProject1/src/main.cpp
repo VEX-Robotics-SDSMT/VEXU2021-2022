@@ -89,11 +89,11 @@ void usercontrol(void) {
     BaseLogger *log = new ScreenLogger();
     if(myController->ButtonX.pressing())
     {
-        log->WriteLine(1, "text1");
+        log->WriteLine(1, "short text");
     }
     if(myController->ButtonY.pressing())
     {
-        log->WriteLine(1, "text2");
+        log->WriteLine(1, "this text is really long");
     }
     if(myController->ButtonA.pressing())
     {
