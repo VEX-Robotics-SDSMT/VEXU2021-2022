@@ -21,3 +21,8 @@ void CSVLogger::WriteLine(int line, std::string text)
 {
 
 }
+
+void CSVLogger::AppLine(char* text)
+{
+
+}

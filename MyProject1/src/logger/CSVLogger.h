@@ -10,6 +10,7 @@ class CSVLogger : public BaseLogger
     void ClearAll();
     void ClearLine(int line);
     void WriteLine(int line, std::string text);
+    void AppLine(char* text);
 
   private:
 
