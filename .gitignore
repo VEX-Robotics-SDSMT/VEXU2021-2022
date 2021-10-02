@@ -1,5 +1,5 @@
+*.v5code
 /.vscode
 /bin
 /build
 compile_commands.json
-generalBot.v5code
