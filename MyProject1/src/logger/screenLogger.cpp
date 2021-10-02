@@ -8,7 +8,8 @@ ScreenLogger::ScreenLogger()
 
 ScreenLogger::ScreenLogger(brain &b)
 {
-  robotBrain = b;
+  brain *bra = &b;
+  robotBrain = bra;
 }
 
 void ScreenLogger::ClearAll()

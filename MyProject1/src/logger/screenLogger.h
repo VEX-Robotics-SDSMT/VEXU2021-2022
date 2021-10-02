@@ -9,7 +9,7 @@ class ScreenLogger
 
   public:
     ScreenLogger();
-    ScreenLogger(brain &b);
+    ScreenLogger(brain &);
     void ClearAll();
     void ClearLine(int line);
     void WriteLine(int line, std::string text);
