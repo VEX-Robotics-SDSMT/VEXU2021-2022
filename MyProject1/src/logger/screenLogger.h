@@ -1,7 +1,6 @@
 #ifndef _SCREENLOGGER_H
 #define _SCREENLOGGER_H
 
-#include "vex.h"
 #include "baseLogger.h"
 
 class ScreenLogger : public BaseLogger
