@@ -3,6 +3,7 @@
 FileLogger::FileLogger()
 {
   //Define a default file to output to please
+  outfile.open("Kill me");
 }
 
 FileLogger::FileLogger(char* filename)
@@ -10,6 +11,7 @@ FileLogger::FileLogger(char* filename)
   brain *brn = &Brain;
   vex::brain::sdcard *sd = &brn->SDcard;
   bool hasSd = sd->isInserted();
+
 }
 
 void FileLogger::ClearAll()

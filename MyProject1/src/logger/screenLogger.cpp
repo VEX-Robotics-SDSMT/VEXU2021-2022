@@ -26,7 +26,7 @@ void ScreenLogger::ClearLine(int line)
     
 void ScreenLogger::WriteLine(int line, char* text)
 {
-  robotBrain->Screen.setCursor(line,0);
+  robotBrain->Screen.setCursor(line,2);
   robotBrain->Screen.print(text);
 }
 

@@ -15,7 +15,7 @@ class FileLogger : public BaseLogger
     void AppLine(char* text);
 
   private:
-    std::ostream outfile;
+    std::ofstream outfile;
 
 };
 
