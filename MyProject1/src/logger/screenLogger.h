@@ -12,7 +12,7 @@ class ScreenLogger : public BaseLogger
     ScreenLogger(brain &);
     void ClearAll();
     void ClearLine(int line);
-    void WriteLine(int line, std::string text);
+    void WriteLine(int line, char* text);
 
   private:
 
