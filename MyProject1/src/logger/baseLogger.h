@@ -7,7 +7,7 @@ class BaseLogger {
 
 public:
    virtual void ClearAll() = 0;
-   virtual void Clear(int line) = 0;
+   virtual void ClearLine(int line) = 0;
    virtual void WriteLine(int line, char* text) = 0;
 
 private:

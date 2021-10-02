@@ -20,6 +20,7 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+#include "logger/screenLogger.h"
 
 using namespace vex;
 
@@ -83,6 +84,13 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
+
+    controller *myController = new controller();
+    BaseLogger log = new ScreenLogger();
+    if(myController->ButtonX.pressing())
+    {
+        
+    }
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
@@ -101,6 +109,8 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
+
+
     wait(100, msec);
   }
 }
