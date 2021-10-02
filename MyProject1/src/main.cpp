@@ -86,10 +86,10 @@ void usercontrol(void) {
 
 
     controller *myController = new controller();
-    BaseLogger log = new ScreenLogger();
+    BaseLogger *log = new ScreenLogger();
     if(myController->ButtonX.pressing())
     {
-        
+        log->WriteLine(1, "text");
     }
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
