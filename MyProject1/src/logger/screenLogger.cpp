@@ -14,7 +14,7 @@ ScreenLogger::ScreenLogger(brain &b)
 
 void ScreenLogger::ClearAll()
 {
-
+  
 }
     
 void ScreenLogger::ClearLine(int line)

@@ -2,8 +2,9 @@
 #define _SCREENLOGGER_H
 
 #include "vex.h"
+#include "baseLogger.h"
 
-class ScreenLogger
+class ScreenLogger : public BaseLogger
 {
   brain *robotBrain;
 
