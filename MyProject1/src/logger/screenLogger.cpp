@@ -24,10 +24,9 @@ void ScreenLogger::ClearLine(int line)
 }
     
     
-void ScreenLogger::WriteLine(int line, std::string text)
+void ScreenLogger::WriteLine(int line, char* text)
 {
   robotBrain->Screen.setCursor(line,0);
-  std::string theText = text;
-  robotBrain->Screen.print(theText);
+  robotBrain->Screen.print(text);
 }
 
