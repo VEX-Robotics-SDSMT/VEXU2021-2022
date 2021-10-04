@@ -12,7 +12,7 @@ class FileLogger : public BaseLogger
     void ClearAll();
     void ClearLine(int line);
     void WriteLine(int line, char* text);
-    void AppLine(char* text);
+    void AppendLine(char* text);
 
   private:
     std::ofstream outfile;

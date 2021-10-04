@@ -30,7 +30,7 @@ void FileLogger::WriteLine(int line, char* text)
   
 }
 
-void FileLogger::AppLine(char* text)
+void FileLogger::AppendLine(char* text)
 {
   
 }

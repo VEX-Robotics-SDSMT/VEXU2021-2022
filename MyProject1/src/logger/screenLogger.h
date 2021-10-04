@@ -2,20 +2,21 @@
 #define _SCREENLOGGER_H
 
 #include "baseLogger.h"
+const int MAX_SCREENLINE = 15;
 
 class ScreenLogger : public BaseLogger
 {
-  brain *robotBrain;
-
   public:
     ScreenLogger();
     ScreenLogger(brain &);
     void ClearAll();
     void ClearLine(int line);
     void WriteLine(int line, char* text);
+    void AppendLine(char* text);
 
   private:
-
+    brain *robotBrain;
+    int appendLine;
 };
 
 #endif
