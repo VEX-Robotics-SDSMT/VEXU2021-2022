@@ -16,21 +16,21 @@ FileLogger::FileLogger(char* filename)
 
 void FileLogger::ClearAll()
 {
-  2 + 2;
+  
 }
     
 void FileLogger::ClearLine(int line)
 {
-  2 + 2;
+  
 }
     
     
 void FileLogger::WriteLine(int line, char* text)
 {
-  2 + 2;
+  
 }
 
 void FileLogger::AppLine(char* text)
 {
-  2 + 2;
+  
 }
