@@ -9,6 +9,7 @@ class FileLogger : public BaseLogger
   public:
     FileLogger();
     FileLogger(char* filename);
+    ~FileLogger();
     void ClearAll();
     void ClearLine(int line);
     void WriteLine(int line, char* text);
@@ -16,6 +17,7 @@ class FileLogger : public BaseLogger
 
   private:
     std::ofstream outfile;
+    char* prntfname;
 
 };
 

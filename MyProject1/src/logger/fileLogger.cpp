@@ -11,6 +11,7 @@ FileLogger::FileLogger(char* filename)
   brain *brn = &Brain;
   vex::brain::sdcard *sd = &brn->SDcard;
   bool hasSd = sd->isInserted();
+  prntfname = filename;
   if (hasSd)                              
   {
     outfile.open(filename);
@@ -27,11 +28,19 @@ FileLogger::FileLogger(char* filename)
   }
 }
 
+FileLogger::~FileLogger()
+{
+  outfile.close();
+}
+
 //Clears the file
 void FileLogger::ClearAll()
 {
-  //Does this clear the stream or does this just clear the buffer
-  outfile.flush();
+  std::ofstream truncfile;
+  outfile.close();                                                      //Close the old file
+  truncfile.open(prntfname, std::ofstream::out | std::ofstream::trunc); //Open the file clearing what's not added
+  truncfile.close();                                                    //Close it, clearing the data
+  outfile.open(prntfname);                                              //Reopen the output file to resume writing
 }
 
 //Removes the text at the given line
