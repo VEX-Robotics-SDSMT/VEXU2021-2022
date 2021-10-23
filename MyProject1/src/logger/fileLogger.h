@@ -3,6 +3,8 @@
 
 #include "baseLogger.h"
 #include <fstream>
+#include <string>
+const std::string DEFAULT_FILE_NAME = "DrivebaseLog.txt";
 
 class FileLogger : public BaseLogger
 {
@@ -16,8 +18,11 @@ class FileLogger : public BaseLogger
     void AppendLine(char* text);
 
   private:
+    brain *robotBrain;
+    vex::brain::sdcard *robotsd;
     std::ofstream outfile;
     char* prntfname;
+
 
 };
 

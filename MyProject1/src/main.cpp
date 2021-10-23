@@ -21,6 +21,8 @@
 
 #include "vex.h"
 #include "logger/screenLogger.h"
+#include "logger/fileLogger.h"
+#include "logger/nullLogger.h"
 
 using namespace vex;
 
@@ -86,18 +88,19 @@ void usercontrol(void) {
 
 
     controller *myController = new controller();
-    BaseLogger *log = new ScreenLogger();
+    BaseLogger *log = new FileLogger();
     if(myController->ButtonX.pressing())
     {
-        log->WriteLine(1, "short text");
+        log->AppendLine("short text");
+        //log->WriteLine(1, "short text");
     }
     if(myController->ButtonY.pressing())
     {
-        log->WriteLine(1, "this text is really long");
+        //log->WriteLine(1, "this text is really long");
     }
     if(myController->ButtonA.pressing())
     {
-        log->ClearLine(1);
+        //log->ClearLine(1);
     }
     if(myController->ButtonB.pressing())
     {
