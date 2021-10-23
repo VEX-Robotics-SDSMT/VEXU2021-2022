@@ -9,7 +9,7 @@ std::vector<motor> rightWheelMotorVector = {rightFront, rightMid, rightBack};
 
 
 //drive base class
-FourWheelDrive* driveBase;
+DifferentialDrive* driveBase;
 
 //globals
 const int loopDelay = 20;

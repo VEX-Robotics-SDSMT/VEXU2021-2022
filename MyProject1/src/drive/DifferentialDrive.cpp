@@ -1,9 +1,9 @@
-#include "drive.h"
+#include "DifferentialDrive.h"
 
 using namespace std;
 using namespace vex;
 
-FourWheelDrive::FourWheelDrive(vector<motor> & right, vector<motor> & left,
+DifferentialDrive::DifferentialDrive(vector<motor> & right, vector<motor> & left,
     inertial & sensor, controller & masterIn)
 {
     vector<motor> *rightPointer = &right;
@@ -23,7 +23,7 @@ FourWheelDrive::FourWheelDrive(vector<motor> & right, vector<motor> & left,
 }
 
 //take in a vector of motors, and set their speed to a value
-void FourWheelDrive::setMotors(vector<motor> *motors, double speed)
+void DifferentialDrive::setMotors(vector<motor> *motors, double speed)
 {
   for(auto motor : *motors)
   {
@@ -31,7 +31,7 @@ void FourWheelDrive::setMotors(vector<motor> *motors, double speed)
   }
 }
 
-void FourWheelDrive::rawSetMotors(double speed, double bias)
+void DifferentialDrive::rawSetMotors(double speed, double bias)
 {
     if (bias > 1)
     {
@@ -49,7 +49,7 @@ void FourWheelDrive::rawSetMotors(double speed, double bias)
     }
 }
 
-void FourWheelDrive::setMotors(double speed)
+void DifferentialDrive::setMotors(double speed)
 {
     //speed capping
     if (speed > maxSpeed)
@@ -96,7 +96,7 @@ void FourWheelDrive::setMotors(double speed)
 }
 
 //take in a vector of motors, and set their brake type to a given type
-void FourWheelDrive::setBrakes(vector<motor> *motors,  brakeType mode)
+void DifferentialDrive::setBrakes(vector<motor> *motors,  brakeType mode)
 {
   for(auto motor: *motors)
   {
@@ -104,7 +104,7 @@ void FourWheelDrive::setBrakes(vector<motor> *motors,  brakeType mode)
   }
 }
 
-void FourWheelDrive::setBrakes(brakeType mode)
+void DifferentialDrive::setBrakes(brakeType mode)
 {
   for(auto motor: *leftMotors)
   {
@@ -118,7 +118,7 @@ void FourWheelDrive::setBrakes(brakeType mode)
 }
 
 //tqke in a vector of motors, and call the move relative function for all of them with a given distance and speed
-void FourWheelDrive::setMotorsRelative(vector<motor> * motors, double distance, double speed)
+void DifferentialDrive::setMotorsRelative(vector<motor> * motors, double distance, double speed)
 {
   for(auto motor : *motors)
   {
@@ -126,7 +126,7 @@ void FourWheelDrive::setMotorsRelative(vector<motor> * motors, double distance, 
   }
 }
 
-void FourWheelDrive::setMotorsRelative(double distance, double speed)
+void DifferentialDrive::setMotorsRelative(double distance, double speed)
 {
   for(auto motor : *leftMotors)
   {
@@ -139,7 +139,7 @@ void FourWheelDrive::setMotorsRelative(double distance, double speed)
   }
 }
 
-void FourWheelDrive::setZeroPosition(vector<motor> * motors)
+void DifferentialDrive::setZeroPosition(vector<motor> * motors)
 {
     for (int i = 0; i < motors->size(); i++) //sets the motors to 0
     {
@@ -147,7 +147,7 @@ void FourWheelDrive::setZeroPosition(vector<motor> * motors)
     }
 }
 
-void FourWheelDrive::setZeroPosition()
+void DifferentialDrive::setZeroPosition()
 {
     for (int i = 0; i < leftMotors->size(); i++) //sets the motors to 0
     {
@@ -160,7 +160,7 @@ void FourWheelDrive::setZeroPosition()
     }
 }
 
-double FourWheelDrive::getPosition(vector<motor> * motors)
+double DifferentialDrive::getPosition(vector<motor> * motors)
 {
     double averagePosition = 0;
     for(int i = 0; i < numMotors; i++)
@@ -171,7 +171,7 @@ double FourWheelDrive::getPosition(vector<motor> * motors)
     return averagePosition / (motors->size());
 }
 
-double FourWheelDrive::getAllPosition()
+double DifferentialDrive::getAllPosition()
 {
     double averagePosition = 0;
     for(int i = 0; i < numMotors; i++)
@@ -183,7 +183,7 @@ double FourWheelDrive::getAllPosition()
     return averagePosition / (numMotors * 2);
 }
 
-double FourWheelDrive::rawGetAllSpeed(double bias)
+double DifferentialDrive::rawGetAllSpeed(double bias)
 {
     double averageSpeed = 0;
     for(int i = 0; i < numMotors; i++)
@@ -195,12 +195,12 @@ double FourWheelDrive::rawGetAllSpeed(double bias)
     return (averageSpeed / (numMotors * 2)) * bias;
 }
 
-double FourWheelDrive::getAllSpeed()
+double DifferentialDrive::getAllSpeed()
 {
     return rawGetAllSpeed(speedBias);
 }
 
-void FourWheelDrive::accelerate(double targetSpeed)
+void DifferentialDrive::accelerate(double targetSpeed)
 {
 	const double TOLERANCE = 0.5;
 
@@ -225,7 +225,7 @@ void FourWheelDrive::accelerate(double targetSpeed)
 	}
 }
 
-void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
+void DifferentialDrive::driveTilesPID(float numTiles, float desiredSpeed)
 {
     float INTEGRATOR_MAX_MAGNITUDE = 1000;
     float DELTA_T = LOOP_DELAY / 1000.0;
@@ -304,13 +304,13 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
     setMotors(leftMotors, 0);
 }
 
-void FourWheelDrive::turnDegreesPID(float numDegrees, float desiredSpeed)
+void DifferentialDrive::turnDegreesPID(float numDegrees, float desiredSpeed)
 {
     float startDegrees = degreeBoundingHelper(inertialSensor->heading());
     turnDegreesAbsolutePID(degreeBoundingHelper(numDegrees + startDegrees), desiredSpeed);
 }
 
-void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSpeed)
+void DifferentialDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSpeed)
 {
   //lcd::set_text(1, "target heading: " + to_string(targetDegrees) + " " + to_string(desiredSpeed));
 

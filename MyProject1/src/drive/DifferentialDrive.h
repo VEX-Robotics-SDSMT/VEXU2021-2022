@@ -7,8 +7,9 @@
 #include <sstream>
 #include <fstream>
 #include "vex.h"
+#include "DriveBase.h"
 
-class FourWheelDrive
+class DifferentialDrive: DriveBase
 {
     std::vector<motor> *rightMotors;
     std::vector<vex::motor> *leftMotors;
@@ -19,10 +20,6 @@ class FourWheelDrive
     std::stringstream fileStream;
     //these values are observed from the routine in the past
     //they will work if the file input fails, but not as well
-    double maxSpeed = 128;
-    double midSpeed = 69;
-    double minSpeed = 10;
-    double speedBias = 1;
 
     double LRBiasHigh = 1;
     double LRBiasLow = 1;
@@ -41,7 +38,7 @@ class FourWheelDrive
     int numMotors; //number of motors on ONE side
 
 public:
-    FourWheelDrive(std::vector<vex::motor>&, std::vector<vex::motor>&,
+    DifferentialDrive(std::vector<vex::motor>&, std::vector<vex::motor>&,
         vex::inertial & , vex::controller &);
 
     void readCalibration();

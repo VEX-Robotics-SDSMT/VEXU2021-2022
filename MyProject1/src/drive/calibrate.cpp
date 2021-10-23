@@ -1,9 +1,9 @@
-#include "drive.h"
+#include "DifferentialDrive.h"
 
 using namespace std;
 
 //calibration
-void FourWheelDrive::readCalibration()
+void DifferentialDrive::readCalibration()
 {
 	char buf[2048]; // This just needs to be larger than the contents of the file
 
@@ -38,7 +38,7 @@ void FourWheelDrive::readCalibration()
 	midSpeed = (maxSpeed + minSpeed) / 2;
 }
 
-void FourWheelDrive::writeCalibration()
+void DifferentialDrive::writeCalibration()
 {
 	const string DELIM = " ";
 	fileStream.clear();
@@ -60,7 +60,7 @@ void FourWheelDrive::writeCalibration()
     fclose(usd_file_write);
 }
 
-/*void FourWheelDrive::calibrateAll()
+/*void DifferentialDrive::calibrateAll()
 {
     int count = 0;
       Brain.Screen.setCursor(6, 0);
@@ -93,7 +93,7 @@ void FourWheelDrive::writeCalibration()
 }
 
 
-void FourWheelDrive::calibrateMinSpeed()
+void DifferentialDrive::calibrateMinSpeed()
 {
     double speed = 0;
     int count = 0;
@@ -121,7 +121,7 @@ void FourWheelDrive::calibrateMinSpeed()
 }
 
 
-void FourWheelDrive::calibrateMaxAcceleration()
+void DifferentialDrive::calibrateMaxAcceleration()
 {
     const double PITCH_TOLERENCE = 10;
     const int NUM_LOOPS = 30;
@@ -286,7 +286,7 @@ void FourWheelDrive::calibrateMaxAcceleration()
 }
 
 
-void FourWheelDrive::calibrateMaxSpeed()
+void DifferentialDrive::calibrateMaxSpeed()
 {
 	const int LOOPS = 25;
 	double tempInstructedSpeed = 0;
@@ -353,7 +353,7 @@ void FourWheelDrive::calibrateMaxSpeed()
 	lcd::set_text(7, "calibrating max speed finished");
 }
 
-void FourWheelDrive::calibrateDrift()
+void DifferentialDrive::calibrateDrift()
 {
 	calibrateDriftLoop(midSpeed, LRBiasLow);
 	calibrateDriftLoop(-midSpeed, LRBiasLowBack);
@@ -362,7 +362,7 @@ void FourWheelDrive::calibrateDrift()
 
 }
 
-void FourWheelDrive::calibrateDriftLoop(double testSpeed, double &bias)
+void DifferentialDrive::calibrateDriftLoop(double testSpeed, double &bias)
 {
 	const double CHANGE_TOLERANCE = 0.01;
 	int numLoops = 100;
@@ -401,7 +401,7 @@ void FourWheelDrive::calibrateDriftLoop(double testSpeed, double &bias)
 
 
 
-void FourWheelDrive::showOff()
+void DifferentialDrive::showOff()
 {
 	waitForUser("rock back and forth");
 	while(true)
@@ -413,7 +413,7 @@ void FourWheelDrive::showOff()
 	}
 }
 
-void FourWheelDrive::waitForUser(string message)
+void DifferentialDrive::waitForUser(string message)
 {
 	lcd::set_text(1, "Waiting for user");
 	lcd::set_text(2, message);
@@ -429,7 +429,7 @@ void FourWheelDrive::waitForUser(string message)
 	lcd::set_text(3, "please wait");
 }
 
-bool FourWheelDrive::panic()
+bool DifferentialDrive::panic()
 {
     return master->get_digital(E_CONTROLLER_DIGITAL_A) || master->get_digital(E_CONTROLLER_DIGITAL_B);
 }
