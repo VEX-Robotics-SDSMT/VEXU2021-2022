@@ -3,7 +3,7 @@
 
 #include "vex.h"
 
-class MinesMotorGroup : public motor_group
+class MinesMotorGroup : public motor_group 
 {
   public:
     MinesMotorGroup(motor, motor);
