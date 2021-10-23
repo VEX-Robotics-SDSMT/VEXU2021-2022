@@ -14,12 +14,13 @@ FileLogger::FileLogger(char* filename)
   prntfname = filename;
   if (hasSd)                              
   {
-    outfile.open(filename);
+    outfile.open(filename, std::ofstream::out);
     if (!outfile.is_open())               //If the file does not exist
     {
       //Throw error
       exit(1);
     }
+    outfile.close();
   }
   else                                    //If there is no SD card inserted
   {
@@ -30,17 +31,15 @@ FileLogger::FileLogger(char* filename)
 
 FileLogger::~FileLogger()
 {
-  outfile.close();
+  
 }
 
 //Clears the file
 void FileLogger::ClearAll()
 {
   std::ofstream truncfile;
-  outfile.close();                                                      //Close the old file
   truncfile.open(prntfname, std::ofstream::out | std::ofstream::trunc); //Open the file clearing what's not added
   truncfile.close();                                                    //Close it, clearing the data
-  outfile.open(prntfname);                                              //Reopen the output file to resume writing
 }
 
 //Removes the text at the given line
@@ -59,5 +58,7 @@ void FileLogger::WriteLine(int line, char* text)
 //Prints the line at the bottom of the file
 void FileLogger::AppendLine(char* text)
 {
+  outfile.open(prntfname, std::ofstream::out | std::ofstream::app);
   outfile << text << '\n';
+  outfile.close();
 }
