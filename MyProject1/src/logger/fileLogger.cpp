@@ -2,6 +2,8 @@
 
 FileLogger::FileLogger()
 {
+  FileLogger(DEFAULT_FILE_NAME);
+  /*
   std::string fileName = DEFAULT_FILE_NAME;
   int n = fileName.length();
   char char_array[n + 1];
@@ -16,7 +18,7 @@ FileLogger::FileLogger()
   bool hasSd = robotsd->isInserted();
   if (hasSd)                              
   {
-    /*if (!robotsd->exists(prntfname))
+    if (!robotsd->exists(prntfname))
     {
       uint8_t myTestData[ 100 ];
       for(int i=0;i<100;i++) 
@@ -24,7 +26,7 @@ FileLogger::FileLogger()
         myTestData[i] = i * 2;
       }
       robotsd->savefile(prntfname, myTestData, sizeof(myTestData));
-    }*/
+    }
     outfile.open(prntfname);
     if (!outfile.is_open())               //If the file does not exist
     {
@@ -36,7 +38,7 @@ FileLogger::FileLogger()
   {
     //Throw error
     exit(1);
-  }
+  }*/
 }
 
 FileLogger::FileLogger(char* filename)
