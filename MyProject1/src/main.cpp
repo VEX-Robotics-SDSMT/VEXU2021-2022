@@ -76,6 +76,10 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+  controller *myController = new controller();
+  BaseLogger *logFile = new FileLogger();
+  BaseLogger *logScreen = new ScreenLogger();
+
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
@@ -86,13 +90,11 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
-
-    controller *myController = new controller();
-    BaseLogger *log = new FileLogger();
     if(myController->ButtonX.pressing())
     {
-        log->AppendLine("short text");
-        //log->WriteLine(1, "short text");
+        logFile->AppendLine("short text");
+        //logScreen->WriteLine(1, "short text");
+        logScreen->AppendLine("short text");
     }
     if(myController->ButtonY.pressing())
     {
@@ -104,7 +106,8 @@ void usercontrol(void) {
     }
     if(myController->ButtonB.pressing())
     {
-        log->ClearAll();
+        logFile->ClearAll();
+        logScreen->ClearAll();
     }
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
