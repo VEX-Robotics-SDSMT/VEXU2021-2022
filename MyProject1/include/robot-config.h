@@ -10,6 +10,8 @@ extern motor leftFront;
 extern motor leftMid;
 extern motor leftBack;
 extern inertial Inertial;
+extern motor_group rightMotors;
+extern motor_group leftMotors;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
