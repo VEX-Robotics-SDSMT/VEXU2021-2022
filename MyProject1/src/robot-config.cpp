@@ -15,8 +15,6 @@ motor leftFront = motor(PORT11, ratio18_1, false);
 motor leftMid = motor(PORT16, ratio18_1, true);
 motor leftBack = motor(PORT20, ratio18_1, true);
 inertial Inertial = inertial(PORT6);
-motor_group rightMotors = motor_group(rightFront, rightMid, rightBack);
-motor_group leftMotors = motor_group(leftFront, leftMid, leftBack);
 
 // VEXcode generated functions
 

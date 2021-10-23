@@ -31,16 +31,8 @@ float FourWheelDrive::bindToMagnitude(float value, float MAX_MAGNITUDE)
   return value;
 }
 
-void FourWheelDrive::setAllBrakeMode(motor_group *motors, brakeType mode)
-{
-    for( int i = 0; i < size; i++)
-    {
-        motors->at(i).setBrake(mode);
-    }
-}
-
 void FourWheelDrive::setAllBrakeMode(brakeType mode)
 {
-    setAllBrakeMode(rightMotors, mode);
-    setAllBrakeMode(leftMotors, mode);
+  rightMotors->setStopping(mode);
+  leftMotors->setStopping(mode);
 }
