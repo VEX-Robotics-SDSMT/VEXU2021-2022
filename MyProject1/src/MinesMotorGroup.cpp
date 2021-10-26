@@ -1,4 +1,4 @@
-#include "..\include\MinesMotorGroup.h"
+#include "../include/MinesMotorGroup.h"
 
 
   MinesMotorGroup::MinesMotorGroup(motor m1, motor m2):motor_group(m1, m2){}
