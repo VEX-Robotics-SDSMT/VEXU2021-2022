@@ -7,11 +7,12 @@
 #include <sstream>
 #include <fstream>
 #include "vex.h"
+#include "../include/MinesMotorGroup.h"
 
 class FourWheelDrive
 {
-    std::vector<motor> *rightMotors;
-    std::vector<vex::motor> *leftMotors;
+    MinesMotorGroup *rightMotors;
+    MinesMotorGroup *leftMotors;
     vex::inertial *inertialSensor;
     vex::controller *master;
 
@@ -38,10 +39,8 @@ class FourWheelDrive
     const velocityUnits VEL_UNIT = velocityUnits::dps;
     const brakeType BRAKE_MODE = brakeType::brake;
 
-    int numMotors; //number of motors on ONE side
-
 public:
-    FourWheelDrive(std::vector<vex::motor>&, std::vector<vex::motor>&,
+    FourWheelDrive(MinesMotorGroup&, MinesMotorGroup&,
         vex::inertial & , vex::controller &);
 
     void readCalibration();
@@ -56,17 +55,16 @@ public:
     void showOff();
 
     void accelerate(double speed);
-    void setMotorsRelative(std::vector<vex::motor> *motors, double distance, double speed);
+    void setMotorsRelative(MinesMotorGroup *motors, double distance, double speed);
     void setMotorsRelative(double distance, double speed);
-    void setBrakes(std::vector<vex::motor> *motors, vex::brakeType mode);
     void setBrakes(vex::brakeType mode);
-    double rawGetAllSpeed(double bias);
+    double getSpeed(MinesMotorGroup *);
     double getAllSpeed();
     double getAllPosition();
-    double getPosition(std::vector<vex::motor> * motors);
+    double getPosition(MinesMotorGroup * motors);
 
-    void drive(std::vector<vex::motor> *leftWheelMotorVector,
-        std::vector<vex::motor> *rightWheelMotorVector, int distance);
+    void drive(MinesMotorGroup *leftWheelMotorVector,
+        MinesMotorGroup *rightWheelMotorVector, int distance);
     void driveTilesPID(float numTiles, float desiredSpeed= 75);
     void turnDegreesAbsolutePID(float targetDegrees, float desiredSpeed = -1);
     void turnDegreesPID(float numDegrees, float desiredSpeed= 55);
@@ -75,9 +73,9 @@ public:
 
 private:
     void rawSetMotors(double speed, double bias = 1);
-    void setMotors(std::vector<vex::motor> *motors, double speed);
+    void setMotors(MinesMotorGroup *motors, double speed);
     void setMotors(double speed);
-    void setZeroPosition(std::vector<vex::motor> * motors);
+    void setZeroPosition(MinesMotorGroup * motors);
     void setZeroPosition();
 
     bool panic();
@@ -86,7 +84,7 @@ private:
     float degreesToRadians(float radians);
     float radiansToDegrees(float degrees);
     float bindToMagnitude(float value, float MAX_MAGNITUDE);
-    void setAllBrakeMode(std::vector<vex::motor> *motors, vex::brakeType mode);
+    void setAllBrakeMode(MinesMotorGroup *motors, vex::brakeType mode);
     void setAllBrakeMode(vex::brakeType mode);
 
 

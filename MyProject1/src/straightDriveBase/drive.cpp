@@ -3,11 +3,11 @@
 using namespace std;
 using namespace vex;
 
-FourWheelDrive::FourWheelDrive(vector<motor> & right, vector<motor> & left,
+FourWheelDrive::FourWheelDrive(MinesMotorGroup & right, MinesMotorGroup & left,
     inertial & sensor, controller & masterIn)
 {
-    vector<motor> *rightPointer = &right;
-    vector<motor> *leftPointer = &left;
+    MinesMotorGroup *rightPointer = &right;
+    MinesMotorGroup *leftPointer = &left;
     inertial *inertialPointer = &sensor;
     controller *controllerPointer = &masterIn;
 
@@ -15,7 +15,6 @@ FourWheelDrive::FourWheelDrive(vector<motor> & right, vector<motor> & left,
     leftMotors = leftPointer;
     inertialSensor = inertialPointer;
     master = controllerPointer;
-    numMotors = rightMotors->size();
 
     setAllBrakeMode(BRAKE_MODE);
 
@@ -23,12 +22,9 @@ FourWheelDrive::FourWheelDrive(vector<motor> & right, vector<motor> & left,
 }
 
 //take in a vector of motors, and set their speed to a value
-void FourWheelDrive::setMotors(vector<motor> *motors, double speed)
+void FourWheelDrive::setMotors(MinesMotorGroup *motors, double speed)
 {
-  for(auto motor : *motors)
-  {
-    motor = speed;
-  }
+  motors->setVelocity(speed, VEL_UNIT);
 }
 
 void FourWheelDrive::rawSetMotors(double speed, double bias)
@@ -39,14 +35,8 @@ void FourWheelDrive::rawSetMotors(double speed, double bias)
     }
 
 
-    for(auto motor : *leftMotors)
-    {
-      motor = speed;
-    }
-    for(auto motor : *rightMotors)
-    {
-      motor = speed * bias;
-    }
+    setMotors(leftMotors, speed);
+    setMotors(rightMotors, speed * bias);
 }
 
 void FourWheelDrive::setMotors(double speed)
@@ -95,111 +85,45 @@ void FourWheelDrive::setMotors(double speed)
     }
 }
 
-//take in a vector of motors, and set their brake type to a given type
-void FourWheelDrive::setBrakes(vector<motor> *motors,  brakeType mode)
-{
-  for(auto motor: *motors)
-  {
-    motor.setBrake(mode);
-  }
-}
-
-void FourWheelDrive::setBrakes(brakeType mode)
-{
-  for(auto motor: *leftMotors)
-  {
-    motor.setBrake(mode);
-  }
-
-  for(auto motor: *rightMotors)
-  {
-    motor.setBrake(mode);
-  }
-}
-
 //tqke in a vector of motors, and call the move relative function for all of them with a given distance and speed
-void FourWheelDrive::setMotorsRelative(vector<motor> * motors, double distance, double speed)
+void FourWheelDrive::setMotorsRelative(MinesMotorGroup * motors, double distance, double speed)
 {
-  for(auto motor : *motors)
-  {
-    motor.spinFor(distance, ROT_UNIT, speed, VEL_UNIT);
-  }
+  motors->spinFor(distance, ROT_UNIT, speed, VEL_UNIT);
 }
 
 void FourWheelDrive::setMotorsRelative(double distance, double speed)
 {
-  for(auto motor : *leftMotors)
-  {
-    motor.spinFor(distance, ROT_UNIT, speed, VEL_UNIT);
-  }
-
-  for(auto motor : *rightMotors)
-  {
-    motor.spinFor(distance, ROT_UNIT, speed, VEL_UNIT);
-  }
-}
-
-void FourWheelDrive::setZeroPosition(vector<motor> * motors)
-{
-    for (int i = 0; i < motors->size(); i++) //sets the motors to 0
-    {
-        (*motors)[i].resetRotation();
-    }
+  setMotorsRelative(rightMotors, distance, speed);
+  setMotorsRelative(leftMotors, distance, speed);
 }
 
 void FourWheelDrive::setZeroPosition()
 {
-    for (int i = 0; i < leftMotors->size(); i++) //sets the motors to 0
-    {
-        (*leftMotors)[i].resetRotation();
-    }
-
-    for (int i = 0; i < rightMotors->size(); i++) //sets the motors to 0
-    {
-        (*rightMotors)[i].resetRotation();
-    }
+  leftMotors->resetPosition();
+  rightMotors->resetPosition();
 }
 
-double FourWheelDrive::getPosition(vector<motor> * motors)
+double FourWheelDrive::getPosition(MinesMotorGroup * motors)
 {
-    double averagePosition = 0;
-    for(int i = 0; i < numMotors; i++)
-    {
-        averagePosition += motors->at(i).position(ROT_UNIT);
-    }
-
-    return averagePosition / (motors->size());
+    return motors->position(ROT_UNIT);
 }
 
 double FourWheelDrive::getAllPosition()
 {
-    double averagePosition = 0;
-    for(int i = 0; i < numMotors; i++)
-    {
-        averagePosition += leftMotors->at(i).position(ROT_UNIT);
-        averagePosition += rightMotors->at(i).position(ROT_UNIT);
-    }
-
-    return averagePosition / (numMotors * 2);
+    return (getPosition(rightMotors) + getPosition(leftMotors)) / 2.0;
 }
 
-double FourWheelDrive::rawGetAllSpeed(double bias)
+double FourWheelDrive::getSpeed(MinesMotorGroup * motors)
 {
-    double averageSpeed = 0;
-    for(int i = 0; i < numMotors; i++)
-    {
-        averageSpeed += leftMotors->at(i).velocity(VEL_UNIT);
-        averageSpeed += rightMotors->at(i).velocity(VEL_UNIT);
-    }
-
-    return (averageSpeed / (numMotors * 2)) * bias;
+  return motors->velocity(VEL_UNIT);
 }
 
 double FourWheelDrive::getAllSpeed()
 {
-    return rawGetAllSpeed(speedBias);
+    return (getSpeed(rightMotors) + getSpeed(leftMotors)) / 2.0;
 }
 
+//TODO port a version to MinesMotorGroup
 void FourWheelDrive::accelerate(double targetSpeed)
 {
 	const double TOLERANCE = 0.5;
@@ -251,11 +175,11 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
     float lastDistance = 0;
     float accumulatedDistance = 0;
 
-    float lastEncoderVal = leftMotors->at(0).position(ROT_UNIT);
+    float lastEncoderVal = getAllPosition();
     float runTime = 0;
     int stopLoopCount = 0;
 
-    int maxRunTime = max(ONE_SEC_IN_MS * 5, ONE_SEC_IN_MS * abs(numTiles) * 2);
+    int maxRunTime = max(ONE_SEC_IN_MS * 5, ONE_SEC_IN_MS * fabs(numTiles) * 2);
 
     while( stopLoopCount <= STOP_LOOPS && runTime < maxRunTime)
     {
@@ -273,7 +197,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
 
         float speed = total * desiredSpeed;
 
-        float currentEncoderVal = leftMotors->at(0).position(ROT_UNIT);
+        float currentEncoderVal = getAllPosition();
 
         currentDistance += (currentEncoderVal - lastEncoderVal) / TICKS_PER_TILE;
 
@@ -293,7 +217,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
         runTime += LOOP_DELAY;
         task::sleep(LOOP_DELAY);
 
-        if(abs(degreeBoundingHelper(currentDistance) - degreeBoundingHelper(numTiles))
+        if(fabs(degreeBoundingHelper(currentDistance) - degreeBoundingHelper(numTiles))
                 <= TILE_TOLERANCE)
             { stopLoopCount++;}
         else
@@ -374,7 +298,7 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
     runTime += LOOP_DELAY;
     task::sleep(LOOP_DELAY);
 
-    if(abs(degreeBoundingHelper(currentDegrees) - degreeBoundingHelper(endingDegrees)) <= TURN_TOLERANCE)
+    if(fabs(degreeBoundingHelper(currentDegrees) - degreeBoundingHelper(endingDegrees)) <= TURN_TOLERANCE)
     {
         stopLoopCount++;
     }
