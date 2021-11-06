@@ -13,8 +13,6 @@ class FileLogger : public BaseLogger
     FileLogger(char* filename);
     ~FileLogger();
     void ClearAll();
-    void ClearLine(int line);
-    void WriteLine(int line, char* text);
     void AppendLine(char* text);
 
   private:

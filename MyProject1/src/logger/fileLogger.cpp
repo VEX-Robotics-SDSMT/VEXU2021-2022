@@ -52,13 +52,10 @@ FileLogger::FileLogger(char* filename)
   bool hasSd = robotsd->isInserted();
   if (hasSd)                              
   {
-    outfile.open(prntfname, std::ofstream::out);
-    if (!outfile.is_open())               //If the file does not exist
+    if(!sd->exists(filename))             //If there is no file by the given name
     {
-      //Throw error
       exit(1);
     }
-    outfile.close();
   }
   else                                    //If there is no SD card inserted
   {
@@ -75,28 +72,13 @@ FileLogger::~FileLogger()
 //Clears the file
 void FileLogger::ClearAll()
 {
-  std::ofstream truncfile;
-  truncfile.open(prntfname, std::ofstream::out | std::ofstream::trunc); //Open the file clearing what's not added
-  truncfile.close();                                                    //Close it, clearing the data
-}
-
-//Removes the text at the given line
-void FileLogger::ClearLine(int line)
-{
-  
-}
-    
-//Inserts the line in the middle of the file at the given line 
-//(but why would you use this over append?)
-void FileLogger::WriteLine(int line, char* text)
-{
-  
+  robotsd->savefile(prntfname, 0, 0);         //Save an empty buffer to the file?
 }
 
 //Prints the line at the bottom of the file
 void FileLogger::AppendLine(char* text)
 {
-  outfile.open(prntfname, std::ofstream::out | std::ofstream::app);
-  outfile << text << '\n';
-  outfile.close();
+  int length = sizeof(text);
+  uint8_t* data = (uint8_t*)text;
+  robotsd->appendfile(prntfname, data, length);
 }
