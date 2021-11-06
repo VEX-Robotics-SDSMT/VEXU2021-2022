@@ -23,8 +23,10 @@
 #include "logger/screenLogger.h"
 #include "logger/fileLogger.h"
 #include "logger/nullLogger.h"
+#include <fstream>
 
 using namespace vex;
+using namespace std;
 
 
 // A global instance of competition
@@ -77,8 +79,8 @@ void autonomous(void) {
 void usercontrol(void) {
   // User control code here, inside the loop
   controller *myController = new controller();
-  BaseLogger *logFile = new FileLogger();
-  BaseLogger *logScreen = new ScreenLogger();
+  //FileLogger *logFile = new FileLogger("DrivebaseLog.txt");
+  ScreenLogger *logScreen = new ScreenLogger();
 
   while (1) {
     // This is the main execution loop for the user control program.
@@ -92,21 +94,29 @@ void usercontrol(void) {
 
     if(myController->ButtonX.pressing())
     {
+        //logScreen->AppendLine("short text");
+        /*FileLogger *logFile = new FileLogger("DrivebaseLog.txt");
         logFile->AppendLine("short text");
-        //logScreen->WriteLine(1, "short text");
-        logScreen->AppendLine("short text");
+        delete(logFile);*/
+        /*uint8_t data[ 100 ];
+        for(int i=0;i<100;i++) 
+        {
+          data[i] = i * 2;
+        }
+        Brain.SDcard.savefile("thisSucks.txt", data, sizeof(data));  
+        logScreen->AppendLine("Saved to file"); */     
     }
     if(myController->ButtonY.pressing())
     {
-        //log->WriteLine(1, "this text is really long");
+        logScreen->WriteLine(1, "this text is really long");
     }
     if(myController->ButtonA.pressing())
     {
-        //log->ClearLine(1);
+        logScreen->ClearLine(1);
     }
     if(myController->ButtonB.pressing())
     {
-        logFile->ClearAll();
+        //logFile->ClearAll();
         logScreen->ClearAll();
     }
     wait(20, msec); // Sleep the task for a short amount of time to

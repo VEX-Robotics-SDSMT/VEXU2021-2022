@@ -15,6 +15,11 @@ ScreenLogger::ScreenLogger(brain &b)
   appendLine = 1;
 }
 
+ScreenLogger::~ScreenLogger()
+{
+
+}
+
 void ScreenLogger::ClearAll()
 {
   robotBrain->Screen.clearScreen();

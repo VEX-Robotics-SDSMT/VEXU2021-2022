@@ -9,6 +9,7 @@ class ScreenLogger : public BaseLogger
   public:
     ScreenLogger();
     ScreenLogger(brain &);
+    ~ScreenLogger();
     void ClearAll();
     void ClearLine(int line);
     void WriteLine(int line, char* text);

@@ -44,29 +44,37 @@ FileLogger::FileLogger()
 FileLogger::FileLogger(char* filename)
 {
   brain* brn = &Brain;
-  brain::sdcard *sd = &brn->SDcard;
   robotBrain = brn;
+  screenLog = new ScreenLogger();
+  brain::sdcard *sd = &robotBrain->SDcard;
   robotsd = sd;
   prntfname = filename;
 
   bool hasSd = robotsd->isInserted();
   if (hasSd)                              
   {
+    screenLog->WriteLine(1, "SD card inserted");
     if(!sd->exists(filename))             //If there is no file by the given name
     {
+      screenLog->WriteLine(2, "File can not be Opened");
       exit(1);
+    }
+    else
+    {
+      screenLog->WriteLine(2, "File exists");
     }
   }
   else                                    //If there is no SD card inserted
   {
     //Throw error
+    screenLog->WriteLine(1, "SD Card not found");
     exit(1);
   }
 }
 
 FileLogger::~FileLogger()
 {
-  
+    delete screenLog;
 }
 
 //Clears the file
@@ -78,7 +86,14 @@ void FileLogger::ClearAll()
 //Prints the line at the bottom of the file
 void FileLogger::AppendLine(char* text)
 {
-  int length = sizeof(text);
-  uint8_t* data = (uint8_t*)text;
-  robotsd->appendfile(prntfname, data, length);
+  uint8_t data[ 100 ];
+      for(int i=0;i<100;i++) 
+      {
+        data[i] = i * 2;
+      }
+  Brain.SDcard.savefile(prntfname, data, sizeof(data));
+  screenLog->AppendLine("Saved File");
+  /*uint8_t data[ 100 ];
+  robotsd->loadfile(prntfname, data, sixeof(data));
+  screenLog->AppendLine((char*)data);*/
 }
