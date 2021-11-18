@@ -5,7 +5,7 @@ using namespace std;
 using namespace vex;
 
 FourWheelDrive::FourWheelDrive(MinesMotorGroup & right, MinesMotorGroup & left,
-    inertial & sensor, controller & masterIn)
+    inertial& sensor, controller& masterIn)
 {
     MinesMotorGroup *rightPointer = &right;
     MinesMotorGroup *leftPointer = &left;
@@ -17,9 +17,24 @@ FourWheelDrive::FourWheelDrive(MinesMotorGroup & right, MinesMotorGroup & left,
     inertialSensor = inertialPointer;
     master = controllerPointer;
 
+    rightMotors->spin(directionType::fwd, 100, percentUnits::pct);
+
+    //setAllBrakeMode(BRAKE_MODE);
+
+    //readCalibration();
+}
+
+FourWheelDrive::FourWheelDrive(MinesMotorGroup* right, MinesMotorGroup* left,
+    inertial* sensor, controller* masterIn)
+{
+    rightMotors = right;
+    leftMotors = left;
+    inertialSensor = sensor;
+    master = masterIn;
+
     setAllBrakeMode(BRAKE_MODE);
 
-    readCalibration();
+    //readCalibration();
 }
 
 //take in a vector of motors, and set their speed to a value
@@ -320,20 +335,20 @@ void FourWheelDrive::tankLoopCall()
   setMotorPercents(leftMotorPercent, rightMotorPercent);
 }
 
-void FourWheelDrive::arcadeLoopCall()
+void FourWheelDrive::arcadeLoopCall(double forwardAxis, double turnAxis)
 {
   int leftMotorPercent = 0;
   int rightMotorPercent = 0;
 
-  if(abs(master->Axis3.position()) > driveThreshold || abs(master->Axis1.position()) > turnThreshold)
+  if(abs(forwardAxis) > driveThreshold || abs(turnAxis) > turnThreshold)
   {
-    leftMotorPercent = master->Axis3.position();
-    rightMotorPercent = master->Axis3.position();
+    leftMotorPercent = forwardAxis;
+    rightMotorPercent = forwardAxis;
 
-    if(master->Axis3.position() > turnThreshold)
+    if(abs(turnAxis) > turnThreshold)
     {
-      leftMotorPercent += master->Axis1.position();
-      rightMotorPercent -= master->Axis1.position();
+      leftMotorPercent += turnAxis;
+      rightMotorPercent -= turnAxis;
     }
   }
   else

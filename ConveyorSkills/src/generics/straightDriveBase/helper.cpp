@@ -51,6 +51,6 @@ void FourWheelDrive::setMotorPercents(int leftSpeed, int rightSpeed)
     leftSpeed = leftSpeed * (100 / abs(rightSpeed));
   }
 
-  leftMotors->setVelocity(leftSpeed, percentUnits::pct);
-  rightMotors->setVelocity(rightSpeed, percentUnits::pct);
+  leftMotors->spin(directionType::fwd, leftSpeed, percentUnits::pct);
+  rightMotors->spin(directionType::fwd, rightSpeed, percentUnits::pct);
 }

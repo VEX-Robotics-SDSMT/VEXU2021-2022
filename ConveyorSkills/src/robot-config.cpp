@@ -8,13 +8,19 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
-motor rightFront = motor(PORT1, ratio18_1, true);
-motor rightMid = motor(PORT2, ratio18_1, false);
-motor rightBack = motor(PORT3, ratio18_1, true);
-motor leftFront = motor(PORT11, ratio18_1, false);
-motor leftMid = motor(PORT16, ratio18_1, true);
-motor leftBack = motor(PORT20, ratio18_1, true);
-inertial Inertial = inertial(PORT6);
+motor rightFront = motor(PORT8, ratio18_1, false);
+motor rightBack = motor(PORT7, ratio18_1, false);
+motor leftFront = motor(PORT2, ratio18_1, true);
+motor leftBack = motor(PORT1, ratio18_1, true);
+
+motor rightShortLift = motor(PORT9, ratio36_1, false);
+motor leftShortLift = motor(PORT3, ratio36_1, true);
+motor rightTallLift = motor(PORT20, ratio18_1, true);
+motor leftTallLift = motor(PORT5, ratio18_1, false);
+motor intake = motor(PORT10, ratio18_1, false);
+pneumatics hook = pneumatics(Brain.ThreeWirePort.A);
+
+inertial Inertial = inertial(PORT13);
 controller Master = controller();
 
 // VEXcode generated functions

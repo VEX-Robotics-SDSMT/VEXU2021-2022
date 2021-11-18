@@ -21,6 +21,7 @@
 
 #include "vex.h"
 #include "../include/globals.h"
+#include "generics/helperFunctions.h"
 using namespace vex;
 
 
@@ -44,9 +45,8 @@ competition Competition;
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  FourWheelDrive drive(leftDriveMotors, rightDriveMotors, Inertial, Master);
 
-  driveBase = &drive;
+  //driveBase = &drive;
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
 }
@@ -76,10 +76,79 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
+  //this is some of the greasiest code in this entire project
+  //if you can find ANY other way to get this to work, PLEASE do it
+  MinesMotorGroup left = MinesMotorGroup(leftFront, leftBack);
+  leftDriveMotors = &left;
+  MinesMotorGroup right = MinesMotorGroup(rightFront, rightBack);
+  rightDriveMotors = &right;
+  FourWheelDrive drive(leftDriveMotors, rightDriveMotors, &Inertial, &Master);
+
+  MinesMotorGroup tallLift = MinesMotorGroup(leftTallLift, rightTallLift);
+  MinesMotorGroup shortLift = MinesMotorGroup(leftShortLift, rightShortLift);
+
+  bool aDebounce = false;
+  bool pnumaticToggle = false;
+
   // User control code here, inside the loop
   while (1) {
+
+    drive.arcadeLoopCall(Master.Axis3.position(), -Master.Axis4.position());
+
+    if(Master.ButtonR1.pressing())
+    {
+      tallLift.spin(directionType::fwd, TALL_LIFT_SPEED, percentUnits::pct);
+    }
+    else if (Master.ButtonR2.pressing())
+    {
+      tallLift.spin(directionType::rev, TALL_LIFT_SPEED, percentUnits::pct);
+    }
+    else
+    {
+      tallLift.stop();
+    }
+
+    if(Master.ButtonX.pressing())
+    {
+      shortLift.spin(directionType::fwd, SHORT_LIFT_SPEED, percentUnits::pct);
+    }
+    else if (Master.ButtonY.pressing())
+    {
+      shortLift.spin(directionType::rev, SHORT_LIFT_SPEED, percentUnits::pct);
+    }
+    else
+    {
+      shortLift.stop();
+    }
+
+    if(Master.ButtonL2.pressing())
+    {
+      intake.spin(directionType::fwd, INTAKE_SPEED, percentUnits::pct);
+    }
+    else if (Master.ButtonL1.pressing())
+    {
+      intake.spin(directionType::rev, INTAKE_SPEED, percentUnits::pct);
+    }
+    else
+    {
+      intake.stop();
+    }
+
+
+    if (pressButton(Master.ButtonA.pressing(), aDebounce))
+    {
+      if(pnumaticToggle)
+      {
+        hook.close();
+        pnumaticToggle = false;
+      }
+      else
+      {
+        hook.open();
+        pnumaticToggle = true;
+      }
+    }
     
-    driveBase->arcadeLoopCall();
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

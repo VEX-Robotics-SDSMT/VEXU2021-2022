@@ -7,9 +7,13 @@
 #define DEBOUNCE_DELAY 200
 #define KILL_BUTTON E_CONTROLLER_DIGITAL_DOWN
 
+#define TALL_LIFT_SPEED 20
+#define SHORT_LIFT_SPEED 40
+#define INTAKE_SPEED 100
+
 //drive base class
-extern MinesMotorGroup rightDriveMotors;
-extern MinesMotorGroup leftDriveMotors;
+extern MinesMotorGroup *rightDriveMotors;
+extern MinesMotorGroup *leftDriveMotors;
 extern FourWheelDrive* driveBase;
 
 //pros declarations
