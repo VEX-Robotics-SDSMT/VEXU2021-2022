@@ -18,7 +18,7 @@ motor leftShortLift = motor(PORT3, ratio36_1, true);
 motor rightTallLift = motor(PORT20, ratio18_1, true);
 motor leftTallLift = motor(PORT5, ratio18_1, false);
 motor intake = motor(PORT10, ratio18_1, false);
-pneumatics hook = pneumatics(Brain.ThreeWirePort.A);
+pneumatics hook = pneumatics(Brain.ThreeWirePort.H);
 
 inertial Inertial = inertial(PORT13);
 controller Master = controller();
