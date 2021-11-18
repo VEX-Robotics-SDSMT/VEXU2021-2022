@@ -1,3 +1,4 @@
+
 #include "drive.h"
 
 using namespace std;
@@ -343,5 +344,3 @@ void FourWheelDrive::arcadeLoopCall()
 
   setMotorPercents(leftMotorPercent, rightMotorPercent);
 }
-
-
