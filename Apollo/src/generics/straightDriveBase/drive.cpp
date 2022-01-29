@@ -1,5 +1,4 @@
-
-#include "drive.h"
+#include "../../../include/generics/drive.h"
 
 using namespace std;
 using namespace vex;
@@ -327,12 +326,9 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
 }
 
 //user control functions
-void FourWheelDrive::tankLoopCall()
+void FourWheelDrive::tankLoopCall(double leftSide, double rightSide)
 {
-  int leftMotorPercent = master->Axis3.position();
-  int rightMotorPercent = master->Axis2.position();
-
-  setMotorPercents(leftMotorPercent, rightMotorPercent);
+  setMotorPercents(leftSide, leftSide);
 }
 
 void FourWheelDrive::arcadeLoopCall(double forwardAxis, double turnAxis)
