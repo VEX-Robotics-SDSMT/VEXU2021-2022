@@ -2,21 +2,21 @@
 
 //globals for this file only
 bool frontMogoLiftOpen = false;
-bool sixBarUp = false;
+bool sixBarUp = true;
 bool chainLiftOut = false;
-bool backMogoLiftUp = false;
+bool backMogoLiftUp = true;
 bool plungerOpen = false;
 
 void toggleFrontMogoLift()
 {
   if (frontMogoLiftOpen)
   {
-    frontMogoLift.spinToPosition(FRONT_MOGO_LIFT_OUT, rotationUnits::deg);
+    frontMogoLift->spinToPosition(FRONT_MOGO_LIFT_IN, rotationUnits::deg);
     frontMogoLiftOpen = false;
   }
   else if (sixBarUp)
   {
-    frontMogoLift.spinToPosition(FRONT_MOGO_LIFT_IN, rotationUnits::deg);
+    frontMogoLift->spinToPosition(FRONT_MOGO_LIFT_OUT, rotationUnits::deg);
     frontMogoLiftOpen = true;
   }  
 }
@@ -25,14 +25,14 @@ void toggleSixBarLift()
 {
   if (sixBarUp)
   {
-    sixBarLift.spinToPosition(FRONT_SIXBAR_LIFT_DOWN, rotationUnits::deg);
+    sixBarLift->spinToPosition(FRONT_SIXBAR_LIFT_DOWN, rotationUnits::deg);
     sixBarUp = false;
   }
   else 
   {
-    sixBarLift.spinToPosition(FRONT_SIXBAR_LIFT_UP, rotationUnits::deg);
+    sixBarLift->spinToPosition(FRONT_SIXBAR_LIFT_UP, rotationUnits::deg);
     sixBarUp = true;
-  }  
+  } 
 }
 
 void toggleBackMogoLift()
@@ -55,12 +55,12 @@ void toggleChainLift()
 {
   if (chainLiftOut)
   {
-    chainLift.spinToPosition(CHAIN_LIFT_IN, rotationUnits::deg);
+    chainLift->spinToPosition(CHAIN_LIFT_IN, rotationUnits::deg);
     chainLiftOut = false;
   }
   else 
   {
-    chainLift.spinToPosition(CHAIN_LIFT_OUT, rotationUnits::deg);
+    chainLift->spinToPosition(CHAIN_LIFT_OUT, rotationUnits::deg);
     chainLiftOut = true;
   }  
 }
@@ -79,8 +79,7 @@ void togglePlunger()
 
 void startUp()
 {
-  sixBarLift.spinToPosition(FRONT_SIXBAR_LIFT_DOWN, rotationUnits::deg);
-  backMogoArm.spinToPosition(BACK_MOGO_LIFT_DOWN, rotationUnits::deg);
+  sixBarLift->spinToPosition(FRONT_SIXBAR_LIFT_UP, rotationUnits::deg);
 }
 
 

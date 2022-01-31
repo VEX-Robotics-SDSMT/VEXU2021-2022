@@ -7,18 +7,6 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// rightFront           motor         1               
-// rightMid             motor         2               
-// rightBack            motor         3               
-// leftFront            motor         11              
-// leftMid              motor         16              
-// leftBack             motor         20              
-// Inertial             inertial      6               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-
 #include "vex.h"
 #include "globals.h"
 #include "generics/helperFunctions.h"
@@ -43,13 +31,20 @@ competition Competition;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+
+
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  //driveBase = &drive;
-  // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
+  //technically can cause a memory leak, but since we'll turn the robot off every time, I'm not worried
+  leftDriveMotors = new MinesMotorGroup(leftDriveTop, leftDriveMid, leftDriveBottom);
+  rightDriveMotors = new MinesMotorGroup(rightDriveTop, rightDriveMid, rightDriveBottom);
+  //driveBase = new FourWheelDrive(leftDriveMotors, rightDriveMotors, &Inertial, &Master);
+
+  sixBarLift = new MinesMotorGroup(right6Bar, left6Bar);
+  chainLift = new MinesMotorGroup(rightChainBar, leftChainBar);
+  frontMogoLift = new MinesMotorGroup(rightFrontMogoLift, leftFrontMogoLift);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -77,16 +72,23 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
+  startUp();
+
   Master.ButtonR1.pressed(toggleFrontMogoLift);
   Master.ButtonR2.pressed(toggleBackMogoLift);
-  Master.ButtonL1.pressed(toggleSixBarLift);
-  Master.ButtonL2.pressed(toggleChainLift);
-  Master.ButtonA.pressed(togglePlunger);
+  //Master.ButtonL1.pressed(toggleSixBarLift);
+  //Master.ButtonL2.pressed(toggleChainLift);
+  //Master.ButtonA.pressed(togglePlunger);
+
+  //TODO - move to a different function
+  MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
+  MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
+  FourWheelDrive d(&l, &r, &Inertial, &Master);
+
 
   // User control code here, inside the loop
   while (1) {
-
-    drive.arcadeLoopCall(Master.Axis3.position(), -Master.Axis4.position());    
+    d.arcadeLoopCall(Master.Axis3.position(), -Master.Axis1.position());
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
@@ -98,6 +100,7 @@ void usercontrol(void) {
 // Main will set up the competition functions and callbacks.
 //
 int main() {
+
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
