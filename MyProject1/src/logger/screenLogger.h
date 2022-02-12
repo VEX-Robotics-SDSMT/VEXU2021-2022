@@ -2,7 +2,7 @@
 #define _SCREENLOGGER_H
 
 #include "baseLogger.h"
-const int MAX_SCREENLINE = 15;
+const int MAX_SCREENLINE = 12;
 
 class ScreenLogger : public BaseLogger
 {

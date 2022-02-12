@@ -118,21 +118,11 @@ void usercontrol(void) {
 
     if(myController->ButtonX.pressing())
     {
-        //logScreen->AppendLine("short text");
-        /*FileLogger *logFile = new FileLogger("DrivebaseLog.txt");
-        logFile->AppendLine("short text");
-        delete(logFile);*/
-        /*uint8_t data[ 100 ];
-        for(int i=0;i<100;i++) 
-        {
-          data[i] = i * 2;
-        }
-        Brain.SDcard.savefile("thisSucks.txt", data, sizeof(data));  
-        logScreen->AppendLine("Saved to file"); */     
+        logScreen->AppendLine((char*)"short text");    
     }
     if(myController->ButtonY.pressing())
     {
-        logScreen->WriteLine(1, "this text is really long");
+        logScreen->WriteLine(1, (char*)"this text is relatively long");
     }
     if(myController->ButtonA.pressing())
     {
@@ -140,7 +130,6 @@ void usercontrol(void) {
     }
     if(myController->ButtonB.pressing())
     {
-        //logFile->ClearAll();
         logScreen->ClearAll();
     }
     wait(20, msec); // Sleep the task for a short amount of time to

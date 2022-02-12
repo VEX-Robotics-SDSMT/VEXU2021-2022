@@ -7,6 +7,8 @@
 #include <string>
 const std::string DEFAULT_FILE_NAME = "DrivebaseLog.txt";
 
+// Note: FileLogger does not work.
+// Do not attempt to fix. The source of the issue is the VEX library. Issue as of December 2021
 class FileLogger : public BaseLogger
 {
   public:
