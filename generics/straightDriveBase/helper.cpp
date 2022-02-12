@@ -36,21 +36,3 @@ void FourWheelDrive::setAllBrakeMode(brakeType mode)
   rightMotors->setStopping(mode);
   leftMotors->setStopping(mode);
 }
-
-void FourWheelDrive::setMotorPercents(int leftSpeed, int rightSpeed)
-{
-    //if one side of the drive is being told to go faster than 100, this makes sure it can't
-  if (abs(leftSpeed) > 100)
-  {
-    leftSpeed = leftSpeed * (100.0 / abs(leftSpeed));
-    rightSpeed = rightSpeed * (100.0 / abs(leftSpeed));
-  }
-  if(abs(rightSpeed) > 100)
-  {
-    rightSpeed = rightSpeed * (100.0 / abs(rightSpeed));
-    leftSpeed = leftSpeed * (100.0/ abs(rightSpeed));
-  }
-
-  leftMotors->spin(directionType::fwd, leftSpeed, percentUnits::pct);
-  rightMotors->spin(directionType::fwd, rightSpeed, percentUnits::pct);
-}

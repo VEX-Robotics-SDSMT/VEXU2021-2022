@@ -7,20 +7,10 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// rightFront           motor         1               
-// rightMid             motor         2               
-// rightBack            motor         3               
-// leftFront            motor         11              
-// leftMid              motor         16              
-// leftBack             motor         20              
-// Inertial             inertial      6               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-
+#include "vex.h"
 #include "globals.h"
-
+#include "generics/helperFunctions.h"
+#include "botFunctions.h"
 using namespace vex;
 
 
@@ -41,12 +31,26 @@ competition Competition;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+
+
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  
-  // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
+
+  //technically can cause a memory leak, but since we'll turn the robot off every time, I'm not worried
+  leftDriveMotors = new MinesMotorGroup(leftDriveTop, leftDriveMid, leftDriveBottom);
+  rightDriveMotors = new MinesMotorGroup(rightDriveTop, rightDriveMid, rightDriveBottom);
+  //driveBase = new FourWheelDrive(leftDriveMotors, rightDriveMotors, &Inertial, &Master);
+
+  sixBarLift = new MinesMotorGroup(right6Bar, left6Bar);
+  chainLift = new MinesMotorGroup(rightChainBar, leftChainBar);
+  frontMogoLift = new MinesMotorGroup(rightFrontMogoLift, leftFrontMogoLift);
+
+  sixBarLift->setStopping(brakeType::hold);
+  chainLift->setStopping(brakeType::hold);
+  frontMogoLift->setStopping(brakeType::hold);
+  backMogoArm.setStopping(brakeType::hold);
+  backMogoArm.resetPosition();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -72,39 +76,43 @@ void autonomous(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-bool tankDrive = false;
-
-void toggle()
-{
-  tankDrive = !tankDrive;
-}
 
 void usercontrol(void) {
+  Master.ButtonR1.pressed(toggleFrontMogoLift);
 
-  Master.ButtonR1.pressed(toggle);
-  MinesMotorGroup leftDriveMotors = MinesMotorGroup(leftFront, leftMid, leftBack);
-  MinesMotorGroup rightDriveMotors = MinesMotorGroup(rightFront, rightMid, rightBack);
-  FourWheelDrive driveBase(leftDriveMotors, rightDriveMotors, Inertial, Master);
+  Master.ButtonUp.pressed(movePlungerOpen);
+  Master.ButtonDown.pressed(movePlungerRest);
+  Master.ButtonLeft.pressed(movePlungerPrep);
+  Master.ButtonRight.pressed(movePlungerScore);
+  Master.ButtonA.pressed(movePlungerPlunge);
+
+  Master.ButtonB.pressed(plungeRing);
+  Master.ButtonX.pressed(togglePlunger);
+
+  //TODO - move to a different function
+  MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
+  MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
+  FourWheelDrive d(&l, &r, &Inertial, &Master);
+
+  l.setStopping(brakeType::coast);
+  r.setStopping(brakeType::coast);
 
   // User control code here, inside the loop
   while (1) {
-    
-    if (tankDrive)
-    {
-      driveBase.tankLoopCall(Master.Axis3.position(), Master.Axis2.position());
-    }
-    else
-    {
-      driveBase.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
-    }
-    // This is the main execution loop for the user control program.
-    // Each time through the loop your program should update motor + servo
-    // values based on feedback from the joysticks.
+    d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
 
-    // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
-    // ........................................................................
+    if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
+    {
+      backMogoArm.spin(directionType::fwd, 100, percentUnits::pct);
+    }
+    else if (Master.ButtonL2.pressing() && backMogoArm.position(rotationUnits::deg) > -500.0)
+    {
+      backMogoArm.spin(directionType::rev, 100, percentUnits::pct);
+    }
+    else 
+    {
+      backMogoArm.stop();
+    }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
@@ -116,6 +124,7 @@ void usercontrol(void) {
 // Main will set up the competition functions and callbacks.
 //
 int main() {
+
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);

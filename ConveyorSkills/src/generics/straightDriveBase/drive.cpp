@@ -1,9 +1,10 @@
+
 #include "drive.h"
 
 using namespace std;
 using namespace vex;
 
-FourWheelDrive::FourWheelDrive(MinesMotorGroup & left, MinesMotorGroup & right,
+FourWheelDrive::FourWheelDrive(MinesMotorGroup & right, MinesMotorGroup & left,
     inertial& sensor, controller& masterIn)
 {
     MinesMotorGroup *rightPointer = &right;
@@ -23,7 +24,7 @@ FourWheelDrive::FourWheelDrive(MinesMotorGroup & left, MinesMotorGroup & right,
     //readCalibration();
 }
 
-FourWheelDrive::FourWheelDrive(MinesMotorGroup* left, MinesMotorGroup* right,
+FourWheelDrive::FourWheelDrive(MinesMotorGroup* right, MinesMotorGroup* left,
     inertial* sensor, controller* masterIn)
 {
     rightMotors = right;
@@ -326,9 +327,12 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
 }
 
 //user control functions
-void FourWheelDrive::tankLoopCall(double leftSide, double rightSide)
+void FourWheelDrive::tankLoopCall()
 {
-  setMotorPercents(leftSide, rightSide);
+  int leftMotorPercent = master->Axis3.position();
+  int rightMotorPercent = master->Axis2.position();
+
+  setMotorPercents(leftMotorPercent, rightMotorPercent);
 }
 
 void FourWheelDrive::arcadeLoopCall(double forwardAxis, double turnAxis)
