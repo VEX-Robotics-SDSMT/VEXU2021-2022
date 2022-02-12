@@ -45,6 +45,12 @@ void pre_auton(void) {
   sixBarLift = new MinesMotorGroup(right6Bar, left6Bar);
   chainLift = new MinesMotorGroup(rightChainBar, leftChainBar);
   frontMogoLift = new MinesMotorGroup(rightFrontMogoLift, leftFrontMogoLift);
+
+  sixBarLift->setStopping(brakeType::hold);
+  chainLift->setStopping(brakeType::hold);
+  frontMogoLift->setStopping(brakeType::hold);
+  backMogoArm.setStopping(brakeType::hold);
+  backMogoArm.resetPosition();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -72,23 +78,41 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
-  startUp();
-
   Master.ButtonR1.pressed(toggleFrontMogoLift);
-  Master.ButtonR2.pressed(toggleBackMogoLift);
-  //Master.ButtonL1.pressed(toggleSixBarLift);
-  //Master.ButtonL2.pressed(toggleChainLift);
-  //Master.ButtonA.pressed(togglePlunger);
+
+  Master.ButtonUp.pressed(movePlungerOpen);
+  Master.ButtonDown.pressed(movePlungerRest);
+  Master.ButtonLeft.pressed(movePlungerPrep);
+  Master.ButtonRight.pressed(movePlungerScore);
+  Master.ButtonA.pressed(movePlungerPlunge);
+
+  Master.ButtonB.pressed(plungeRing);
+  Master.ButtonX.pressed(togglePlunger);
 
   //TODO - move to a different function
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
 
+  l.setStopping(brakeType::coast);
+  r.setStopping(brakeType::coast);
 
   // User control code here, inside the loop
   while (1) {
-    d.arcadeLoopCall(Master.Axis3.position(), -Master.Axis1.position());
+    d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
+
+    if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
+    {
+      backMogoArm.spin(directionType::fwd, 100, percentUnits::pct);
+    }
+    else if (Master.ButtonL2.pressing() && backMogoArm.position(rotationUnits::deg) > -500.0)
+    {
+      backMogoArm.spin(directionType::rev, 100, percentUnits::pct);
+    }
+    else 
+    {
+      backMogoArm.stop();
+    }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

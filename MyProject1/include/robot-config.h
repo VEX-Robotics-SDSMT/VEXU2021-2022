@@ -1,6 +1,7 @@
 using namespace vex;
 
 extern brain Brain;
+extern controller Master;
 
 // VEXcode devices
 extern motor rightFront;

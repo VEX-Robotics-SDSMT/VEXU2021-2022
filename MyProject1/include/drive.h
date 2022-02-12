@@ -6,8 +6,9 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
+#include <string>
 #include "vex.h"
-#include "../include/MinesMotorGroup.h"
+#include "MinesMotorGroup.h"
 
 class FourWheelDrive
 {
@@ -39,9 +40,13 @@ class FourWheelDrive
     const velocityUnits VEL_UNIT = velocityUnits::dps;
     const brakeType BRAKE_MODE = brakeType::brake;
 
+    const int turnThreshold = 5;
+	  const int driveThreshold = 5;
+
 public:
     FourWheelDrive(MinesMotorGroup&, MinesMotorGroup&,
-        vex::inertial & , vex::controller &);
+        vex::inertial&, vex::controller&);
+    FourWheelDrive(MinesMotorGroup*, MinesMotorGroup*, vex::inertial*, vex::controller*);
 
     void readCalibration();
     void writeCalibration();
@@ -69,6 +74,9 @@ public:
     void turnDegreesAbsolutePID(float targetDegrees, float desiredSpeed = -1);
     void turnDegreesPID(float numDegrees, float desiredSpeed= 55);
 
+    void tankLoopCall(double, double);
+    void arcadeLoopCall(double, double);
+
 
 
 private:
@@ -86,6 +94,7 @@ private:
     float bindToMagnitude(float value, float MAX_MAGNITUDE);
     void setAllBrakeMode(MinesMotorGroup *motors, vex::brakeType mode);
     void setAllBrakeMode(vex::brakeType mode);
+    void setMotorPercents(int leftSpeed, int rightSpeed);
 
 
     void checkGyro();

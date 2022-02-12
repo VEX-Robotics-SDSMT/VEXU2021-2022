@@ -1,9 +1,16 @@
 #include "globals.h"
 
-
 void toggleFrontMogoLift();
-void toggleSixBarLift();
 void toggleBackMogoLift();
-void toggleChainLift();
+
+//plunger arm
 void togglePlunger();
-void startUp();
+void movePlungerPos(const double[3], bool waitForCompletion = true);
+
+void movePlungerOpen();
+void movePlungerHome();
+void movePlungerRest();
+void movePlungerScore();
+void movePlungerPrep();
+void movePlungerPlunge();
+void plungeRing();

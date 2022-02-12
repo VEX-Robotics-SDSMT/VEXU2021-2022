@@ -72,12 +72,31 @@ void autonomous(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
+bool tankDrive = false;
+
+void toggle()
+{
+  tankDrive = !tankDrive;
+}
 
 void usercontrol(void) {
+
+  Master.ButtonR1.pressed(toggle);
+  MinesMotorGroup leftDriveMotors = MinesMotorGroup(leftFront, leftMid, leftBack);
+  MinesMotorGroup rightDriveMotors = MinesMotorGroup(rightFront, rightMid, rightBack);
+  FourWheelDrive driveBase(leftDriveMotors, rightDriveMotors, Inertial, Master);
+
   // User control code here, inside the loop
   while (1) {
-
-    driveBase;
+    
+    if (tankDrive)
+    {
+      driveBase.tankLoopCall(Master.Axis3.position(), Master.Axis2.position());
+    }
+    else
+    {
+      driveBase.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
+    }
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
