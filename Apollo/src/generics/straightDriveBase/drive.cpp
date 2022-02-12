@@ -1,4 +1,4 @@
-#include "../../../include/generics/drive.h"
+#include "generics/drive.h"
 
 using namespace std;
 using namespace vex;
@@ -39,7 +39,7 @@ FourWheelDrive::FourWheelDrive(MinesMotorGroup* left, MinesMotorGroup* right,
 //take in a vector of motors, and set their speed to a value
 void FourWheelDrive::setMotors(MinesMotorGroup *motors, double speed)
 {
-  motors->setVelocity(speed, VEL_UNIT);
+  motors->spin(directionType::fwd, speed, VEL_UNIT);
 }
 
 void FourWheelDrive::rawSetMotors(double speed, double bias)
@@ -195,6 +195,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
 
     int maxRunTime = max(ONE_SEC_IN_MS * 5, ONE_SEC_IN_MS * fabs(numTiles) * 2);
 
+    Brain.Screen.print("preLoop");
     while( stopLoopCount <= STOP_LOOPS && runTime < maxRunTime)
     {
         porportionalAmount = numTiles - currentDistance;

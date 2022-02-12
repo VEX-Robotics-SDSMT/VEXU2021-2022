@@ -37,7 +37,7 @@ class FourWheelDrive
     const int STOP_AMOUNT = 100;
     const int LOOP_DELAY = 20;
     const rotationUnits ROT_UNIT = rotationUnits::deg;
-    const velocityUnits VEL_UNIT = velocityUnits::dps;
+    const velocityUnits VEL_UNIT = velocityUnits::pct;
     const brakeType BRAKE_MODE = brakeType::brake;
 
     const int turnThreshold = 5;
@@ -62,7 +62,7 @@ public:
     void accelerate(double speed);
     void setMotorsRelative(MinesMotorGroup *motors, double distance, double speed);
     void setMotorsRelative(double distance, double speed);
-    void setBrakes(vex::brakeType mode);
+    void setAllBrakeMode(vex::brakeType mode);
     double getSpeed(MinesMotorGroup *);
     double getAllSpeed();
     double getAllPosition();
@@ -93,7 +93,6 @@ private:
     float radiansToDegrees(float degrees);
     float bindToMagnitude(float value, float MAX_MAGNITUDE);
     void setAllBrakeMode(MinesMotorGroup *motors, vex::brakeType mode);
-    void setAllBrakeMode(vex::brakeType mode);
     void setMotorPercents(int leftSpeed, int rightSpeed);
 
 

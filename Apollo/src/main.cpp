@@ -64,7 +64,14 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  
+  MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
+  MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
+  FourWheelDrive d(&l, &r, &Inertial, &Master);
+
+  d.setAllBrakeMode(vex::brakeType::brake);
+  d.driveTilesPID(-3);
+
+  Brain.Screen.print("Auto Running");
 }
 
 /*---------------------------------------------------------------------------*/
