@@ -3,8 +3,8 @@
 using namespace std;
 using namespace vex;
 
-FourWheelDrive::FourWheelDrive(MinesMotorGroup & left, MinesMotorGroup & right,
-    inertial& sensor, controller& masterIn)
+FourWheelDrive::FourWheelDrive(MinesMotorGroup & right, MinesMotorGroup & left,
+    inertial & sensor, controller & masterIn)
 {
     MinesMotorGroup *rightPointer = &right;
     MinesMotorGroup *leftPointer = &left;
@@ -16,24 +16,9 @@ FourWheelDrive::FourWheelDrive(MinesMotorGroup & left, MinesMotorGroup & right,
     inertialSensor = inertialPointer;
     master = controllerPointer;
 
-    rightMotors->spin(directionType::fwd, 100, percentUnits::pct);
-
-    //setAllBrakeMode(BRAKE_MODE);
-
-    //readCalibration();
-}
-
-FourWheelDrive::FourWheelDrive(MinesMotorGroup* left, MinesMotorGroup* right,
-    inertial* sensor, controller* masterIn)
-{
-    rightMotors = right;
-    leftMotors = left;
-    inertialSensor = sensor;
-    master = masterIn;
-
     setAllBrakeMode(BRAKE_MODE);
 
-    //readCalibration();
+    readCalibration();
 }
 
 //take in a vector of motors, and set their speed to a value
@@ -170,6 +155,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
     float DELTA_T = LOOP_DELAY / 1000.0;
     const int STOP_LOOPS = 20;
     const float TILE_TOLERANCE = 0.02;
+    const float DESIRED_SPEED = 70;
     // 4 Inches wheels, 600RPM motors, measured 222.22 ticks/rotation
     const double TICKS_PER_TILE = 1333.3;
     float currentDistance = 0;
@@ -323,35 +309,4 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
   }
 
   setMotors(0);
-}
-
-//user control functions
-void FourWheelDrive::tankLoopCall(double leftSide, double rightSide)
-{
-  setMotorPercents(leftSide, rightSide);
-}
-
-void FourWheelDrive::arcadeLoopCall(double forwardAxis, double turnAxis)
-{
-  int leftMotorPercent = 0;
-  int rightMotorPercent = 0;
-
-  if(fabs(forwardAxis) > driveThreshold || fabs(turnAxis) > turnThreshold)
-  {
-    leftMotorPercent = forwardAxis;
-    rightMotorPercent = forwardAxis;
-
-    if(fabs(turnAxis) > turnThreshold)
-    {
-      leftMotorPercent += turnAxis;
-      rightMotorPercent -= turnAxis;
-    }
-  }
-  else
-  {
-    leftMotorPercent = 0;
-    rightMotorPercent = 0;
-  }
-
-  setMotorPercents(leftMotorPercent, rightMotorPercent);
 }
