@@ -67,14 +67,14 @@ void autonomous(void) {
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
-
   d.setAllBrakeMode(vex::brakeType::brake);
-  d.driveTilesPID(-2.8);
-  d.driveTilesPID(1.3);
-  d.turnDegreesAbsolutePID(300);
-  d.driveTilesPID(1);
-  d.turnDegreesAbsolutePID(90);
-  d.driveTilesPID(.3);
+  toggleBackMogoArm();
+  //d.driveTilesPID(-2.8);
+  //d.driveTilesPID(1.3);
+  //d.turnDegreesAbsolutePID(300);
+  //d.driveTilesPID(1);
+  //d.turnDegreesAbsolutePID(90);
+  //d.driveTilesPID(.3);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -95,8 +95,9 @@ void usercontrol(void) {
   Master.ButtonLeft.pressed(movePlungerPrep);
   Master.ButtonRight.pressed(movePlungerScore);
   Master.ButtonA.pressed(movePlungerPlunge);
+  Master.ButtonB.pressed(toggleBackMogoArm);
 
-  Master.ButtonB.pressed(plungeRing);
+  //Master.ButtonB.pressed(plungeRing);
   Master.ButtonX.pressed(togglePlunger);
 
   //TODO - move to a different function
@@ -111,7 +112,7 @@ void usercontrol(void) {
   while (1) {
     d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
 
-    if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
+    /*if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
     {
       backMogoArm.spin(directionType::fwd, 100, percentUnits::pct);
     }
@@ -122,7 +123,7 @@ void usercontrol(void) {
     else 
     {
       backMogoArm.stop();
-    }
+    }*/
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

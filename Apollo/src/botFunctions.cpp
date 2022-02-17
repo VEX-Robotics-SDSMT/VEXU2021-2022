@@ -3,7 +3,7 @@
 //globals for this file only
 bool frontMogoLiftOpen = false;
 bool sixBarUp = true;
-bool backMogoLiftUp = true;
+bool backMogoLiftUp = false;
 
 void toggleFrontMogoLift()
 {
@@ -19,11 +19,11 @@ void toggleFrontMogoLift()
   }  
 }
 
-void toggleBackMogoLift()
+void toggleBackMogoArm()
 {
-  if (backMogoLiftUp)
+    if (backMogoLiftUp)
   {
-    backMogoArm.spinToPosition(BACK_MOGO_LIFT_DOWN, rotationUnits::deg);
+    backMogoArm.spinToPosition(BACK_MOGO_LIFT_DOWN, rotationUnits::deg,100,velocityUnits::pct);
     backMogoLiftUp = false;
   }
   else 

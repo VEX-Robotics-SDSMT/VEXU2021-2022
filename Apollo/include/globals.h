@@ -8,14 +8,14 @@
 #define KILL_BUTTON E_CONTROLLER_DIGITAL_DOWN
 
 //bot-specific constants
-#define FRONT_SIXBAR_LIFT_UP 400
-#define FRONT_SIXBAR_LIFT_DOWN 30
-#define BACK_MOGO_LIFT_DOWN -290
-#define BACK_MOGO_LIFT_UP -90
-#define FRONT_MOGO_LIFT_OUT 430
-#define FRONT_MOGO_LIFT_IN 5
-#define CHAIN_LIFT_IN 0
-#define CHAIN_LIFT_OUT 120
+extern const double FRONT_SIXBAR_LIFT_UP;
+extern const double FRONT_SIXBAR_LIFT_DOWN;
+extern const double BACK_MOGO_LIFT_DOWN;
+extern const double BACK_MOGO_LIFT_UP;
+extern const double FRONT_MOGO_LIFT_OUT;
+extern const double FRONT_MOGO_LIFT_IN;
+extern const double CHAIN_LIFT_IN;
+extern const double CHAIN_LIFT_OUT;
 
 //all const positions are of the form {sixBar, chainBar, chainDelay}
 //negative chain delay means chain goes first
