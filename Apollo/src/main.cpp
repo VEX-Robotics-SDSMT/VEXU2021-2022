@@ -64,6 +64,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
+  //commented out for scrim until it has been tuned
+  /*
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
@@ -75,6 +77,7 @@ void autonomous(void) {
   d.driveTilesPID(1);
   d.turnDegreesAbsolutePID(90);
   d.driveTilesPID(.3);
+  */
 }
 
 /*---------------------------------------------------------------------------*/
@@ -87,16 +90,21 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+
+
 void usercontrol(void) {
+  bool buttonADebounce = false;
+  bool buttonBDebounce = false;
+
   Master.ButtonR1.pressed(toggleFrontMogoLift);
 
   Master.ButtonUp.pressed(movePlungerOpen);
   Master.ButtonDown.pressed(movePlungerRest);
   Master.ButtonLeft.pressed(movePlungerPrep);
   Master.ButtonRight.pressed(movePlungerScore);
-  Master.ButtonA.pressed(movePlungerPlunge);
+  //Master.ButtonA.pressed(movePlungerPlunge);
 
-  Master.ButtonB.pressed(plungeRing);
+  //Master.ButtonB.pressed(plungeRing);
   Master.ButtonX.pressed(togglePlunger);
 
   //TODO - move to a different function
@@ -123,6 +131,17 @@ void usercontrol(void) {
     {
       backMogoArm.stop();
     }
+
+    //for testing purpouses only
+    if (pressButton(Master.ButtonA.pressing(), buttonADebounce))
+    {
+      d.driveTilesPID(2);
+    }
+    if (pressButton(Master.ButtonB.pressing(), buttonBDebounce))
+    {
+      d.driveTilesPID(-2);
+    }
+
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

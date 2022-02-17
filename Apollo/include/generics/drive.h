@@ -48,17 +48,6 @@ public:
         vex::inertial&, vex::controller&);
     FourWheelDrive(MinesMotorGroup*, MinesMotorGroup*, vex::inertial*, vex::controller*);
 
-    void readCalibration();
-    void writeCalibration();
-    void calibrateAll();
-    void calibrateMinSpeed();
-    void calibrateMaxSpeed();
-    void calibrateMaxAcceleration();
-    void calibrateDrift();
-    void calibrateDriftLoop(double testSpeed, double &bias);
-    void waitForUser(std::string message);
-    void showOff();
-
     void accelerate(double speed);
     void setMotorsRelative(MinesMotorGroup *motors, double distance, double speed);
     void setMotorsRelative(double distance, double speed);
