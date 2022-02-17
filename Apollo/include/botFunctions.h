@@ -1,7 +1,7 @@
 #include "globals.h"
 
 void toggleFrontMogoLift();
-void toggleBackMogoLift();
+void toggleBackMogoArm();
 
 //plunger arm
 void togglePlunger();

@@ -65,12 +65,13 @@ void pre_auton(void) {
 
 void autonomous(void) {
   //commented out for scrim until it has been tuned
-  /*
+  
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
-
   d.setAllBrakeMode(vex::brakeType::brake);
+  toggleBackMogoArm();
+  /*
   d.driveTilesPID(-2.8);
   d.driveTilesPID(1.3);
   d.turnDegreesAbsolutePID(300);
@@ -79,6 +80,8 @@ void autonomous(void) {
   d.driveTilesPID(.3);
   */
 }
+  
+
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
@@ -119,7 +122,7 @@ void usercontrol(void) {
   while (1) {
     d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
 
-    if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
+    /*if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
     {
       backMogoArm.spin(directionType::fwd, 100, percentUnits::pct);
     }
@@ -130,7 +133,7 @@ void usercontrol(void) {
     else 
     {
       backMogoArm.stop();
-    }
+    }*/
 
     //for testing purpouses only
     if (pressButton(Master.ButtonA.pressing(), buttonADebounce))
