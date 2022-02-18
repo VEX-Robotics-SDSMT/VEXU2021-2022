@@ -43,11 +43,21 @@ class FourWheelDrive
     const int turnThreshold = 5;
 	  const int driveThreshold = 5;
 
+    //default PID values
+    double driveKP = 1;
+    double driveKI = 0.47;
+    double driveKD = 0.004;
+    double turnKP = 1 / 90.0; //speed to goal
+    double turnKI = 1 / 90.0; //adds speed if too slow
+    double turnKD = 0.15 / 90.0; //prevents overshoot
+
 public:
     FourWheelDrive(MinesMotorGroup&, MinesMotorGroup&,
         vex::inertial&, vex::controller&);
     FourWheelDrive(MinesMotorGroup*, MinesMotorGroup*, vex::inertial*, vex::controller*);
 
+    void setDrivePIDConst(double, double, double);
+    void setTurnPIDConst(double, double, double);
     void accelerate(double speed);
     void setMotorsRelative(MinesMotorGroup *motors, double distance, double speed);
     void setMotorsRelative(double distance, double speed);
@@ -75,20 +85,12 @@ private:
     void setZeroPosition(MinesMotorGroup * motors);
     void setZeroPosition();
 
-    bool panic();
-
     float degreeBoundingHelper(float inDegrees);
     float degreesToRadians(float radians);
     float radiansToDegrees(float degrees);
     float bindToMagnitude(float value, float MAX_MAGNITUDE);
     void setAllBrakeMode(MinesMotorGroup *motors, vex::brakeType mode);
     void setMotorPercents(int leftSpeed, int rightSpeed);
-
-
-    void checkGyro();
-    void correctGyroCalibration(float accel, float jerk);
-    void addStream(std::stringstream &gyroStream, float speed);
-
 };
 
 

@@ -36,6 +36,19 @@ FourWheelDrive::FourWheelDrive(MinesMotorGroup* left, MinesMotorGroup* right,
     //readCalibration();
 }
 
+void FourWheelDrive::setDrivePIDConst(double p, double i, double d)
+{
+  driveKP = p;
+  driveKI = i;
+  driveKD = d;
+}
+void FourWheelDrive::setTurnPIDConst(double p, double i, double d)
+{
+  turnKP = p;
+  turnKI = i;
+  driveKD = d;
+}
+
 //take in a vector of motors, and set their speed to a value
 void FourWheelDrive::setMotors(MinesMotorGroup *motors, double speed)
 {
@@ -166,6 +179,7 @@ void FourWheelDrive::accelerate(double targetSpeed)
 
 void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
 {
+
     float INTEGRATOR_MAX_MAGNITUDE = 1000;
     float DELTA_T = LOOP_DELAY / 1000.0;
     const int STOP_LOOPS = 20;
@@ -174,13 +188,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
     const double TICKS_PER_TILE = 1333.3;
     float currentDistance = 0;
 
-    //float kP = 1;
-    //float kI = .47;
-    //float kD = 0.004;
-    float kP = 3;
-    float kI = 0;
-    float kD = 0;
-
+    //non-tunables
     float porportionalAmount = 0;
     float integralAmount = 0;
     float derivativeAmount = 0;
@@ -207,7 +215,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
 
         derivativeAmount = (lastDistance - currentDistance) / DELTA_T;
 
-        float total = porportionalAmount * kP + integralAmount * kI + derivativeAmount * kD;
+        float total = porportionalAmount * driveKP + integralAmount * driveKI + derivativeAmount * driveKD;
         total = bindToMagnitude(total, 1);
 
         float speed = total * desiredSpeed;
@@ -215,12 +223,6 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
         float currentEncoderVal = getAllPosition();
 
         currentDistance += (currentEncoderVal - lastEncoderVal) / TICKS_PER_TILE;
-
-        /*lcd::set_text(3, "Desired " + to_string(numTiles));
-        lcd::set_text(4, "Current: " + to_string(currentDistance));
-        lcd::set_text(5, "Raw Vals: " + to_string(porportionalAmount) + " " + to_string(integralAmount) + " " + to_string(derivativeAmount));
-        lcd::set_text(6, "New Vals: " + to_string(porportionalAmount * kP) + " " + to_string(integralAmount * kI) + " " + to_string(derivativeAmount * kD));
-        lcd::set_text(7, to_string(lastDistance) + " " + to_string(currentDistance));*/
 
         setMotors(rightMotors, speed);
         setMotors(leftMotors, speed);
@@ -268,12 +270,6 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
       desiredSpeed = DESIRED_SPEED;
   }
 
-  //lcd::set_text(2, "turnDegrees: " + to_string(currentDegrees) + " " + to_string(endingDegrees));
-
-  float kP = 1 / 90.0; //speed to goal
-  float kI = 1 / 90.0; //adds speed if too slow
-  float kD = 0.15 / 90.0; //prevents overshoot
-
   float porportionalAmount = 0;
   float integralAmount = 0;
   float derivativeAmount = 0;
@@ -297,18 +293,13 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
 
     integralAmount = accumulatedDegrees * DELTA_T;
 
-    float total = porportionalAmount * kP + integralAmount * kI + derivativeAmount * kD;
+    float total = porportionalAmount * turnKP + integralAmount * turnKI + derivativeAmount * turnKD;
     total = bindToMagnitude(total, 1);
     float speed = total * desiredSpeed;
 
 
     setMotors(rightMotors, -speed);
     setMotors(leftMotors, speed);
-
-    //lcd::set_text(3, "Desired " + to_string(endingDegrees));
-    //lcd::set_text(4, "Current: " + to_string(currentDegrees));
-    //lcd::set_text(5, "Raw Vals: " + to_string(porportionalAmount) + " " + to_string(integralAmount) + " " + to_string(derivativeAmount));
-    //lcd::set_text(6, "New Vals: " + to_string(porportionalAmount * kP) + " " + to_string(integralAmount * kI) + " " + to_string(derivativeAmount * kD));
 
     runTime += LOOP_DELAY;
     task::sleep(LOOP_DELAY);
