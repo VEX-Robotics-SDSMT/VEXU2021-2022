@@ -70,6 +70,9 @@ void autonomous(void) {
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setAllBrakeMode(vex::brakeType::brake);
+  d.setDrivePIDConst(2.3, 0, 0.0036);
+  d.setTurnPIDConst(0.01, 0, 0);
+
   toggleBackMogoArm();
   d.driveTilesPID(-2.8);
   toggleBackMogoArm();
@@ -115,6 +118,8 @@ void usercontrol(void) {
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
+  d.setDrivePIDConst(2.3, 0, 0.0036);
+  d.setTurnPIDConst(0.01, 0, 0);
 
   l.setStopping(brakeType::coast);
   r.setStopping(brakeType::coast);
