@@ -44,12 +44,12 @@ class FourWheelDrive
 	  const int driveThreshold = 5;
 
     //default PID values
-    double driveKP = 1;
-    double driveKI = 0.47;
-    double driveKD = 0.004;
-    double turnKP = 1 / 90.0; //speed to goal
-    double turnKI = 1 / 90.0; //adds speed if too slow
-    double turnKD = 0.15 / 90.0; //prevents overshoot
+    double driveKP = 2.3;
+    double driveKI = 0;
+    double driveKD = 0.0036;
+    double turnKP = 0.01; //speed to goal
+    double turnKI = 0; //adds speed if too slow
+    double turnKD = 0; //prevents overshoot
 
 public:
     FourWheelDrive(MinesMotorGroup&, MinesMotorGroup&,
