@@ -71,10 +71,11 @@ void autonomous(void) {
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setAllBrakeMode(vex::brakeType::brake);
   toggleBackMogoArm();
-  /*
   d.driveTilesPID(-2.8);
+  toggleBackMogoArm();
   d.driveTilesPID(1.3);
-  d.turnDegreesAbsolutePID(300);
+  //d.turnDegreesAbsolutePID(300);
+  /*
   d.driveTilesPID(1);
   d.turnDegreesAbsolutePID(90);
   d.driveTilesPID(.3);
@@ -138,11 +139,11 @@ void usercontrol(void) {
     //for testing purpouses only
     if (pressButton(Master.ButtonA.pressing(), buttonADebounce))
     {
-      d.driveTilesPID(2);
+      d.turnDegreesAbsolutePID(0);
     }
     if (pressButton(Master.ButtonB.pressing(), buttonBDebounce))
     {
-      d.driveTilesPID(-2);
+      d.turnDegreesAbsolutePID(90);
     }
 
 
