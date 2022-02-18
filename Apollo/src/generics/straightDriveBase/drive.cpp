@@ -179,16 +179,14 @@ void FourWheelDrive::accelerate(double targetSpeed)
 
 void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
 {
-
     float INTEGRATOR_MAX_MAGNITUDE = 1000;
     float DELTA_T = LOOP_DELAY / 1000.0;
-    const int STOP_LOOPS = 20;
-    const float TILE_TOLERANCE = 0.02;
+    const int STOP_LOOPS = 35;
+    const float DEGREE_TOLERANCE = 0.5;
     // 4 Inches wheels, 600RPM motors, measured 222.22 ticks/rotation
     const double TICKS_PER_TILE = 1333.3;
     float currentDistance = 0;
 
-    //non-tunables
     float porportionalAmount = 0;
     float integralAmount = 0;
     float derivativeAmount = 0;
@@ -215,7 +213,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
 
         derivativeAmount = (lastDistance - currentDistance) / DELTA_T;
 
-        float total = porportionalAmount * driveKP + integralAmount * driveKI + derivativeAmount * driveKD;
+        float total = porportionalAmount * driveKP + integralAmount * driveKI - derivativeAmount * driveKD;
         total = bindToMagnitude(total, 1);
 
         float speed = total * desiredSpeed;
@@ -235,7 +233,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
         task::sleep(LOOP_DELAY);
 
         if(fabs(degreeBoundingHelper(currentDistance) - degreeBoundingHelper(numTiles))
-                <= TILE_TOLERANCE)
+                <= DEGREE_TOLERANCE)
             { stopLoopCount++;}
         else
             {stopLoopCount = 0;}
@@ -279,7 +277,7 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
   float runTime = 0;
   int stopLoopCount = 0;  
 
-  while( stopLoopCount <= STOP_LOOPS && runTime < MAX_RUN_TIME)
+  while( stopLoopCount <= STOP_LOOPS && runTime < MAX_RUN_TIME )
   {
     currentDegrees = degreeBoundingHelper(inertialSensor->heading());
 
@@ -293,7 +291,7 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
 
     integralAmount = accumulatedDegrees * DELTA_T;
 
-    float total = porportionalAmount * turnKP + integralAmount * turnKI + derivativeAmount * turnKD;
+    float total = porportionalAmount * turnKP + integralAmount * turnKI - derivativeAmount * turnKD;
     total = bindToMagnitude(total, 1);
     float speed = total * desiredSpeed;
 
