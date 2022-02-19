@@ -80,8 +80,22 @@ void autonomous(void) {
     toggleBackMogoArm(false);
     d.driveTilesPID(-2.9);
     toggleBackMogoArm();
-    d.driveTilesPID(-1.5);
-    d.turnDegreesPID(70);
+    d.driveTilesPID(-1.75);
+    d.turnDegreesAbsolutePID(70);
+    movePlungerOpen();
+    toggleFrontMogoLift();
+    d.driveTilesPID(1.3,30);
+    toggleFrontMogoLift();
+    movePlungerRest();
+    d.driveTilesPID(-1.3,30);
+    d.turnDegreesAbsolutePID(-4);
+    d.driveTilesPID(3.1);
+    d.turnDegreesAbsolutePID(-24);
+    toggleBackMogoArm();
+    // Pick up rings
+    d.driveTilesPID(1);
+    d.turnDegreesAbsolutePID(-110);
+
   }
   else
   {
@@ -142,7 +156,7 @@ void usercontrol(void) {
   while (1) {
     d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
 
-    /*if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
+    if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
     {
       backMogoArm.spin(directionType::fwd, 100, percentUnits::pct);
     }
@@ -153,7 +167,7 @@ void usercontrol(void) {
     else 
     {
       backMogoArm.stop();
-    }*/
+    }
 
     //for testing purpouses only
     if (pressButton(Master.ButtonA.pressing(), buttonADebounce))
