@@ -96,3 +96,24 @@ void plungeRing()
   task::sleep(1000);
   movePlungerPos(PLUNGE_PREP, true);
 }
+
+void autoBalance(FourWheelDrive &drive, double distance, double speed)
+{
+  double pos = drive.getAllPosition();
+  drive.accelerate(speed);
+
+  while(Inertial.pitch() < 10 && drive.getAllPosition() - pos < distance)
+  {
+    task::sleep(20);
+  }
+
+  while(Inertial.pitch() > 10)
+  {
+    if (drive.getAllPosition() - pos > distance)
+    {
+      drive.accelerate(8);
+    }
+    task::sleep(20);
+  }
+  drive.accelerate(0);
+}

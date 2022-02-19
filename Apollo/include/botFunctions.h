@@ -14,3 +14,5 @@ void movePlungerScore();
 void movePlungerPrep();
 void movePlungerPlunge();
 void plungeRing();
+
+void autoBalance(FourWheelDrive &drive, double distance, double speed);
