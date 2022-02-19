@@ -69,7 +69,7 @@ public:
 
     void drive(MinesMotorGroup *leftWheelMotorVector,
         MinesMotorGroup *rightWheelMotorVector, int distance);
-    void driveTilesPID(float numTiles, float desiredSpeed= 75);
+    void driveTilesPID(float numTiles, float desiredSpeed= 100);
     void turnDegreesAbsolutePID(float targetDegrees, float desiredSpeed = -1);
     void turnDegreesPID(float numDegrees, float desiredSpeed= 55);
 

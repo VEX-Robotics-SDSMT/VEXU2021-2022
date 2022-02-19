@@ -70,19 +70,21 @@ void autonomous(void) {
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setAllBrakeMode(vex::brakeType::brake);
-  d.setDrivePIDConst(2.3, 0, 0.0036);
+ // d.setDrivePIDConst(2.3, 0, 0.0036);
   d.setTurnPIDConst(0.01, 0, 0);
+  d.setDrivePIDConst(.8, 0, 0);
 
+  toggleBackMogoArm(false);
+  d.driveTilesPID(-2.98);
   toggleBackMogoArm();
-  d.driveTilesPID(-2.8);
-  toggleBackMogoArm();
-  d.driveTilesPID(1.3);
-  //d.turnDegreesAbsolutePID(300);
-  /*
-  d.driveTilesPID(1);
-  d.turnDegreesAbsolutePID(90);
-  d.driveTilesPID(.3);
-  */
+  d.driveTilesPID(1.8);
+  d.turnDegreesAbsolutePID(300);
+  movePlungerOpen();
+  toggleFrontMogoLift();
+  d.driveTilesPID(1.2,30);
+  toggleFrontMogoLift();
+  d.turnDegreesAbsolutePID(30);
+  d.driveTilesPID(.4);
 }
   
 
@@ -118,11 +120,11 @@ void usercontrol(void) {
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
-  d.setDrivePIDConst(2.3, 0, 0.0036);
+  d.setDrivePIDConst(0.8, 0, 0);
   d.setTurnPIDConst(0.01, 0, 0);
 
-  l.setStopping(brakeType::coast);
-  r.setStopping(brakeType::coast);
+  l.setStopping(brakeType::brake);
+  r.setStopping(brakeType::brake);
 
   // User control code here, inside the loop
   while (1) {
@@ -144,11 +146,11 @@ void usercontrol(void) {
     //for testing purpouses only
     if (pressButton(Master.ButtonA.pressing(), buttonADebounce))
     {
-      d.turnDegreesAbsolutePID(0);
+      d.driveTilesPID(2,100);
     }
     if (pressButton(Master.ButtonB.pressing(), buttonBDebounce))
     {
-      d.turnDegreesAbsolutePID(90);
+      d.driveTilesPID(-2,100);
     }
 
 
