@@ -64,7 +64,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = false;
+  bool skills = true;
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
@@ -77,8 +77,13 @@ void autonomous(void) {
 
   if (skills)
   {
-    
+    toggleBackMogoArm(false);
+    d.driveTilesPID(-2.9);
+    toggleBackMogoArm();
+    d.driveTilesPID(-1.5);
+    d.turnDegreesPID(70);
   }
+  else
   {
     toggleBackMogoArm(false);
     d.driveTilesPID(-2.98);
