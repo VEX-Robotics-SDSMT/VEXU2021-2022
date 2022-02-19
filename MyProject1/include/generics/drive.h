@@ -37,32 +37,31 @@ class FourWheelDrive
     const int STOP_AMOUNT = 100;
     const int LOOP_DELAY = 20;
     const rotationUnits ROT_UNIT = rotationUnits::deg;
-    const velocityUnits VEL_UNIT = velocityUnits::dps;
+    const velocityUnits VEL_UNIT = velocityUnits::pct;
     const brakeType BRAKE_MODE = brakeType::brake;
 
     const int turnThreshold = 5;
 	  const int driveThreshold = 5;
+
+    //default PID values
+    double driveKP = 2.3;
+    double driveKI = 0;
+    double driveKD = 0.0036;
+    double turnKP = 0.01; //speed to goal
+    double turnKI = 0; //adds speed if too slow
+    double turnKD = 0; //prevents overshoot
 
 public:
     FourWheelDrive(MinesMotorGroup&, MinesMotorGroup&,
         vex::inertial&, vex::controller&);
     FourWheelDrive(MinesMotorGroup*, MinesMotorGroup*, vex::inertial*, vex::controller*);
 
-    void readCalibration();
-    void writeCalibration();
-    void calibrateAll();
-    void calibrateMinSpeed();
-    void calibrateMaxSpeed();
-    void calibrateMaxAcceleration();
-    void calibrateDrift();
-    void calibrateDriftLoop(double testSpeed, double &bias);
-    void waitForUser(std::string message);
-    void showOff();
-
+    void setDrivePIDConst(double, double, double);
+    void setTurnPIDConst(double, double, double);
     void accelerate(double speed);
     void setMotorsRelative(MinesMotorGroup *motors, double distance, double speed);
     void setMotorsRelative(double distance, double speed);
-    void setBrakes(vex::brakeType mode);
+    void setAllBrakeMode(vex::brakeType mode);
     double getSpeed(MinesMotorGroup *);
     double getAllSpeed();
     double getAllPosition();
@@ -86,21 +85,12 @@ private:
     void setZeroPosition(MinesMotorGroup * motors);
     void setZeroPosition();
 
-    bool panic();
-
     float degreeBoundingHelper(float inDegrees);
     float degreesToRadians(float radians);
     float radiansToDegrees(float degrees);
     float bindToMagnitude(float value, float MAX_MAGNITUDE);
     void setAllBrakeMode(MinesMotorGroup *motors, vex::brakeType mode);
-    void setAllBrakeMode(vex::brakeType mode);
     void setMotorPercents(int leftSpeed, int rightSpeed);
-
-
-    void checkGyro();
-    void correctGyroCalibration(float accel, float jerk);
-    void addStream(std::stringstream &gyroStream, float speed);
-
 };
 
 

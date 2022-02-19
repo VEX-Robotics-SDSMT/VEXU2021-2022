@@ -1,7 +1,7 @@
 #ifndef _GLOBALS_H
 #define _GLOBALS_H
 
-#include "drive.h"
+#include "generics/drive.h"
 #include "MinesMotorGroup.h"
 #include "vex.h"
 

@@ -19,16 +19,16 @@ void toggleFrontMogoLift()
   }  
 }
 
-void toggleBackMogoArm()
+void toggleBackMogoArm(bool waitForCompletion)
 {
     if (backMogoLiftUp)
   {
-    backMogoArm.spinToPosition(BACK_MOGO_LIFT_DOWN, rotationUnits::deg,100,velocityUnits::pct);
+    backMogoArm.spinToPosition(BACK_MOGO_LIFT_DOWN, rotationUnits::deg, waitForCompletion);
     backMogoLiftUp = false;
   }
   else 
   {
-    backMogoArm.spinToPosition(BACK_MOGO_LIFT_UP, rotationUnits::deg);
+    backMogoArm.spinToPosition(BACK_MOGO_LIFT_UP, rotationUnits::deg, waitForCompletion);
     backMogoLiftUp = true;
   }  
 }

@@ -20,6 +20,7 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "globals.h"
+#include "helper.h"
 
 using namespace vex;
 
@@ -44,6 +45,8 @@ competition Competition;
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+
+  Inertial.calibrate();
   
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -96,6 +99,11 @@ void usercontrol(void) {
     else
     {
       driveBase.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
+    }
+
+    if (Master.ButtonA.pressing())
+    {
+      autoBalance(driveBase, 700, 40);
     }
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
