@@ -3,8 +3,8 @@
 //const doubles
 const double FRONT_MOGO_LIFT_UP = 430;
 const double FRONT_MOGO_LIFT_DOWN = 5;
-const double BACK_MOGO_ARM_UP = -30;
-const double BACK_MOGO_ARM_DOWN = -89;
+const double BACK_MOGO_ARM_UP = -85;
+const double BACK_MOGO_ARM_DOWN = -280;
 
 //globals
 const int loopDelay = 20;
