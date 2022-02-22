@@ -33,6 +33,12 @@ void toggleBackMogoArm(bool waitForCompletion)
   }  
 }
 
+//For Debug Only
+void toggleBackMogoArm()
+{
+  toggleBackMogoArm(true);
+}
+
 void autoBalance(FourWheelDrive &drive, double distance, double speed)
 {
   double pos = drive.getAllPosition();

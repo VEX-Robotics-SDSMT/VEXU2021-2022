@@ -40,6 +40,7 @@ void pre_auton(void) {
   frontMogoLift = new MinesMotorGroup(leftLiftMotor, rightLiftMotor);
 
   frontMogoLift->setStopping(brakeType::hold);
+  tailMotor.setStopping(brakeType::hold);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -91,7 +92,7 @@ void usercontrol(void) {
   bool buttonADebounce = false;
   bool buttonBDebounce = false;
 
-  Master.ButtonR1.pressed(toggleFrontMogoLift);
+  Master.ButtonR1.pressed(toggleBackMogoArm);
 
   //TODO - move to a different function
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
