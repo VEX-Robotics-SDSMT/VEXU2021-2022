@@ -22,12 +22,12 @@ void toggleBackMogoArm(bool waitForCompletion)
 {
   if (backMogoLiftUp)
   {
-    tailMotor.spinToPosition(BACK_MOGO_ARM_DOWN, rotationUnits::deg, waitForCompletion, velocityUnits::pct, 100);
+    tailMotor.spinToPosition(BACK_MOGO_ARM_DOWN, rotationUnits::deg, 100, velocityUnits::pct, waitForCompletion);
     backMogoLiftUp = false;
   }
   else 
   {
-    tailMotor.spinToPosition(BACK_MOGO_ARM_UP, rotationUnits::deg, waitForCompletion, velocityUnits::pct, 100);
+    tailMotor.spinToPosition(BACK_MOGO_ARM_UP, rotationUnits::deg, 100, velocityUnits::pct, waitForCompletion);
     backMogoLiftUp = true;
   }  
 }

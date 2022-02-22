@@ -103,8 +103,6 @@ void usercontrol(void) {
   d.setDrivePIDConst(0.8, 0, 0);
   d.setTurnPIDConst(0.01, 0, 0);
 
-  
-
   l.setStopping(brakeType::brake);
   r.setStopping(brakeType::brake);
 
@@ -112,11 +110,11 @@ void usercontrol(void) {
   while (1) {
     d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
 
-    if (Master.ButtonL1.pressing() && tailMotor.position(rotationUnits::deg) < -50.0)
+    if (Master.ButtonL1.pressing())
     {
       frontMogoLift->spin(directionType::fwd,100, percentUnits::pct);
     }
-    else if (Master.ButtonL2.pressing() && tailMotor.position(rotationUnits::deg) > -500.0)
+    else if (Master.ButtonL2.pressing())
     {
       frontMogoLift->spin(directionType::rev,100, percentUnits::pct);
     }
