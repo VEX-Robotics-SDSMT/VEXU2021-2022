@@ -2,7 +2,6 @@
 
 //globals for this file only
 bool frontMogoLiftOpen = false;
-bool sixBarUp = true;
 bool backMogoLiftUp = false;
 
 void toggleFrontMogoLift()
@@ -12,7 +11,7 @@ void toggleFrontMogoLift()
     frontMogoLift->spinToPosition(FRONT_MOGO_LIFT_DOWN, rotationUnits::deg);
     frontMogoLiftOpen = false;
   }
-  else if (sixBarUp)
+  else
   {
     frontMogoLift->spinToPosition(FRONT_MOGO_LIFT_UP, rotationUnits::deg);
     frontMogoLiftOpen = true;
@@ -21,7 +20,7 @@ void toggleFrontMogoLift()
 
 void toggleBackMogoArm(bool waitForCompletion)
 {
-    if (backMogoLiftUp)
+  if (backMogoLiftUp)
   {
     tailMotor.spinToPosition(BACK_MOGO_ARM_DOWN, rotationUnits::deg, waitForCompletion);
     backMogoLiftUp = false;

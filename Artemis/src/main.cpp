@@ -119,7 +119,7 @@ void usercontrol(void) {
     }
     else 
     {
-      tailMotor.stop();
+      //tailMotor.stop();
     }
 
     //for testing purpouses only
