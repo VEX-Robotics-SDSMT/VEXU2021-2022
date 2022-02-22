@@ -96,6 +96,7 @@ void usercontrol(void) {
   //TODO - move to a different function
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
   MinesMotorGroup r(rightDrive1, rightDrive2, rightDrive3, rightDrive4);
+  MinesMotorGroup frontMogoLift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setDrivePIDConst(0.8, 0, 0);
   d.setTurnPIDConst(0.01, 0, 0);

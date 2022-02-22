@@ -1,21 +1,21 @@
 #include "../include/botFunctions.h"
 
 //globals for this file only
-bool frontMogoLiftUp = false;
+bool frontMogoLiftOpen = false;
 bool sixBarUp = true;
 bool backMogoLiftUp = false;
 
 void toggleFrontMogoLift()
 {
-  if (frontMogoLiftUp)
+  if (frontMogoLiftOpen)
   {
     frontMogoLift->spinToPosition(FRONT_MOGO_LIFT_DOWN, rotationUnits::deg);
-    frontMogoLiftUp = false;
+    frontMogoLiftOpen = false;
   }
   else if (sixBarUp)
   {
     frontMogoLift->spinToPosition(FRONT_MOGO_LIFT_UP, rotationUnits::deg);
-    frontMogoLiftUp = true;
+    frontMogoLiftOpen = true;
   }  
 }
 
