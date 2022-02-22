@@ -89,8 +89,8 @@ void autonomous(void) {
 
 
 void usercontrol(void) {
-  bool buttonADebounce = false;
-  bool buttonBDebounce = false;
+  bool buttonUpDebounce = false;
+  bool buttonDownDebounce = false;
 
   Master.ButtonR1.pressed(toggleBackMogoArm);
   Master.ButtonA.pressed(toggleFrontMogoLift);
@@ -102,6 +102,8 @@ void usercontrol(void) {
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setDrivePIDConst(0.8, 0, 0);
   d.setTurnPIDConst(0.01, 0, 0);
+
+  
 
   l.setStopping(brakeType::brake);
   r.setStopping(brakeType::brake);
@@ -123,12 +125,12 @@ void usercontrol(void) {
       frontMogoLift->stop();
     }
 
-    //for testing purpouses only
-    if (pressButton(Master.ButtonA.pressing(), buttonADebounce))
+    //for testing purposes only
+    if (pressButton(Master.ButtonUp.pressing(), buttonUpDebounce))
     {
       d.driveTilesPID(2,100);
     }
-    if (pressButton(Master.ButtonB.pressing(), buttonBDebounce))
+    if (pressButton(Master.ButtonDown.pressing(), buttonDownDebounce))
     {
       d.driveTilesPID(-2,100);
     }
