@@ -64,7 +64,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = true;
+  bool skills = false;
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
@@ -99,7 +99,7 @@ void autonomous(void) {
   }
   else
   {
-    toggleBackMogoArm(false);
+    /*toggleBackMogoArm(false);
     d.driveTilesPID(-2.98);
     toggleBackMogoArm();
     d.driveTilesPID(1.8);
@@ -109,7 +109,17 @@ void autonomous(void) {
     d.driveTilesPID(1.2,30);
     toggleFrontMogoLift();
     d.turnDegreesAbsolutePID(30);
-    d.driveTilesPID(.4);
+    d.driveTilesPID(.4);*/
+    movePlungerOpen();
+    task::sleep(2000);
+    movePlungerPrep();
+    task::sleep(2000);
+    movePlungerPlunge();
+    task::sleep(2000);
+    plungeRing();
+    task::sleep(2000);
+    movePlungerScore();
+
   }
 }
   

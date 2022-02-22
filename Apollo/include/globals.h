@@ -17,7 +17,7 @@ extern const double FRONT_MOGO_LIFT_IN;
 extern const double CHAIN_LIFT_IN;
 extern const double CHAIN_LIFT_OUT;
 
-//all const positions are of the form {sixBar, chainBar, chainDelay}
+
 //negative chain delay means chain goes first
 extern const double PLUNGE_HOME[3];
 extern const double PLUNGE_OPEN[3];
