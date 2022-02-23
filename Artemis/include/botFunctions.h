@@ -1,6 +1,6 @@
 #include "globals.h"
 
-void toggleFrontMogoLift();
+void toggleFrontMogoLift(MinesMotorGroup&);
 void toggleBackMogoArm(bool waitForCompletion);
 void toggleBackMogoArm();
 

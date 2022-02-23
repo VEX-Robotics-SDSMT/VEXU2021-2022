@@ -4,16 +4,16 @@
 bool frontMogoLiftOpen = false;
 bool backMogoLiftUp = false;
 
-void toggleFrontMogoLift()
+void toggleFrontMogoLift(MinesMotorGroup &lift)
 {
   if (frontMogoLiftOpen)
   {
-    frontMogoLift->spinToPosition(FRONT_MOGO_LIFT_DOWN, rotationUnits::deg);
+    lift.spinToPosition(FRONT_MOGO_LIFT_DOWN, rotationUnits::deg, 100, velocityUnits::pct);
     frontMogoLiftOpen = false;
   }
   else
   {
-    frontMogoLift->spinToPosition(FRONT_MOGO_LIFT_UP, rotationUnits::deg);
+    lift.spinToPosition(FRONT_MOGO_LIFT_UP, rotationUnits::deg, 100, velocityUnits::pct);
     frontMogoLiftOpen = true;
   }  
 }

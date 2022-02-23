@@ -90,10 +90,8 @@ void autonomous(void) {
 
 void usercontrol(void) {
   bool buttonUpDebounce = false;
-  bool buttonDownDebounce = false;
 
   Master.ButtonR1.pressed(toggleBackMogoArm);
-  Master.ButtonA.pressed(toggleFrontMogoLift);
 
   //TODO - move to a different function
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
@@ -101,7 +99,7 @@ void usercontrol(void) {
   MinesMotorGroup frontMogoLift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setDrivePIDConst(6.4, 0, 0.0024);
-  d.setTurnPIDConst(0.01, 0, 0);
+  d.setTurnPIDConst(0.0064, 0, 0.0002);
 
   d.setAllBrakeMode(brakeType::brake);
   frontMogoLift.setStopping(brakeType::hold);
@@ -126,11 +124,7 @@ void usercontrol(void) {
     //for testing purposes only
     if (pressButton(Master.ButtonUp.pressing(), buttonUpDebounce))
     {
-      d.driveTilesPID(1.5,100);
-    }
-    if (pressButton(Master.ButtonDown.pressing(), buttonDownDebounce))
-    {
-      d.driveTilesPID(-1.5,100);
+      toggleFrontMogoLift(frontMogoLift);
     }
 
 
