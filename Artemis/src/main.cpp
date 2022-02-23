@@ -100,7 +100,7 @@ void usercontrol(void) {
   MinesMotorGroup r(rightDrive1, rightDrive2, rightDrive3, rightDrive4);
   //MinesMotorGroup frontMogoLift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
-  d.setDrivePIDConst(0.8, 0, 0);
+  d.setDrivePIDConst(6.4, 0, 0.0024);
   d.setTurnPIDConst(0.01, 0, 0);
 
   l.setStopping(brakeType::brake);
@@ -126,11 +126,11 @@ void usercontrol(void) {
     //for testing purposes only
     if (pressButton(Master.ButtonUp.pressing(), buttonUpDebounce))
     {
-      d.driveTilesPID(2,100);
+      d.driveTilesPID(1.5,100);
     }
     if (pressButton(Master.ButtonDown.pressing(), buttonDownDebounce))
     {
-      d.driveTilesPID(-2,100);
+      d.driveTilesPID(-1.5,100);
     }
 
 
