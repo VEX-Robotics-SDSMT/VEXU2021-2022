@@ -18,8 +18,8 @@ motor rightDrive3 = motor(PORT15, ratio18_1, true);
 motor rightDrive4 = motor(PORT11, ratio18_1, false);
 
 motor tailMotor = motor(PORT1, ratio6_1, false);
-motor leftLiftMotor = motor(PORT8, ratio18_1, true);
-motor rightLiftMotor = motor(PORT16, ratio18_1, false);
+motor leftLiftMotor = motor(PORT8, ratio18_1, false);
+motor rightLiftMotor = motor(PORT16, ratio18_1, true);
 
 inertial Inertial = inertial(PORT3);
 controller Master = controller();

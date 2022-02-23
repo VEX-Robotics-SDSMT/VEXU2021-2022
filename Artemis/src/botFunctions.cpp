@@ -32,7 +32,6 @@ void toggleBackMogoArm(bool waitForCompletion)
   }  
 }
 
-//For Debug Only
 void toggleBackMogoArm()
 {
   toggleBackMogoArm(true);

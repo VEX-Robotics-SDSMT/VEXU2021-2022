@@ -98,13 +98,13 @@ void usercontrol(void) {
   //TODO - move to a different function
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
   MinesMotorGroup r(rightDrive1, rightDrive2, rightDrive3, rightDrive4);
-  //MinesMotorGroup frontMogoLift(leftLiftMotor, rightLiftMotor);
+  MinesMotorGroup frontMogoLift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setDrivePIDConst(0.8, 0, 0);
   d.setTurnPIDConst(0.01, 0, 0);
 
-  l.setStopping(brakeType::brake);
-  r.setStopping(brakeType::brake);
+  d.setAllBrakeMode(brakeType::brake);
+  frontMogoLift.setStopping(brakeType::hold);
 
   // User control code here, inside the loop
   while (1) {
@@ -112,15 +112,15 @@ void usercontrol(void) {
 
     if (Master.ButtonL1.pressing())
     {
-      frontMogoLift->spin(directionType::fwd,100, percentUnits::pct);
+      frontMogoLift.spin(directionType::fwd,100, percentUnits::pct);
     }
     else if (Master.ButtonL2.pressing())
     {
-      frontMogoLift->spin(directionType::rev,100, percentUnits::pct);
+      frontMogoLift.spin(directionType::rev,100, percentUnits::pct);
     }
     else 
     {
-      frontMogoLift->stop();
+      frontMogoLift.stop();
     }
 
     //for testing purposes only
