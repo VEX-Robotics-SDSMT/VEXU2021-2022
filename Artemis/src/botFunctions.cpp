@@ -1,19 +1,33 @@
 #include "../include/botFunctions.h"
 
 //globals for this file only
-bool frontMogoLiftOpen = false;
+bool frontMogoLiftOpen = true;
 bool backMogoLiftUp = false;
 
 void toggleFrontMogoLift(MinesMotorGroup &lift)
 {
+  int loops = 0;
   if (frontMogoLiftOpen)
   {
-    lift.spinToPosition(FRONT_MOGO_LIFT_DOWN, rotationUnits::deg, 100, velocityUnits::pct);
+    //lift.spinToPosition(FRONT_MOGO_LIFT_DOWN, rotationUnits::deg, 100, velocityUnits::pct);
+    lift.spin(vex::directionType::rev, 50, velocityUnits::pct);
+
+    while(lift.rotation(deg) >= FRONT_MOGO_LIFT_DOWN && loops <= 3500)
+    {
+      loops += loopDelay;
+      task::sleep(loopDelay);
+    }
     frontMogoLiftOpen = false;
   }
   else
   {
-    lift.spinToPosition(FRONT_MOGO_LIFT_UP, rotationUnits::deg, 100, velocityUnits::pct);
+    //lift.spinToPosition(FRONT_MOGO_LIFT_UP, rotationUnits::deg, 100, velocityUnits::pct);
+    lift.spin(vex::directionType::fwd, 100, velocityUnits::pct);
+    while(lift.rotation(deg) <= FRONT_MOGO_LIFT_UP && loops <= 3500)
+    {
+      loops += loopDelay;
+      task::sleep(loopDelay);
+    }
     frontMogoLiftOpen = true;
   }  
 }
