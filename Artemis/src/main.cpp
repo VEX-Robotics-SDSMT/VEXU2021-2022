@@ -69,14 +69,14 @@ void autonomous(void) {
     toggleFrontMogoLift(lift);
     d.driveTilesPID(.25);
     toggleFrontMogoLift(lift);
-    d.turnDegreesAbsolutePID(-47);
+    d.turnDegreesAbsolutePID(-48);
     toggleFrontMogoLift(lift);
     d.driveTilesPID(1.4);
     toggleFrontMogoLift(lift);
     d.driveTilesPID(-.75);
     toggleFrontMogoLift(lift);
-    d.turnDegreesAbsolutePID(40);
-    d.driveTilesPID(.5);
+    d.turnDegreesAbsolutePID(20);
+    d.driveTilesPID(.55);
     toggleFrontMogoLift(lift);
     d.driveTilesPID(1.5);
     d.turnDegreesAbsolutePID(-90);
@@ -103,8 +103,6 @@ void autonomous(void) {
 
 void usercontrol(void) {
   bool buttonUpDebounce = false;
-  bool buttonXDebounce = false;
-
 
   Master.ButtonR1.pressed(toggleBackMogoArm);
 
