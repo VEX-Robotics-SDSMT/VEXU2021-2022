@@ -36,10 +36,6 @@ competition Competition;
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-
-  frontMogoLift = new MinesMotorGroup(leftLiftMotor, rightLiftMotor);
-
-  frontMogoLift->setStopping(brakeType::hold);
   tailMotor.setStopping(brakeType::hold);
 }
 
@@ -59,14 +55,31 @@ void autonomous(void) {
   
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
   MinesMotorGroup r(rightDrive1, rightDrive2, rightDrive3, rightDrive4);
+  MinesMotorGroup lift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setAllBrakeMode(vex::brakeType::brake);
   d.setTurnPIDConst(0.01, 0, 0);
   d.setDrivePIDConst(.8, 0, 0);
+  lift.setStopping(brakeType::hold);
+
 
   if (skills)
   {
-
+    //These are all the right motions for skills, but its completly untuned
+    toggleFrontMogoLift(lift);
+    d.driveTilesPID(.25);
+    toggleFrontMogoLift(lift);
+    d.turnDegreesAbsolutePID(-48);
+    toggleFrontMogoLift(lift);
+    d.driveTilesPID(1.4);
+    toggleFrontMogoLift(lift);
+    d.driveTilesPID(-.75);
+    toggleFrontMogoLift(lift);
+    d.turnDegreesAbsolutePID(20);
+    d.driveTilesPID(.55);
+    toggleFrontMogoLift(lift);
+    d.driveTilesPID(1.5);
+    d.turnDegreesAbsolutePID(-90);
   }
   else
   {
@@ -96,13 +109,13 @@ void usercontrol(void) {
   //TODO - move to a different function
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
   MinesMotorGroup r(rightDrive1, rightDrive2, rightDrive3, rightDrive4);
-  MinesMotorGroup frontMogoLift(leftLiftMotor, rightLiftMotor);
+  MinesMotorGroup lift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setDrivePIDConst(6.4, 0, 0.0024);
   d.setTurnPIDConst(0.0064, 0, 0.0002);
 
   d.setAllBrakeMode(brakeType::brake);
-  frontMogoLift.setStopping(brakeType::hold);
+  lift.setStopping(brakeType::hold);
 
   // User control code here, inside the loop
   while (1) {
@@ -110,21 +123,22 @@ void usercontrol(void) {
 
     if (Master.ButtonL1.pressing())
     {
-      frontMogoLift.spin(directionType::fwd,100, percentUnits::pct);
+      lift.spin(directionType::fwd,100, percentUnits::pct);
+
     }
     else if (Master.ButtonL2.pressing())
     {
-      frontMogoLift.spin(directionType::rev,100, percentUnits::pct);
+      lift.spin(directionType::rev,100, percentUnits::pct);
     }
     else 
     {
-      frontMogoLift.stop();
+      lift.stop();
     }
 
     //for testing purposes only
     if (pressButton(Master.ButtonUp.pressing(), buttonUpDebounce))
     {
-      toggleFrontMogoLift(frontMogoLift);
+      toggleFrontMogoLift(lift);
     }
 
 
