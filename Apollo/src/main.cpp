@@ -99,17 +99,19 @@ void autonomous(void) {
   }
   else
   {
-    /*toggleBackMogoArm(false);
+    
+    toggleBackMogoArm(false);
     d.driveTilesPID(-2.98);
     toggleBackMogoArm();
-    d.driveTilesPID(1.8);
-    d.turnDegreesAbsolutePID(300);
+    d.driveTilesPID(1.9);
+    d.turnDegreesAbsolutePID(310);
     movePlungerOpen();
     toggleFrontMogoLift();
-    d.driveTilesPID(1.2,30);
+    d.driveTilesPID(1.6,35);
     toggleFrontMogoLift();
     d.turnDegreesAbsolutePID(30);
-    d.driveTilesPID(.4);*/
+    d.driveTilesPID(.4);
+    /*
     movePlungerOpen();
     task::sleep(2000);
     movePlungerPrep();
@@ -119,7 +121,7 @@ void autonomous(void) {
     plungeRing();
     task::sleep(2000);
     movePlungerScore();
-
+    */
   }
 }
   
@@ -147,9 +149,9 @@ void usercontrol(void) {
   Master.ButtonDown.pressed(movePlungerRest);
   Master.ButtonLeft.pressed(movePlungerPrep);
   Master.ButtonRight.pressed(movePlungerScore);
-  //Master.ButtonA.pressed(movePlungerPlunge);
+  Master.ButtonA.pressed(movePlungerPlunge);
 
-  //Master.ButtonB.pressed(plungeRing);
+  Master.ButtonB.pressed(plungeRing);
   Master.ButtonX.pressed(togglePlunger);
 
   //TODO - move to a different function
@@ -179,7 +181,8 @@ void usercontrol(void) {
       backMogoArm.stop();
     }
 
-    //for testing purpouses only
+    //for testing purpouses only 
+    /*
     if (pressButton(Master.ButtonA.pressing(), buttonADebounce))
     {
       d.driveTilesPID(2,100);
@@ -188,7 +191,7 @@ void usercontrol(void) {
     {
       d.driveTilesPID(-2,100);
     }
-
+    */
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
