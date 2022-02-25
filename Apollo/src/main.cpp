@@ -64,14 +64,14 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = false;
+  bool skills = true;
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setAllBrakeMode(vex::brakeType::brake);
- // d.setDrivePIDConst(2.3, 0, 0.0036);
+  d.setLRBias(1);
   d.setTurnPIDConst(0.01, 0, 0);
   d.setDrivePIDConst(.8, 0, 0);
 
@@ -81,20 +81,29 @@ void autonomous(void) {
     d.driveTilesPID(-2.9);
     toggleBackMogoArm();
     d.driveTilesPID(-1.75);
-    d.turnDegreesAbsolutePID(70);
+    d.turnDegreesAbsolutePID(72);
     movePlungerOpen();
     toggleFrontMogoLift();
-    d.driveTilesPID(1.3,30);
+    d.driveTilesPID(1.5,30);
     toggleFrontMogoLift();
     movePlungerRest();
-    d.driveTilesPID(-1.3,30);
+    d.driveTilesPID(-1.5,30);
     d.turnDegreesAbsolutePID(-4);
     d.driveTilesPID(3.1);
     d.turnDegreesAbsolutePID(-24);
     toggleBackMogoArm();
-    // Pick up rings
     d.driveTilesPID(1);
-    d.turnDegreesAbsolutePID(-110);
+    d.turnDegreesAbsolutePID(68);
+    d.driveTilesPID(-0.5);
+    toggleBackMogoArm();
+    d.driveTilesPID(0.3);
+    d.turnDegreesAbsolutePID(250);
+    toggleBackMogoArm(false);
+    plungeUntilTime(1500, 50000);
+    movePlungerScore();
+    d.driveTilesPID(0.3);
+    //park
+
 
   }
   else
@@ -138,8 +147,11 @@ void autonomous(void) {
 
 
 void usercontrol(void) {
-  bool buttonADebounce = false;
-  bool buttonBDebounce = false;
+  //do this only once at the beginnning of the each match
+  Brain.Timer.reset();
+
+  bool buttonYDebounce = false;
+  bool buttonXDebounce = false;
 
   Master.ButtonR1.pressed(toggleFrontMogoLift);
 
@@ -147,9 +159,9 @@ void usercontrol(void) {
   Master.ButtonDown.pressed(movePlungerRest);
   Master.ButtonLeft.pressed(movePlungerPrep);
   Master.ButtonRight.pressed(movePlungerScore);
-  //Master.ButtonA.pressed(movePlungerPlunge);
+  Master.ButtonA.pressed(movePlungerPlunge);
 
-  //Master.ButtonB.pressed(plungeRing);
+  Master.ButtonB.pressed(plungeRing);
   Master.ButtonX.pressed(togglePlunger);
 
   //TODO - move to a different function
@@ -159,8 +171,8 @@ void usercontrol(void) {
   d.setDrivePIDConst(0.8, 0, 0);
   d.setTurnPIDConst(0.01, 0, 0);
 
-  l.setStopping(brakeType::brake);
-  r.setStopping(brakeType::brake);
+  l.setStopping(brakeType::coast);
+  r.setStopping(brakeType::coast);
 
   // User control code here, inside the loop
   while (1) {
@@ -180,13 +192,13 @@ void usercontrol(void) {
     }
 
     //for testing purpouses only
-    if (pressButton(Master.ButtonA.pressing(), buttonADebounce))
+    if (pressButton(Master.ButtonX.pressing(), buttonXDebounce))
     {
-      d.driveTilesPID(2,100);
+      d.swingDrivePID(1, 0);
     }
-    if (pressButton(Master.ButtonB.pressing(), buttonBDebounce))
+    if (pressButton(Master.ButtonY.pressing(), buttonYDebounce))
     {
-      d.driveTilesPID(-2,100);
+      d.swingDrivePID(-1, 0);
     }
 
 

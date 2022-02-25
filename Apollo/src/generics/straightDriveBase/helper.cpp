@@ -37,6 +37,11 @@ void FourWheelDrive::setAllBrakeMode(brakeType mode)
   leftMotors->setStopping(mode);
 }
 
+void FourWheelDrive::setLRBias(double bias)
+{
+  LRBias = bias;
+}
+
 void FourWheelDrive::setMotorPercents(int leftSpeed, int rightSpeed)
 {
     //if one side of the drive is being told to go faster than 100, this makes sure it can't

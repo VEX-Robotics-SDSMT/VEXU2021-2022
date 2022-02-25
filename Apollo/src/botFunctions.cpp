@@ -44,11 +44,11 @@ void movePlungerPos(const double armPair[3], bool waitForCompletion)
   {
     sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, false);
     task::sleep(armPair[2]);
-    chainLift->spinToPosition(armPair[1], rotationUnits::deg, 30, velocityUnits::pct, waitForCompletion);
+    chainLift->spinToPosition(armPair[1], rotationUnits::deg, 50, velocityUnits::pct, waitForCompletion);
   }
   else
   {
-    chainLift->spinToPosition(armPair[1], rotationUnits::deg, 30, velocityUnits::pct, false);
+    chainLift->spinToPosition(armPair[1], rotationUnits::deg, 50, velocityUnits::pct, false);
     task::sleep(armPair[2]);
     sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, waitForCompletion);
   }
@@ -74,6 +74,10 @@ void movePlungerRest()
 void movePlungerScore()
 {
   movePlungerPos(PLUNGE_SCORE);
+  task::sleep(150);
+  plungerPneumatics.open();
+  task::sleep(1500);
+  plungerPneumatics.close();
 }
 
 void movePlungerPrep()
@@ -89,23 +93,27 @@ void movePlungerPlunge()
 void plungeRing()
 {
   movePlungerPos(PLUNGE_PREP, true);
-  plungerPneumatics.close();
-  task::sleep(1000);
   movePlungerPos(PLUNGE_PLUNGE, true);
-  plungerPneumatics.open();
-  task::sleep(1000);
   movePlungerPos(PLUNGE_PREP, true);
 }
 
 void autoBalance(FourWheelDrive &drive, double distance, double speed)
 {
   double pos = drive.getAllPosition();
+
+  movePlungerOpen();
+  movePlungerPlunge();
+  chainLift->setStopping(brakeType::coast);
+
   drive.accelerate(speed);
 
   while(Inertial.pitch() < 10 && drive.getAllPosition() - pos < distance)
   {
     task::sleep(20);
   }
+
+  chainLift->setStopping(brakeType::brake);
+  movePlungerRest();
 
   while(Inertial.pitch() > 10)
   {
@@ -116,4 +124,14 @@ void autoBalance(FourWheelDrive &drive, double distance, double speed)
     task::sleep(20);
   }
   drive.accelerate(0);
+}
+
+void plungeUntilTime(int delay, int time)
+{
+  time = time - delay; //this is here to make sure this doesn't go overtime
+  while(Brain.Timer.time() < time)
+  {
+    task::sleep(delay);
+    plungeRing();
+  }
 }

@@ -26,10 +26,7 @@ class FourWheelDrive
     double minSpeed = 10;
     double speedBias = 1;
 
-    double LRBiasHigh = 1;
-    double LRBiasLow = 1;
-    double LRBiasHighBack = 1;
-    double LRBiasLowBack = 1;
+    double LRBias = 1;
     double maxAccelerationForward = 3;
     double maxAccelerationBackward = 3;
 
@@ -50,6 +47,9 @@ class FourWheelDrive
     double turnKP = 0.01; //speed to goal
     double turnKI = 0; //adds speed if too slow
     double turnKD = 0; //prevents overshoot
+    double swingTurnKP = 0;
+    double swingTurnKI = 0;
+    double swingTurnKD = 0;
 
 public:
     FourWheelDrive(MinesMotorGroup&, MinesMotorGroup&,
@@ -58,10 +58,12 @@ public:
 
     void setDrivePIDConst(double, double, double);
     void setTurnPIDConst(double, double, double);
+    void setSwingPIDConst(double, double, double);
     void accelerate(double speed);
     void setMotorsRelative(MinesMotorGroup *motors, double distance, double speed);
     void setMotorsRelative(double distance, double speed);
     void setAllBrakeMode(vex::brakeType mode);
+    void setLRBias(double bias);
     double getSpeed(MinesMotorGroup *);
     double getAllSpeed();
     double getAllPosition();
@@ -69,9 +71,11 @@ public:
 
     void drive(MinesMotorGroup *leftWheelMotorVector,
         MinesMotorGroup *rightWheelMotorVector, int distance);
-    void driveTilesPID(float numTiles, float desiredSpeed= 100);
+    void driveTilesPID(float numTiles, float desiredSpeed= 90);
     void turnDegreesAbsolutePID(float targetDegrees, float desiredSpeed = -1);
     void turnDegreesPID(float numDegrees, float desiredSpeed= 55);
+    void swingDrivePID(float numTiles, float degrees, float desiredSpeed = 100);
+    void swingDriveAbsolutePID(float numTiles, float degrees, float desiredSpeed);
 
     void tankLoopCall(double, double);
     void arcadeLoopCall(double, double);

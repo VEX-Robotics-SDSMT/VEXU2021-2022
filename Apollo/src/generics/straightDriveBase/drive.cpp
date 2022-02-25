@@ -48,6 +48,12 @@ void FourWheelDrive::setTurnPIDConst(double p, double i, double d)
   turnKI = i;
   driveKD = d;
 }
+void FourWheelDrive::setSwingPIDConst(double p, double i, double d)
+{
+  swingTurnKP = p;
+  swingTurnKI = i;
+  swingTurnKD = d;
+}
 
 //take in a vector of motors, and set their speed to a value
 void FourWheelDrive::setMotors(MinesMotorGroup *motors, double speed)
@@ -62,55 +68,13 @@ void FourWheelDrive::rawSetMotors(double speed, double bias)
         speed *= (1 / bias);
     }
 
-
     setMotors(leftMotors, speed);
     setMotors(rightMotors, speed * bias);
 }
 
 void FourWheelDrive::setMotors(double speed)
 {
-    //speed capping
-    if (speed > maxSpeed)
-    {
-        speed = maxSpeed;
-        rawSetMotors(speed, LRBiasHigh);
-        //lcd::set_text(0, "speed > maxSpeed: " + to_string(speed) + " bias: " + to_string(LRBiasHigh));
-    }
-    else if(speed > midSpeed)
-    {
-        double highPercent = (speed - midSpeed) / (maxSpeed - midSpeed);
-        double lowPercent = (maxSpeed - speed) / (maxSpeed - midSpeed);
-
-        rawSetMotors(speed, LRBiasLow * lowPercent + LRBiasHigh * highPercent);
-        //lcd::set_text(0, "speed > midSpeed: " + to_string(speed) + " bias: "
-        //        + to_string(LRBiasLow * lowPercent + LRBiasHigh * highPercent));
-    }
-    else if (speed >= 0)
-    {
-        rawSetMotors(speed, LRBiasLow);
-        //lcd::set_text(0, "speed > 0: " + to_string(speed) + " bias: " + to_string(LRBiasLow));
-    }
-    //backwards biases
-    else if (speed < -maxSpeed)
-    {
-        speed = -maxSpeed;
-        rawSetMotors(speed, LRBiasHighBack);
-        //lcd::set_text(0, "speed < -maxSpeed: " + to_string(speed) + " bias: " + to_string(LRBiasHighBack));
-    }
-    else if (speed < -midSpeed)
-    {
-        double highPercent = (-speed - midSpeed) / (maxSpeed - midSpeed);
-        double lowPercent = (maxSpeed + speed) / (maxSpeed - midSpeed);
-
-        rawSetMotors(speed, LRBiasLowBack * lowPercent + LRBiasHighBack * highPercent);
-        //lcd::set_text(0, "speed < -midSpeed: " + to_string(speed) + " bias: "
-        //        + to_string(LRBiasLow * lowPercent + LRBiasHigh * highPercent));
-    }
-    else //if (speed < 0)
-    {
-        rawSetMotors(speed, LRBiasLowBack);
-        //lcd::set_text(0, "speed < 0: " + to_string(speed) + " bias: " + to_string(LRBiasLowBack));
-    }
+  rawSetMotors(speed, LRBias);
 }
 
 //tqke in a vector of motors, and call the move relative function for all of them with a given distance and speed
@@ -313,6 +277,142 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
   }
 
   setMotors(0);
+}
+
+void FourWheelDrive::swingDrivePID(float numTiles, float degrees, float desiredSpeed)
+{
+    float startDegrees = degreeBoundingHelper(inertialSensor->heading());
+    swingDriveAbsolutePID(numTiles, degreeBoundingHelper(degrees + startDegrees), desiredSpeed);
+}
+
+void FourWheelDrive::swingDriveAbsolutePID(float numTiles, float degrees, float desiredSpeed)
+{
+    float DRIVE_INTEGRATOR_MAX_MAGNITUDE = 100;
+    float TURN_INTEGRATOR_MAX_MAGNITUDE = 100;
+    float DELTA_T = LOOP_DELAY / 1000.0;
+    float MINSPEED_MOD = 2;
+    int const LOOPS_REQUIRED_CORRECT = 50;
+    float const TOLERANCE = 40;
+    const double TICKS_PER_TILE = 1333.3;
+
+    float proportionalAmountDrive = 0;
+    float integralAmountDrive = 0;
+    float derivativeAmountDrive = 0;
+    float proportionalAmountTurn = 0;
+    float integralAmountTurn = 0;
+    float derivativeAmountTurn = 0;
+
+    float targetTicks = numTiles * TICKS_PER_TILE;
+    long iterations = 1;
+    int loopsCorrect = 0;
+    float currentDistance = 0;
+    float lastDistance = 0;
+    float accumulatedDistance = 0;
+    float accumulatedDegrees = 0;
+    float lastDegrees = 0;
+
+    float firstEncoderValue = 0;
+    float lastEncoderVal = 0;
+
+    if(degrees <= 0)
+    {
+        //turn left
+        lastEncoderVal = firstEncoderValue = getPosition(leftMotors);
+	  }
+    else
+    {
+        lastEncoderVal = firstEncoderValue = getPosition(rightMotors);
+	  }
+
+    float runTime = 0;
+
+    int maxRunTime = max(ONE_SEC_IN_MS, ONE_SEC_IN_MS * fabs(numTiles) * 2);
+    proportionalAmountDrive = targetTicks;
+
+    float initialHeading = degreeBoundingHelper(inertialSensor->heading());
+    float degreeDif = degreeBoundingHelper(degrees - initialHeading);
+
+    // While not at destination and not out of time
+    while (loopsCorrect <= LOOPS_REQUIRED_CORRECT && runTime < maxRunTime)
+    {
+        proportionalAmountDrive = targetTicks - currentDistance;
+
+        accumulatedDistance += proportionalAmountDrive;
+        accumulatedDistance = bindToMagnitude(accumulatedDistance, DRIVE_INTEGRATOR_MAX_MAGNITUDE);
+
+        integralAmountDrive = accumulatedDistance * DELTA_T;
+
+        derivativeAmountDrive = (lastDistance - currentDistance) / DELTA_T;
+
+        float totalDrive = proportionalAmountDrive * driveKD + integralAmountDrive * driveKI - derivativeAmountDrive * driveKP;
+        totalDrive = bindToMagnitude(totalDrive, 1);
+
+        float speed = totalDrive * desiredSpeed;
+
+        float currentEncoderVal = 0;
+        if(degrees <= 0)
+          {currentEncoderVal = getPosition(leftMotors);} //turn left
+        else
+          {currentEncoderVal = getPosition(rightMotors);} //turn right
+
+        currentDistance += (currentEncoderVal - lastEncoderVal);
+
+        lastDistance = proportionalAmountDrive;
+        lastEncoderVal = currentEncoderVal;
+
+        //------------------------------------------------------------------------------------------------
+        //turn pid time
+        //------------------------------------------------------------------------------------------------
+        float distPercent = currentDistance / targetTicks;
+        float targetDegrees = degreeBoundingHelper(initialHeading + distPercent * degreeDif);
+        float currentDegrees = degreeBoundingHelper(inertialSensor->heading());
+
+        proportionalAmountTurn = degreeBoundingHelper(targetDegrees - currentDegrees);
+
+        accumulatedDegrees += proportionalAmountTurn;
+        accumulatedDegrees = bindToMagnitude(accumulatedDegrees, TURN_INTEGRATOR_MAX_MAGNITUDE);
+
+        derivativeAmountTurn = (proportionalAmountTurn - lastDegrees) / DELTA_T;
+        lastDegrees = proportionalAmountTurn;
+
+        integralAmountTurn = accumulatedDegrees * DELTA_T;
+
+        float totalTurn = proportionalAmountTurn * swingTurnKP + integralAmountTurn * swingTurnKI - derivativeAmountTurn * swingTurnKD;
+        totalTurn = bindToMagnitude(totalTurn, 1);
+        float turnSpeed = totalTurn * fabs(speed);
+
+        if (fabs(turnSpeed) < minSpeed * MINSPEED_MOD)
+        {
+            turnSpeed = turnSpeed * minSpeed * MINSPEED_MOD / fabs(speed);
+        }
+
+        //TODO This wll allow the pid to go over the max motor speed
+        float speedLeft = speed + turnSpeed;
+        float speedRight = speed - turnSpeed;
+
+        //--------------------------------------------------------------------
+        //set motors
+        // -------------------------------------------------------------------
+
+        setMotors(rightMotors, speedRight);
+        setMotors(leftMotors, speedLeft);
+
+        float distanceAway = fabs(currentDistance - targetTicks);
+
+        if (distanceAway <= TOLERANCE)
+        {
+            loopsCorrect++;
+        }
+        else
+        {
+            loopsCorrect = 0;
+        }
+
+        iterations++;
+        runTime += LOOP_DELAY;
+        task::sleep(LOOP_DELAY);
+    }
+    setMotors(0);
 }
 
 //user control functions
