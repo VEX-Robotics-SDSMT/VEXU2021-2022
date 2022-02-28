@@ -4,7 +4,7 @@
 const double FRONT_MOGO_LIFT_UP = -1200; //600
 const double FRONT_MOGO_LIFT_DOWN = -1900; //1900
 const double BACK_MOGO_ARM_UP = -85;
-const double BACK_MOGO_ARM_DOWN = -300;
+const double BACK_MOGO_ARM_DOWN = -350;
 
 //globals
 const int loopDelay = 20;

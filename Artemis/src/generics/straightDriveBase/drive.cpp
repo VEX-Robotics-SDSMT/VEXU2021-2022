@@ -114,15 +114,15 @@ void FourWheelDrive::setMotors(double speed)
 }
 
 //tqke in a vector of motors, and call the move relative function for all of them with a given distance and speed
-void FourWheelDrive::setMotorsRelative(MinesMotorGroup * motors, double distance, double speed)
+void FourWheelDrive::setMotorsRelative(MinesMotorGroup * motors, double distance, double speed, bool waitForCompletion)
 {
-  motors->spinFor(distance, ROT_UNIT, speed, VEL_UNIT);
+  motors->spinFor(distance, ROT_UNIT, speed, VEL_UNIT, waitForCompletion);
 }
 
 void FourWheelDrive::setMotorsRelative(double distance, double speed)
 {
-  setMotorsRelative(rightMotors, distance, speed);
-  setMotorsRelative(leftMotors, distance, speed);
+  setMotorsRelative(rightMotors, distance, speed, false);
+  setMotorsRelative(leftMotors, distance, speed, true);
 }
 
 void FourWheelDrive::setZeroPosition()
@@ -202,7 +202,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
     int maxRunTime = max(ONE_SEC_IN_MS * 5, ONE_SEC_IN_MS * fabs(numTiles) * 2);
 
     Brain.Screen.print("preLoop");
-    while( stopLoopCount <= STOP_LOOPS /*&& runTime < maxRunTime*/)
+    while( stopLoopCount <= STOP_LOOPS && runTime < maxRunTime)
     {
         porportionalAmount = numTiles - currentDistance;
 

@@ -50,7 +50,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = true;
+  bool skills = false;
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
@@ -83,7 +83,16 @@ void autonomous(void) {
   }
   else
   {
-
+    d.setMotorsRelative(-800, 100);   
+    toggleBackMogoArm(false);
+    d.setMotorsRelative(600, 100);
+    toggleBackMogoArm();
+    d.setMotorsRelative(100, 100);
+    d.turnDegreesPID(180);
+    tailMotor.spinToPosition(0, rotationUnits::deg);
+    // toggleFrontMogoLift(lift);
+    // d.driveTilesPID(.5, 75);
+    // toggleFrontMogoLift(lift);
   }
 }
   

@@ -2,7 +2,7 @@
 
 //globals for this file only
 bool frontMogoLiftOpen = true;
-bool backMogoLiftUp = false;
+bool backMogoLiftUp = true;
 
 void toggleFrontMogoLift(MinesMotorGroup &lift)
 {
@@ -30,18 +30,30 @@ void toggleFrontMogoLift(MinesMotorGroup &lift)
     }
     frontMogoLiftOpen = true;
   }  
+  lift.stop();
 }
 
 void toggleBackMogoArm(bool waitForCompletion)
 {
+  int loops = 0;
   if (backMogoLiftUp)
   {
     tailMotor.spinToPosition(BACK_MOGO_ARM_DOWN, rotationUnits::deg, 100, velocityUnits::pct, waitForCompletion);
+    while(tailMotor.rotation(deg) >= BACK_MOGO_ARM_DOWN && loops <= 500)
+    {
+      loops += loopDelay;
+      task::sleep(loopDelay);
+    }
     backMogoLiftUp = false;
   }
   else 
   {
     tailMotor.spinToPosition(BACK_MOGO_ARM_UP, rotationUnits::deg, 100, velocityUnits::pct, waitForCompletion);
+    while(tailMotor.rotation(deg) <= BACK_MOGO_ARM_UP && loops <= 500)
+    {
+      loops += loopDelay;
+      task::sleep(loopDelay);
+    }
     backMogoLiftUp = true;
   }  
 }

@@ -59,7 +59,7 @@ public:
     void setDrivePIDConst(double, double, double);
     void setTurnPIDConst(double, double, double);
     void accelerate(double speed);
-    void setMotorsRelative(MinesMotorGroup *motors, double distance, double speed);
+    void setMotorsRelative(MinesMotorGroup *motors, double distance, double speed, bool = true);
     void setMotorsRelative(double distance, double speed);
     void setAllBrakeMode(vex::brakeType mode);
     double getSpeed(MinesMotorGroup *);
@@ -77,10 +77,9 @@ public:
     void arcadeLoopCall(double, double);
 
 
-
 private:
-    void rawSetMotors(double speed, double bias = 1);
     void setMotors(MinesMotorGroup *motors, double speed);
+    void rawSetMotors(double speed, double bias = 1);
     void setMotors(double speed);
     void setZeroPosition(MinesMotorGroup * motors);
     void setZeroPosition();
