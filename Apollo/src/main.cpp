@@ -166,7 +166,8 @@ void usercontrol(void) {
   Master.ButtonA.pressed(movePlungerPlunge);
 
   Master.ButtonB.pressed(plungeRing);
-  Master.ButtonX.pressed(togglePlunger);
+  //Master.ButtonX.pressed(togglePlunger);
+  Master.ButtonX.pressed(movePlungerHome);
 
   //TODO - move to a different function
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);

@@ -78,6 +78,7 @@ void movePlungerScore()
   plungerPneumatics.open();
   task::sleep(1500);
   plungerPneumatics.close();
+  movePlungerOpen();
 }
 
 void movePlungerPrep()

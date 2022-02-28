@@ -10,14 +10,14 @@ const double FRONT_MOGO_LIFT_IN = 5;
 const double CHAIN_LIFT_IN = 0;
 const double CHAIN_LIFT_OUT = 120;
 
-//all const positions are of the form {sixBar, chainBar, chainDelay}
+//all const positions are of the form {sixBar, fourBar, chainDelay}
 //plunger positions
-const double PLUNGE_HOME[3] = {15, 0, 0};
-const double PLUNGE_OPEN[3] = {400, 0, 300};
-const double PLUNGE_REST[3] = {95, 120, -150};
-const double PLUNGE_PREP[3] = {95, 170, -150};
-const double PLUNGE_PLUNGE[3] = {95, 258, 0};
-const double PLUNGE_SCORE[3] ={290, 15, 300};
+const double PLUNGE_HOME[3] = {0, 30, 0};
+const double PLUNGE_OPEN[3] = {430, 30, 200};
+const double PLUNGE_REST[3] = {90, 120, -100};
+const double PLUNGE_PREP[3] = {150, 130, 0};
+const double PLUNGE_PLUNGE[3] = {90, 200, 0};
+const double PLUNGE_SCORE[3] ={400, 5, 600};
 
 //globals
 const int loopDelay = 20;
