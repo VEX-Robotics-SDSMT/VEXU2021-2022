@@ -14,5 +14,6 @@ void movePlungerScore();
 void movePlungerPrep();
 void movePlungerPlunge();
 void plungeRing();
+void plungeUntilTime(int delay, int time);
 
 void autoBalance(FourWheelDrive &drive, double distance, double speed);

@@ -21,10 +21,10 @@ motor leftDriveBottom = motor(PORT14, ratio6_1, true);
 //lift motors
 motor rightFrontMogoLift = motor(PORT20, ratio36_1, true);
 motor leftFrontMogoLift = motor(PORT9, ratio36_1, false);
-motor right6Bar = motor(PORT17, ratio18_1, false);
-motor left6Bar = motor(PORT7, ratio18_1, true);
+motor right6Bar = motor(PORT7, ratio18_1, true);
+motor left6Bar = motor(PORT17, ratio18_1, false);
 motor rightChainBar = motor(PORT12, ratio36_1, true);
-motor leftChainBar = motor(PORT13, ratio36_1, false);
+motor leftChainBar = motor(PORT15, ratio36_1, false);
 motor backMogoArm = motor(PORT10, ratio36_1, true);
 
 pneumatics plungerPneumatics = pneumatics(Brain.ThreeWirePort.C);

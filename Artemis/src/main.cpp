@@ -65,13 +65,13 @@ void autonomous(void) {
 
   if (skills)
   {
-    //These are all the right motions for skills, but its completly untuned
+    task::sleep(10000);
     toggleFrontMogoLift(lift);
     d.driveTilesPID(.25);
     toggleFrontMogoLift(lift);
     d.turnDegreesAbsolutePID(-48);
     toggleFrontMogoLift(lift);
-    d.driveTilesPID(1.4);
+    d.driveTilesPID(1.3);
     toggleFrontMogoLift(lift);
     d.driveTilesPID(-.75);
     toggleFrontMogoLift(lift);
