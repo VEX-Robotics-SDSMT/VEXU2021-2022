@@ -25,6 +25,7 @@ void toggleBackMogoArm(bool waitForCompletion)
   {
     backMogoArm.spinToPosition(BACK_MOGO_LIFT_DOWN, rotationUnits::deg, waitForCompletion);
     backMogoLiftUp = false;
+   // backMogoArm.spinToPosition(-400, rotationUnits::deg);
   }
   else 
   {

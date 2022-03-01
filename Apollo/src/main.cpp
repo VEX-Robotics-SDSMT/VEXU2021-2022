@@ -109,30 +109,19 @@ void autonomous(void) {
   }
   else
   {
-    
     toggleBackMogoArm(false);
     d.driveTilesPID(-2.98);
     toggleBackMogoArm();
     d.driveTilesPID(1.9);
-    d.turnDegreesAbsolutePID(298);
+    d.turnDegreesAbsolutePID(310);
     movePlungerOpen();
     toggleFrontMogoLift();
     d.driveTilesPID(1.6,35);
     toggleFrontMogoLift();
+    d.turnDegreesAbsolutePID(30); 
+    d.driveTilesPID(.4);
+    plungeUntilTime(1500, 60000);
     movePlungerScore();
-    d.turnDegreesAbsolutePID(30);
-    //d.driveTilesPID(.4);
-    /*
-    movePlungerOpen();
-    task::sleep(2000);
-    movePlungerPrep();
-    task::sleep(2000);
-    movePlungerPlunge();
-    task::sleep(2000);
-    plungeRing();
-    task::sleep(2000);
-    movePlungerScore();
-    */
   }
 }
   

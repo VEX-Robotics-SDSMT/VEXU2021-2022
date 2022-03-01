@@ -3,8 +3,8 @@
 //const doubles
 const double FRONT_SIXBAR_LIFT_UP = 400;
 const double FRONT_SIXBAR_LIFT_DOWN = 30;
-const double BACK_MOGO_LIFT_DOWN = -441;// -450
-const double BACK_MOGO_LIFT_UP = -290;
+const double BACK_MOGO_LIFT_DOWN = -370;// -450
+const double BACK_MOGO_LIFT_UP = -240;
 const double FRONT_MOGO_LIFT_OUT = 430;
 const double FRONT_MOGO_LIFT_IN = 5;
 const double CHAIN_LIFT_IN = 0;
