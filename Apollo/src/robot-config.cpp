@@ -18,10 +18,11 @@ motor leftDriveTop = motor(PORT19, ratio6_1, true);
 motor leftDriveMid = motor(PORT21, ratio6_1, false);
 motor leftDriveBottom = motor(PORT14, ratio6_1, true);
 
+// port 6 and 8 are broken
 //lift motors
 motor rightFrontMogoLift = motor(PORT20, ratio36_1, true);
 motor leftFrontMogoLift = motor(PORT9, ratio36_1, false);
-motor right6Bar = motor(PORT7, ratio18_1, true);
+motor right6Bar = motor(PORT13, ratio18_1, true);
 motor left6Bar = motor(PORT17, ratio18_1, false);
 motor rightChainBar = motor(PORT12, ratio36_1, true);
 motor leftChainBar = motor(PORT15, ratio36_1, false);
@@ -36,7 +37,7 @@ pot right6BarPot = pot(Brain.ThreeWirePort.H);
 pot leftChainPot = pot(Brain.ThreeWirePort.B);
 pot rightChainPot = pot(Brain.ThreeWirePort.E);
 
-inertial Inertial = inertial(PORT8);
+inertial Inertial = inertial(PORT7);
 controller Master = controller();
 
 // VEXcode generated functions
