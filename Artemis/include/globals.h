@@ -3,6 +3,7 @@
 
 #include "generics/drive.h"
 #include "robot-config.h"
+#include <algorithm>
 
 #define DEBOUNCE_DELAY 200
 #define KILL_BUTTON E_CONTROLLER_DIGITAL_DOWN
@@ -12,6 +13,7 @@ extern const double FRONT_MOGO_LIFT_UP;
 extern const double FRONT_MOGO_LIFT_DOWN;
 extern const double BACK_MOGO_ARM_UP;
 extern const double BACK_MOGO_ARM_DOWN;
+extern const double DIST_MULT;
 
 //drive base class
 extern MinesMotorGroup *leftDriveMotors;

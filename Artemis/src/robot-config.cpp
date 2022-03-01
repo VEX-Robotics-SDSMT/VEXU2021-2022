@@ -23,9 +23,10 @@ motor rightLiftMotor = motor(PORT16, ratio18_1, true);
 
 inertial Inertial = inertial(PORT3);
 controller Master = controller();
+sonar rangeFinder = sonar(Brain.ThreeWirePort.G);
 
 pneumatics snakeJaw = pneumatics(Brain.ThreeWirePort.F);
-pneumatics hornClamp = pneumatics(Brain.ThreeWirePort.G);
+pneumatics hornClamp = pneumatics(Brain.ThreeWirePort.D);
 // VEXcode generated functions
 
 

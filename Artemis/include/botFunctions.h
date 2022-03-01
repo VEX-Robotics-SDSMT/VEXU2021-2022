@@ -8,4 +8,4 @@ void toggleSnakeJaw();
 void toggleHornClamp();
 
 void autoBalance(FourWheelDrive &drive, double distance, double speed);
-void chargeGoal(FourWheelDrive &drive, double dist);
+void chargeGoal(FourWheelDrive &drive, double dist, bool);

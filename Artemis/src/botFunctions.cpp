@@ -118,7 +118,7 @@ void autoBalance(FourWheelDrive &drive, double distance, double speed)
   drive.accelerate(0);
 }
 
-void chargeGoal(FourWheelDrive &drive, double dist)
+void chargeGoal(FourWheelDrive &drive, double dist, bool keepPulling)
 {
   tailMotor.spin(reverse, 100, velocityUnits::pct);
   drive.setMotors(-100);
@@ -128,9 +128,24 @@ void chargeGoal(FourWheelDrive &drive, double dist)
   }
   tailMotor.stop(); 
   drive.setMotors(100);
-  while (drive.getAllPosition() < -(dist-100))
+
+  if (keepPulling)
   {
-    task::sleep(loopDelay);
+    while (true)
+    {
+       double speed = std::max(std::min(100.0, rangeFinder.distance(distanceUnits::cm) * DIST_MULT), 0.0);
+      drive.setMotors(speed);
+    }
   }
-  drive.setMotors(0);
+  else
+  {
+    drive.setMotors(100);
+    while (drive.getAllPosition() < -(dist-100))
+    {
+      task::sleep(loopDelay);
+    }
+
+    drive.setMotors(0);
+}
+
 }

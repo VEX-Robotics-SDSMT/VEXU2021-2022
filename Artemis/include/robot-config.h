@@ -18,6 +18,7 @@ extern motor rightLiftMotor;
 
 extern inertial Inertial;
 extern controller Master;
+extern sonar rangeFinder;
 
 extern pneumatics snakeJaw;
 extern pneumatics hornClamp;
