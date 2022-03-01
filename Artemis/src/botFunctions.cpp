@@ -8,30 +8,34 @@ bool hornClampOpen = false;
 
 void toggleFrontMogoLift(MinesMotorGroup &lift)
 {
-  int loops = 0;
+
   if (frontMogoLiftOpen)
   {
-    //lift.spinToPosition(FRONT_MOGO_LIFT_DOWN, rotationUnits::deg, 100, velocityUnits::pct);
-    lift.spin(vex::directionType::rev, 50, velocityUnits::pct);
-
-    while(lift.rotation(deg) >= FRONT_MOGO_LIFT_DOWN && loops <= 3500)
-    {
-      loops += loopDelay;
-      task::sleep(loopDelay);
-    }
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 50);
     frontMogoLiftOpen = false;
   }
   else
   {
-    //lift.spinToPosition(FRONT_MOGO_LIFT_UP, rotationUnits::deg, 100, velocityUnits::pct);
-    lift.spin(vex::directionType::fwd, 100, velocityUnits::pct);
-    while(lift.rotation(deg) <= FRONT_MOGO_LIFT_UP && loops <= 3500)
-    {
-      loops += loopDelay;
-      task::sleep(loopDelay);
-    }
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
     frontMogoLiftOpen = true;
   }  
+}
+
+void moveLiftToPosition(MinesMotorGroup &lift, double pos, double speed)
+{
+  directionType dir = directionType::fwd;
+
+  if(lift.rotation(deg) > pos )
+    dir = directionType::rev;
+
+  int loops = 0;
+  lift.spin(dir, speed, velocityUnits::pct);
+
+  while(fabs(lift.rotation(deg) - pos) >= 20 && loops <= 3500)
+  {
+    loops += loopDelay;
+    task::sleep(loopDelay);
+  }
   lift.stop();
 }
 
@@ -112,4 +116,21 @@ void autoBalance(FourWheelDrive &drive, double distance, double speed)
     task::sleep(20);
   }
   drive.accelerate(0);
+}
+
+void chargeGoal(FourWheelDrive &drive, double dist)
+{
+  tailMotor.spin(reverse, 100, velocityUnits::pct);
+  drive.setMotors(-100);
+  while (drive.getAllPosition() > -dist)
+  {
+    task::sleep(loopDelay);
+  }
+  tailMotor.stop(); 
+  drive.setMotors(100);
+  while (drive.getAllPosition() < -(dist-100))
+  {
+    task::sleep(loopDelay);
+  }
+  drive.setMotors(0);
 }
