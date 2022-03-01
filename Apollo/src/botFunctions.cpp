@@ -102,25 +102,28 @@ void autoBalance(FourWheelDrive &drive, double distance, double speed)
 {
   double pos = drive.getAllPosition();
 
-  movePlungerOpen();
-  movePlungerPlunge();
+  movePlungerPos(PLUNGE_OPEN, true);
+  task::sleep(1000);
+  movePlungerPos(PLUNGE_PLUNGE, true);
   chainLift->setStopping(brakeType::coast);
+  task::sleep(500);
+
 
   drive.accelerate(speed);
 
-  while(Inertial.pitch() < 10 && drive.getAllPosition() - pos < distance)
+  while(Inertial.pitch() < 10 || drive.getAllPosition() - pos < distance)
   {
     task::sleep(20);
   }
 
-  chainLift->setStopping(brakeType::brake);
   movePlungerRest();
+  chainLift->setStopping(brakeType::brake);
 
   while(Inertial.pitch() > 10)
   {
     if (drive.getAllPosition() - pos > distance)
     {
-      drive.accelerate(8);
+      drive.accelerate(4);
     }
     task::sleep(20);
   }

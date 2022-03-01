@@ -19,8 +19,8 @@ extern motor rightLiftMotor;
 extern inertial Inertial;
 extern controller Master;
 
-extern pot rearPot;
-extern pot leftPot;
+extern pneumatics snakeJaw;
+extern pneumatics hornClamp;
 
 
 /**

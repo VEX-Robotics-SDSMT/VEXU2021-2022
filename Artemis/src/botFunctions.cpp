@@ -3,6 +3,8 @@
 //globals for this file only
 bool frontMogoLiftOpen = true;
 bool backMogoLiftUp = true;
+bool jawOpen = false;
+bool hornClampOpen = false;
 
 void toggleFrontMogoLift(MinesMotorGroup &lift)
 {
@@ -31,6 +33,34 @@ void toggleFrontMogoLift(MinesMotorGroup &lift)
     frontMogoLiftOpen = true;
   }  
   lift.stop();
+}
+
+void toggleSnakeJaw()
+{
+  if (jawOpen)
+  {
+    snakeJaw.close();
+    jawOpen = false;
+  }
+  else
+  {
+    snakeJaw.open();
+    jawOpen = true;
+  }
+}
+
+void toggleHornClamp()
+{
+  if (hornClampOpen)
+  {
+    hornClamp.close();
+    hornClampOpen = false;
+  }
+  else
+  {
+    hornClamp.open();
+    hornClampOpen = true;
+  }
 }
 
 void toggleBackMogoArm(bool waitForCompletion)

@@ -37,6 +37,8 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   tailMotor.setStopping(brakeType::hold);
+  snakeJaw.close();
+  hornClamp.close();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -57,7 +59,7 @@ void autonomous(void) {
   MinesMotorGroup r(rightDrive1, rightDrive2, rightDrive3, rightDrive4);
   MinesMotorGroup lift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
-  d.setAllBrakeMode(vex::brakeType::brake);
+  d.setAllBrakeMode(brakeType::brake);
   d.setTurnPIDConst(0.01, 0, 0);
   d.setDrivePIDConst(.8, 0, 0);
   lift.setStopping(brakeType::hold);
@@ -113,7 +115,9 @@ void autonomous(void) {
 void usercontrol(void) {
   bool buttonUpDebounce = false;
 
-  Master.ButtonR1.pressed(toggleBackMogoArm);
+  Master.ButtonB.pressed(toggleBackMogoArm);
+  Master.ButtonA.pressed(toggleSnakeJaw);
+  Master.ButtonL1.pressed(toggleHornClamp);
 
   //TODO - move to a different function
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
@@ -123,19 +127,19 @@ void usercontrol(void) {
   d.setDrivePIDConst(6.4, 0, 0.0024);
   d.setTurnPIDConst(0.0064, 0, 0.0002);
 
-  d.setAllBrakeMode(brakeType::brake);
+  d.setAllBrakeMode(brakeType::coast);
   lift.setStopping(brakeType::hold);
 
   // User control code here, inside the loop
   while (1) {
     d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
 
-    if (Master.ButtonL1.pressing())
+    if (Master.ButtonR1.pressing())
     {
       lift.spin(directionType::fwd,100, percentUnits::pct);
 
     }
-    else if (Master.ButtonL2.pressing())
+    else if (Master.ButtonR2.pressing())
     {
       lift.spin(directionType::rev,100, percentUnits::pct);
     }

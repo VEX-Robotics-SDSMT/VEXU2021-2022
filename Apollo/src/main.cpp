@@ -167,7 +167,7 @@ void usercontrol(void) {
 
   Master.ButtonB.pressed(plungeRing);
   //Master.ButtonX.pressed(togglePlunger);
-  Master.ButtonX.pressed(movePlungerHome);
+
 
   //TODO - move to a different function
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
@@ -181,7 +181,7 @@ void usercontrol(void) {
 
   // User control code here, inside the loop
   while (1) {
-    d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
+    d.arcadeLoopCall(Master.Axis3.position(), Master.Axis4.position());
 
     if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
     {
@@ -200,8 +200,9 @@ void usercontrol(void) {
     /*
     if (pressButton(Master.ButtonX.pressing(), buttonXDebounce))
     {
-      d.swingDrivePID(1, 0);
-    }
+      autoBalance(d, 800, 20);
+    }*/
+    /*
     if (pressButton(Master.ButtonY.pressing(), buttonYDebounce))
     {
       d.swingDrivePID(-1, 0);

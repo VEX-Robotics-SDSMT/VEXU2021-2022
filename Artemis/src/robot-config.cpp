@@ -24,9 +24,8 @@ motor rightLiftMotor = motor(PORT16, ratio18_1, true);
 inertial Inertial = inertial(PORT3);
 controller Master = controller();
 
-pot rearPot = pot(Brain.ThreeWirePort.A);
-pot leftPot = pot(Brain.ThreeWirePort.H);
-
+pneumatics snakeJaw = pneumatics(Brain.ThreeWirePort.F);
+pneumatics hornClamp = pneumatics(Brain.ThreeWirePort.G);
 // VEXcode generated functions
 
 
