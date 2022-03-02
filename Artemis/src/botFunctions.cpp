@@ -23,16 +23,18 @@ void toggleFrontMogoLift(MinesMotorGroup &lift)
 
 void moveLiftToPosition(MinesMotorGroup &lift, double pos, double speed)
 {
-  directionType dir = directionType::fwd;
-
-  if(lift.rotation(deg) > pos )
-    dir = directionType::rev;
-
   int loops = 0;
-  lift.spin(dir, speed, velocityUnits::pct);
 
-  while(fabs(lift.rotation(deg) - pos) >= 20 && loops <= 3500)
+  while(lift.rotation(deg) > pos && loops <= 3500)
   {
+    lift.spin(directionType::rev, speed, velocityUnits::pct);
+    loops += loopDelay;
+    task::sleep(loopDelay);
+  }
+
+  while(lift.rotation(deg) < pos  && loops <= 3500)
+  {
+    lift.spin(directionType::fwd, speed, velocityUnits::pct);
     loops += loopDelay;
     task::sleep(loopDelay);
   }
@@ -122,12 +124,17 @@ void chargeGoal(FourWheelDrive &drive, double dist, bool keepPulling)
 {
   tailMotor.spin(reverse, 100, velocityUnits::pct);
   drive.setMotors(-100);
-  while (drive.getAllPosition() > -dist)
+  int count = 0;
+  while (rangeFinder.distance(distanceUnits::cm) < dist) //(drive.getAllPosition() > -dist)
   {
     task::sleep(loopDelay);
+    Brain.Screen.clearLine(0);
+    Brain.Screen.print(count);
+    count++;
   }
   tailMotor.stop(); 
   drive.setMotors(100);
+  Brain.Screen.print(drive.getAllPosition());
 
   if (keepPulling)
   {

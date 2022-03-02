@@ -4,6 +4,7 @@
 #include "generics/drive.h"
 #include "robot-config.h"
 #include <algorithm>
+#include <string>
 
 #define DEBOUNCE_DELAY 200
 #define KILL_BUTTON E_CONTROLLER_DIGITAL_DOWN

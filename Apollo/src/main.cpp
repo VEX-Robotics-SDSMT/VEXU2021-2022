@@ -148,13 +148,14 @@ void usercontrol(void) {
 
   Master.ButtonR1.pressed(toggleFrontMogoLift);
 
+/*
   Master.ButtonUp.pressed(movePlungerOpen);
   Master.ButtonDown.pressed(movePlungerRest);
   Master.ButtonLeft.pressed(movePlungerPrep);
   Master.ButtonRight.pressed(movePlungerScore);
   Master.ButtonA.pressed(movePlungerPlunge);
 
-  Master.ButtonB.pressed(plungeRing);
+  Master.ButtonB.pressed(plungeRing);*/
   //Master.ButtonX.pressed(togglePlunger);
 
 
@@ -185,7 +186,33 @@ void usercontrol(void) {
       backMogoArm.stop();
     }
 
-    //for testing purpouses only 
+    if (Master.ButtonUp.pressing() && backMogoArm.position(rotationUnits::deg))
+    {
+      sixBarLift->spin(directionType::fwd, 100, percentUnits::pct);
+    }
+    else if (Master.ButtonDown.pressing() && backMogoArm.position(rotationUnits::deg))
+    {
+      sixBarLift->spin(directionType::rev, 100, percentUnits::pct);
+    }
+    else 
+    {
+      sixBarLift->stop();
+    }
+
+
+    if (Master.ButtonX.pressing() && backMogoArm.position(rotationUnits::deg))
+    {
+      chainLift->spin(directionType::fwd, 100, percentUnits::pct);
+    }
+    else if (Master.ButtonB.pressing() && backMogoArm.position(rotationUnits::deg))
+    {
+      chainLift->spin(directionType::rev, 100, percentUnits::pct);
+    }
+    else 
+    {
+      chainLift->stop();
+    }
+    //for testing purposes only 
     /*
     if (pressButton(Master.ButtonX.pressing(), buttonXDebounce))
     {

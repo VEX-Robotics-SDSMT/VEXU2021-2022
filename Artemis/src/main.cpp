@@ -85,7 +85,7 @@ void autonomous(void) {
   }
   else
   {
-    chargeGoal(d, 500, true);
+    chargeGoal(d, 95, true); //500
     //toggleBackMogoArm();
     //d.setMotorsRelative(100, 100);
     //d.turnDegreesPID(180);
