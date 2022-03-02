@@ -53,6 +53,7 @@ void pre_auton(void) {
 
 void autonomous(void) {
   bool skills = false;
+  bool keepPulling = false;
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
@@ -85,7 +86,22 @@ void autonomous(void) {
   }
   else
   {
-    chargeGoal(d, 95, true); //500
+    chargeGoal(d, 95, keepPulling);
+    d.driveTilesPID(0.75);
+    toggleSnakeJaw();
+    task::sleep(300);
+    d.turnDegreesAbsolutePID(-30);
+    moveBackMogoArm(BACK_MOGO_ARM_UP, 80);
+    d.turnDegreesAbsolutePID(0);
+    d.driveTilesPID(0.3);
+    d.turnDegreesAbsolutePID(-95);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 80);
+    d.turnDegreesAbsolutePID(-180);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN,80);
+    d.driveTilesPID(0.8);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 80);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN,80);
+
     //toggleBackMogoArm();
     //d.setMotorsRelative(100, 100);
     //d.turnDegreesPID(180);

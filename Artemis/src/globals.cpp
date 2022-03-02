@@ -3,8 +3,10 @@
 //const doubles
 const double FRONT_MOGO_LIFT_UP = -500; //600
 const double FRONT_MOGO_LIFT_DOWN = -1550; //1900
-const double BACK_MOGO_ARM_UP = -85;
-const double BACK_MOGO_ARM_DOWN = -350;
+const double FRONT_MOGO_LIFT_RING = -700;
+const double BACK_MOGO_ARM_UP = -20;
+const double BACK_MOGO_ARM_DOWN = -800;
+const double BACK_MOGO_ARM_RELEASE = -750;
 
 const double DIST_MULT = 1;
 

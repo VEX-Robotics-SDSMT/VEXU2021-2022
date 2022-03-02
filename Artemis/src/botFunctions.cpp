@@ -41,6 +41,13 @@ void moveLiftToPosition(MinesMotorGroup &lift, double pos, double speed)
   lift.stop();
 }
 
+void openJaw()
+{
+  snakeJaw.open();
+  tailMotor.spinToPosition(BACK_MOGO_ARM_RELEASE, rotationUnits::deg);
+  jawOpen = true;
+}
+
 void toggleSnakeJaw()
 {
   if (jawOpen)
@@ -50,8 +57,7 @@ void toggleSnakeJaw()
   }
   else
   {
-    snakeJaw.open();
-    jawOpen = true;
+    openJaw();
   }
 }
 
@@ -69,27 +75,36 @@ void toggleHornClamp()
   }
 }
 
-void toggleBackMogoArm(bool waitForCompletion)
+void moveBackMogoArm( double pos, double speed)
 {
   int loops = 0;
+
+  while(tailMotor.rotation(deg) > pos && loops <= 3500)
+  {
+    tailMotor.spin(directionType::rev, speed, velocityUnits::pct);
+    loops += loopDelay;
+    task::sleep(loopDelay);
+  }
+
+  while(tailMotor.rotation(deg) < pos  && loops <= 3500)
+  {
+    tailMotor.spin(directionType::fwd, speed, velocityUnits::pct);
+    loops += loopDelay;
+    task::sleep(loopDelay);
+  }
+  tailMotor.stop();
+}
+
+void toggleBackMogoArm(bool waitForCompletion)
+{
   if (backMogoLiftUp)
   {
-    tailMotor.spinToPosition(BACK_MOGO_ARM_DOWN, rotationUnits::deg, 100, velocityUnits::pct, waitForCompletion);
-    while(tailMotor.rotation(deg) >= BACK_MOGO_ARM_DOWN && loops <= 500)
-    {
-      loops += loopDelay;
-      task::sleep(loopDelay);
-    }
+    moveBackMogoArm(BACK_MOGO_ARM_DOWN, 80);
     backMogoLiftUp = false;
   }
   else 
   {
-    tailMotor.spinToPosition(BACK_MOGO_ARM_UP, rotationUnits::deg, 100, velocityUnits::pct, waitForCompletion);
-    while(tailMotor.rotation(deg) <= BACK_MOGO_ARM_UP && loops <= 500)
-    {
-      loops += loopDelay;
-      task::sleep(loopDelay);
-    }
+    moveBackMogoArm(BACK_MOGO_ARM_UP, 80);
     backMogoLiftUp = true;
   }  
 }
@@ -140,7 +155,7 @@ void chargeGoal(FourWheelDrive &drive, double dist, bool keepPulling)
   {
     while (true)
     {
-       double speed = std::max(std::min(100.0, rangeFinder.distance(distanceUnits::cm) * DIST_MULT), 0.0);
+      double speed = std::max(std::min(100.0, rangeFinder.distance(distanceUnits::cm) * DIST_MULT), 0.0);
       drive.setMotors(speed);
     }
   }

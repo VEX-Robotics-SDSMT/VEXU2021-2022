@@ -2,8 +2,10 @@
 
 void moveLiftToPosition(MinesMotorGroup &lift, double pos, double speed);
 void toggleFrontMogoLift(MinesMotorGroup&);
+void moveBackMogoArm(double pos, double speed);
 void toggleBackMogoArm(bool waitForCompletion);
 void toggleBackMogoArm();
+void openJaw();
 void toggleSnakeJaw();
 void toggleHornClamp();
 
