@@ -118,8 +118,8 @@ void autonomous(void) {
     toggleFrontMogoLift();
     d.driveTilesPID(1.6,35);
     toggleFrontMogoLift();
-    d.turnDegreesAbsolutePID(30); 
-    d.driveTilesPID(.4);
+    d.turnDegreesAbsolutePID(32); 
+    d.driveTilesPID(.2);
     plungeUntilTime(1500, 60000);
     movePlungerScore();
   }

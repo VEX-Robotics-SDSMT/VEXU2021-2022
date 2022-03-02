@@ -21,14 +21,23 @@ void toggleFrontMogoLift()
 
 void toggleBackMogoArm(bool waitForCompletion)
 {
+  int loops = 0;
     if (backMogoLiftUp)
   {
-    backMogoArm.spinToPosition(BACK_MOGO_LIFT_DOWN, rotationUnits::deg, waitForCompletion);
-    backMogoLiftUp = false;
+    backMogoArm.spin(directionType::rev, 100, velocityUnits::pct);
+    while(fabs(backMogoArm.rotation(deg) - BACK_MOGO_LIFT_DOWN) >= 5 && loops <= 500)
+  {
+    loops += loopDelay;
+    task::sleep(loopDelay);
+  }
+  backMogoArm.stop();
+    //backMogoArm.spinToPosition(BACK_MOGO_LIFT_DOWN, rotationUnits::deg, waitForCompletion);
+    //backMogoLiftUp = false;
    // backMogoArm.spinToPosition(-400, rotationUnits::deg);
   }
   else 
   {
+    
     backMogoArm.spinToPosition(BACK_MOGO_LIFT_UP, rotationUnits::deg, waitForCompletion);
     backMogoLiftUp = true;
   }  
