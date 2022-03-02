@@ -22,18 +22,16 @@ void toggleFrontMogoLift()
 void toggleBackMogoArm(bool waitForCompletion)
 {
   int loops = 0;
-    if (backMogoLiftUp)
+  if (backMogoLiftUp)
   {
     backMogoArm.spin(directionType::rev, 100, velocityUnits::pct);
     while(fabs(backMogoArm.rotation(deg) - BACK_MOGO_LIFT_DOWN) >= 5 && loops <= 500)
-  {
-    loops += loopDelay;
-    task::sleep(loopDelay);
-  }
-  backMogoArm.stop();
-    //backMogoArm.spinToPosition(BACK_MOGO_LIFT_DOWN, rotationUnits::deg, waitForCompletion);
-    //backMogoLiftUp = false;
-   // backMogoArm.spinToPosition(-400, rotationUnits::deg);
+    {
+      loops += loopDelay;
+      task::sleep(loopDelay);
+    }
+    backMogoArm.stop();
+    backMogoLiftUp = false;
   }
   else 
   {
@@ -52,7 +50,7 @@ void movePlungerPos(const double armPair[3], bool waitForCompletion)
 {
   if (armPair[2] >= 0)
   {
-    sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, false);
+    sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, 100, velocityUnits::pct, false);
     task::sleep(armPair[2]);
     chainLift->spinToPosition(armPair[1], rotationUnits::deg, 50, velocityUnits::pct, waitForCompletion);
   }
@@ -60,7 +58,7 @@ void movePlungerPos(const double armPair[3], bool waitForCompletion)
   {
     chainLift->spinToPosition(armPair[1], rotationUnits::deg, 50, velocityUnits::pct, false);
     task::sleep(armPair[2]);
-    sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, waitForCompletion);
+    sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, 100, velocityUnits::pct, waitForCompletion);
   }
 }
 

@@ -64,7 +64,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = false;
+  bool skills = true;
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
@@ -81,30 +81,30 @@ void autonomous(void) {
     d.driveTilesPID(-2.9);
     toggleBackMogoArm();
     d.driveTilesPID(-1.75);
-    d.turnDegreesAbsolutePID(72);
+    d.turnDegreesAbsolutePID(76);
     movePlungerOpen();
     toggleFrontMogoLift();
     d.driveTilesPID(1.5,30);
     toggleFrontMogoLift();
     movePlungerRest();
     d.driveTilesPID(-1.5,30);
-    d.turnDegreesAbsolutePID(-4);
+    d.turnDegreesAbsolutePID(-1);
     d.driveTilesPID(3.1);
     d.turnDegreesAbsolutePID(-24);
     toggleBackMogoArm();
-    d.driveTilesPID(1);
+    movePlungerOpen();
+    d.driveTilesPID(1.2);
     d.turnDegreesAbsolutePID(68);
-    d.driveTilesPID(-0.5);
+    d.driveTilesPID(-0.35);
     toggleBackMogoArm();
     d.driveTilesPID(0.3);
     d.turnDegreesAbsolutePID(250);
-    d.driveTilesPID(-0.8);
+    //d.driveTilesPID(-0.8);
     toggleBackMogoArm(false);
     plungeUntilTime(1500, 50000);
     movePlungerScore();
-    d.driveTilesPID(0.3);
-    //park
-
+    //d.driveTilesPID(0.43);
+    //autoBalance(d, 300, 30);
 
   }
   else
@@ -120,7 +120,7 @@ void autonomous(void) {
     toggleFrontMogoLift();
     d.turnDegreesAbsolutePID(32); 
     d.driveTilesPID(.2);
-    plungeUntilTime(1500, 60000);
+    plungeUntilTime(1500, 43000);
     movePlungerScore();
   }
 }
