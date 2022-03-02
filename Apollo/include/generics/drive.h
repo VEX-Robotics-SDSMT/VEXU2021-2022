@@ -64,6 +64,7 @@ public:
     void setMotorsRelative(double distance, double speed);
     void setAllBrakeMode(vex::brakeType mode);
     void setLRBias(double bias);
+    void setMotors(double speed);
     double getSpeed(MinesMotorGroup *);
     double getAllSpeed();
     double getAllPosition();
@@ -85,7 +86,6 @@ public:
 private:
     void rawSetMotors(double speed, double bias = 1);
     void setMotors(MinesMotorGroup *motors, double speed);
-    void setMotors(double speed);
     void setZeroPosition(MinesMotorGroup * motors);
     void setZeroPosition();
 

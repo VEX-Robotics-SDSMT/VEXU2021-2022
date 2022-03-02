@@ -153,6 +153,6 @@ void chargeGoal(FourWheelDrive &drive, double dist, bool keepPulling)
     }
 
     drive.setMotors(0);
-}
+  }
 
 }

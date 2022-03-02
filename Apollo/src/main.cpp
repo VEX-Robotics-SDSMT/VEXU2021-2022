@@ -64,7 +64,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = true;
+  bool skills = false;
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
@@ -99,7 +99,6 @@ void autonomous(void) {
     toggleBackMogoArm();
     d.driveTilesPID(0.3);
     d.turnDegreesAbsolutePID(250);
-    //d.driveTilesPID(-0.8);
     toggleBackMogoArm(false);
     plungeUntilTime(1500, 50000);
     movePlungerScore();
@@ -111,7 +110,7 @@ void autonomous(void) {
   {
     toggleBackMogoArm(false);
     d.driveTilesPID(-2.98);
-    toggleBackMogoArm();
+    toggleBackMogoArm(true);
     d.driveTilesPID(1.9);
     d.turnDegreesAbsolutePID(310);
     movePlungerOpen();
@@ -153,10 +152,10 @@ void usercontrol(void) {
   Master.ButtonDown.pressed(movePlungerRest);
   Master.ButtonLeft.pressed(movePlungerPrep);
   Master.ButtonRight.pressed(movePlungerScore);
-  Master.ButtonA.pressed(movePlungerPlunge);
 
   Master.ButtonB.pressed(plungeRing);*/
-  //Master.ButtonX.pressed(togglePlunger);
+  Master.ButtonX.pressed(togglePlunger);
+  Master.ButtonA.pressed(toggleBackMogoArm);
 
 
   //TODO - move to a different function

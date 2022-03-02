@@ -41,6 +41,11 @@ void toggleBackMogoArm(bool waitForCompletion)
   }  
 }
 
+void toggleBackMogoArm()
+{
+  toggleBackMogoArm(true);
+}
+
 void togglePlunger()
 {
   plungerPneumatics.set( !plungerPneumatics.value());
@@ -146,4 +151,21 @@ void plungeUntilTime(int delay, int time)
     task::sleep(delay);
     plungeRing();
   }
+}
+
+void chargeGoal(FourWheelDrive &drive, double dist)
+{
+  toggleBackMogoArm(false);
+  drive.setMotors(-100);
+  int count = 0;
+  while (drive.getAllPosition() > -dist) //(drive.getAllPosition() > -dist)
+  {
+    task::sleep(loopDelay);
+    Brain.Screen.clearLine(0);
+    Brain.Screen.print(count);
+    count++;
+  }
+  toggleBackMogoArm();
+  drive.setMotors(0);
+  Brain.Screen.print(drive.getAllPosition());
 }

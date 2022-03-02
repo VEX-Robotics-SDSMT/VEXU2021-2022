@@ -3,7 +3,7 @@
 //const doubles
 const double FRONT_SIXBAR_LIFT_UP = 400;
 const double FRONT_SIXBAR_LIFT_DOWN = 30;
-const double BACK_MOGO_LIFT_DOWN = -370;// -450
+const double BACK_MOGO_LIFT_DOWN = -375;// -450
 const double BACK_MOGO_LIFT_UP = -240;
 const double FRONT_MOGO_LIFT_OUT = 430;
 const double FRONT_MOGO_LIFT_IN = 5;
@@ -16,7 +16,7 @@ const double PLUNGE_HOME[3] = {0, 30, 0};
 const double PLUNGE_OPEN[3] = {430, 30, 200};
 const double PLUNGE_REST[3] = {90, 120, -100};
 const double PLUNGE_PREP[3] = {150, 130, 0};
-const double PLUNGE_PLUNGE[3] = {90, 200, 0};
+const double PLUNGE_PLUNGE[3] = {90, 210, 0};
 const double PLUNGE_SCORE[3] ={400, 5, 600};
 
 //globals

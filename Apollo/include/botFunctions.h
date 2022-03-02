@@ -1,7 +1,8 @@
 #include "globals.h"
 
 void toggleFrontMogoLift();
-void toggleBackMogoArm(bool waitForCompletion = true);
+void toggleBackMogoArm(bool waitForCompletion);
+void toggleBackMogoArm();
 
 //plunger arm
 void togglePlunger();
@@ -17,3 +18,5 @@ void plungeRing();
 void plungeUntilTime(int delay, int time);
 
 void autoBalance(FourWheelDrive &drive, double distance, double speed);
+void chargeGoal(FourWheelDrive &drive, double dist);
+
