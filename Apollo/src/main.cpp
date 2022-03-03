@@ -145,8 +145,8 @@ void usercontrol(void) {
   bool buttonYDebounce = false;
   bool buttonXDebounce = false;
 
-  Master.ButtonR1.pressed(toggleFrontMogoLift);
-
+  Master.ButtonA.pressed(toggleFrontMogoLift);
+  Master.ButtonUp.pressed(togglePlunger);
 /*
   Master.ButtonUp.pressed(movePlungerOpen);
   Master.ButtonDown.pressed(movePlungerRest);
@@ -154,8 +154,8 @@ void usercontrol(void) {
   Master.ButtonRight.pressed(movePlungerScore);
 
   Master.ButtonB.pressed(plungeRing);*/
-  Master.ButtonX.pressed(togglePlunger);
-  Master.ButtonA.pressed(toggleBackMogoArm);
+  //Master.ButtonX.pressed(togglePlunger);
+  //Master.ButtonA.pressed(toggleBackMogoArm);
 
 
   //TODO - move to a different function
@@ -172,11 +172,11 @@ void usercontrol(void) {
   while (1) {
     d.arcadeLoopCall(Master.Axis3.position(), Master.Axis4.position());
 
-    if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
+    if (Master.ButtonX.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
     {
       backMogoArm.spin(directionType::fwd, 100, percentUnits::pct);
     }
-    else if (Master.ButtonL2.pressing() && backMogoArm.position(rotationUnits::deg) > -500.0)
+    else if (Master.ButtonB.pressing() && backMogoArm.position(rotationUnits::deg) > -500.0)
     {
       backMogoArm.spin(directionType::rev, 100, percentUnits::pct);
     }
@@ -185,11 +185,11 @@ void usercontrol(void) {
       backMogoArm.stop();
     }
 
-    if (Master.ButtonUp.pressing() && backMogoArm.position(rotationUnits::deg))
+    if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg))
     {
       sixBarLift->spin(directionType::fwd, 100, percentUnits::pct);
     }
-    else if (Master.ButtonDown.pressing() && backMogoArm.position(rotationUnits::deg))
+    else if (Master.ButtonL2.pressing() && backMogoArm.position(rotationUnits::deg))
     {
       sixBarLift->spin(directionType::rev, 100, percentUnits::pct);
     }
@@ -199,11 +199,11 @@ void usercontrol(void) {
     }
 
 
-    if (Master.ButtonX.pressing() && backMogoArm.position(rotationUnits::deg))
+    if (Master.ButtonR1.pressing() && backMogoArm.position(rotationUnits::deg))
     {
       chainLift->spin(directionType::fwd, 100, percentUnits::pct);
     }
-    else if (Master.ButtonB.pressing() && backMogoArm.position(rotationUnits::deg))
+    else if (Master.ButtonR2.pressing() && backMogoArm.position(rotationUnits::deg))
     {
       chainLift->spin(directionType::rev, 100, percentUnits::pct);
     }
