@@ -143,9 +143,9 @@ void autoBalance(FourWheelDrive &drive, double distance, double speed)
   drive.accelerate(0);
 }
 
-void plungeUntilTime(int delay, int time)
+void plungeUntilTime(int delay, int time, int startTime)
 {
-  time = time - delay; //this is here to make sure this doesn't go overtime
+  time = startTime + time - delay; //this is here to make sure this doesn't go overtime
   while(Brain.Timer.time() < time)
   {
     task::sleep(delay);

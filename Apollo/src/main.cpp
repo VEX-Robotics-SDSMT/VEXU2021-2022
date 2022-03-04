@@ -64,7 +64,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = false;
+  bool skills = true;
+  int matchTime = Brain.Timer.time();
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
@@ -84,7 +85,7 @@ void autonomous(void) {
     d.turnDegreesAbsolutePID(76);
     movePlungerOpen();
     toggleFrontMogoLift();
-    d.driveTilesPID(1.5,30);
+    d.driveTilesPID(1.8,30);
     toggleFrontMogoLift();
     movePlungerRest();
     d.driveTilesPID(-1.5,30);
@@ -93,14 +94,14 @@ void autonomous(void) {
     d.turnDegreesAbsolutePID(-24);
     toggleBackMogoArm();
     movePlungerOpen();
-    d.driveTilesPID(1.2);
-    d.turnDegreesAbsolutePID(68);
+    d.driveTilesPID(0.4);
+    /*d.turnDegreesAbsolutePID(68);
     d.driveTilesPID(-0.35);
     toggleBackMogoArm();
     d.driveTilesPID(0.3);
     d.turnDegreesAbsolutePID(250);
-    toggleBackMogoArm(false);
-    plungeUntilTime(1500, 50000);
+    toggleBackMogoArm(false);*/
+    plungeUntilTime(1500, 50000, matchTime);
     movePlungerScore();
     //d.driveTilesPID(0.43);
     //autoBalance(d, 300, 30);
@@ -119,7 +120,7 @@ void autonomous(void) {
     toggleFrontMogoLift();
     d.turnDegreesAbsolutePID(32); 
     d.driveTilesPID(.2);
-    plungeUntilTime(1500, 43000);
+    plungeUntilTime(1500, 41500, matchTime);
     movePlungerScore();
   }
 }
@@ -172,11 +173,11 @@ void usercontrol(void) {
   while (1) {
     d.arcadeLoopCall(Master.Axis3.position(), Master.Axis4.position());
 
-    if (Master.ButtonX.pressing() && backMogoArm.position(rotationUnits::deg) < -50.0)
+    if (Master.ButtonX.pressing())
     {
       backMogoArm.spin(directionType::fwd, 100, percentUnits::pct);
     }
-    else if (Master.ButtonB.pressing() && backMogoArm.position(rotationUnits::deg) > -500.0)
+    else if (Master.ButtonB.pressing())
     {
       backMogoArm.spin(directionType::rev, 100, percentUnits::pct);
     }
@@ -185,13 +186,13 @@ void usercontrol(void) {
       backMogoArm.stop();
     }
 
-    if (Master.ButtonL1.pressing() && backMogoArm.position(rotationUnits::deg))
+    if (Master.ButtonL1.pressing())
     {
-      sixBarLift->spin(directionType::fwd, 100, percentUnits::pct);
+      sixBarLift->spin(directionType::fwd, 70, percentUnits::pct);
     }
-    else if (Master.ButtonL2.pressing() && backMogoArm.position(rotationUnits::deg))
+    else if (Master.ButtonL2.pressing())
     {
-      sixBarLift->spin(directionType::rev, 100, percentUnits::pct);
+      sixBarLift->spin(directionType::rev, 70, percentUnits::pct);
     }
     else 
     {
@@ -199,13 +200,13 @@ void usercontrol(void) {
     }
 
 
-    if (Master.ButtonR1.pressing() && backMogoArm.position(rotationUnits::deg))
+    if (Master.ButtonR2.pressing())
     {
-      chainLift->spin(directionType::fwd, 100, percentUnits::pct);
+      chainLift->spin(directionType::fwd, 70, percentUnits::pct);
     }
-    else if (Master.ButtonR2.pressing() && backMogoArm.position(rotationUnits::deg))
+    else if (Master.ButtonR1.pressing())
     {
-      chainLift->spin(directionType::rev, 100, percentUnits::pct);
+      chainLift->spin(directionType::rev, 70, percentUnits::pct);
     }
     else 
     {
