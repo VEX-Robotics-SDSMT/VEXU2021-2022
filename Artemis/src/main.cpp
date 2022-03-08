@@ -52,8 +52,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = false;
-  bool keepPulling = false;
+  bool skills = true;
+  bool keepPulling = true;
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
@@ -64,25 +64,26 @@ void autonomous(void) {
   d.setTurnPIDConst(0.01, 0, 0);
   d.setDrivePIDConst(.8, 0, 0);
   lift.setStopping(brakeType::hold);
+  tailMotor.setStopping(brakeType::hold);
 
 
   if (skills)
   {
     task::sleep(10000);
-    toggleFrontMogoLift(lift);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
     d.driveTilesPID(.25);
-    toggleFrontMogoLift(lift);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
     d.turnDegreesAbsolutePID(-48);
-    toggleFrontMogoLift(lift);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
     d.driveTilesPID(1.3);
-    toggleFrontMogoLift(lift);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
     d.driveTilesPID(-.75);
-    toggleFrontMogoLift(lift);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
     d.turnDegreesAbsolutePID(20);
     d.driveTilesPID(.55);
-    toggleFrontMogoLift(lift);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
     d.driveTilesPID(1.5);
-    d.turnDegreesAbsolutePID(-90);
+    //d.turnDegreesAbsolutePID(-90);
   }
   else
   {
@@ -96,7 +97,7 @@ void autonomous(void) {
     d.driveTilesPID(0.3);
     d.turnDegreesAbsolutePID(-95);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 80);
-    d.turnDegreesAbsolutePID(-180);
+    d.turnDegreesAbsolutePID(-195);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN,80);
     d.driveTilesPID(0.8);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 80);
@@ -128,6 +129,7 @@ void autonomous(void) {
 
 void usercontrol(void) {
   bool buttonUpDebounce = false;
+  bool manualArmMovement = false;
 
   Master.ButtonB.pressed(toggleBackMogoArm);
   Master.ButtonA.pressed(toggleSnakeJaw);
@@ -162,11 +164,32 @@ void usercontrol(void) {
       lift.stop();
     }
 
+    if (Master.ButtonDown.pressing() || Master.ButtonUp.pressing())
+    {
+      manualArmMovement = true;
+    }
+
+    if (manualArmMovement)
+    {
+      if (Master.ButtonUp.pressing())
+      {
+        tailMotor.spin(directionType::fwd, 50, percentUnits::pct);
+      }
+      else if (Master.ButtonDown.pressing())
+      {
+        tailMotor.spin(directionType::rev, 50, percentUnits::pct);
+      }
+      else
+      {
+        tailMotor.stop();
+      }
+    }
+
     //for testing purposes only
-    if (pressButton(Master.ButtonUp.pressing(), buttonUpDebounce))
+    /*if (pressButton(Master.ButtonUp.pressing(), buttonUpDebounce))
     {
       toggleFrontMogoLift(lift);
-    }
+    }*/
 
 
     wait(20, msec); // Sleep the task for a short amount of time to
