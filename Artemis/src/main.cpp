@@ -84,6 +84,36 @@ void autonomous(void) {
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
     d.driveTilesPID(1.5);
     //d.turnDegreesAbsolutePID(-90);
+
+    // Rough draft for new skills route.
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    d.driveTilesPID(.25);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
+    d.turnDegreesAbsolutePID(-90);
+    d.driveTilesPID(1);
+    d.turnDegreesAbsolutePID(0);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    d.driveTilesPID(1.5);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
+    d.driveTilesPID(1.5);
+    d.turnDegreesAbsolutePID(-20);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    d.driveTilesPID(.25);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 50);
+    d.driveTilesPID(-.25);
+    d.turnDegreesAbsolutePID(0);
+    d.driveTilesPID(-.5);
+    d.turnDegreesAbsolutePID(180);
+    d.driveTilesPID(1);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    d.driveTilesPID(-.5);
+    d.turnDegreesAbsolutePID(90);
+    d.driveTilesPID(1);
+    d.turnDegreesAbsolutePID(0);
+    d.driveTilesPID(1);
+    d.turnDegreesAbsolutePID(-90);
+    d.driveTilesPID(1);
+    //Auto balance
   }
   else
   {

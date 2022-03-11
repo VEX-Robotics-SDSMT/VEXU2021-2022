@@ -106,6 +106,34 @@ void autonomous(void) {
     //d.driveTilesPID(0.43);
     //autoBalance(d, 300, 30);
 
+    // Rough draft for new skills
+    movePlungerOpen();
+    toggleFrontMogoLift();
+    d.driveTilesPID(.5,30);
+    toggleFrontMogoLift();
+    movePlungerRest();
+    d.driveTilesPID(.35,30);
+    d.turnDegreesAbsolutePID(-74);
+    d.driveTilesPID(1,30);
+    d.turnDegreesAbsolutePID(106);
+    d.driveTilesPID(-1.9);
+    toggleBackMogoArm();
+    d.driveTilesPID(-2.2);
+    toggleBackMogoArm();
+    d.driveTilesPID(0.45);
+    d.turnDegreesAbsolutePID(0);
+    d.driveTilesPID(-1.8);
+    toggleBackMogoArm();
+    d.driveTilesPID(-1.8);
+    d.turnDegreesAbsolutePID(-106);
+    d.driveTilesPID(-2.5);
+    toggleBackMogoArm();
+    d.driveTilesPID(0.3);
+    d.turnDegreesAbsolutePID(74);
+    // Load rings
+
+
+
   }
   else
   {
