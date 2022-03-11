@@ -69,20 +69,20 @@ void autonomous(void) {
 
   if (skills)
   {
-    task::sleep(10000);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(.25);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
-    d.turnDegreesAbsolutePID(-48);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(1.3);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
-    d.driveTilesPID(-.75);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.turnDegreesAbsolutePID(20);
-    d.driveTilesPID(.55);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
-    d.driveTilesPID(1.5);
+    // task::sleep(10000);
+    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    // d.driveTilesPID(.25);
+    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
+    // d.turnDegreesAbsolutePID(-48);
+    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    // d.driveTilesPID(1.3);
+    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
+    // d.driveTilesPID(-.75);
+    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    // d.turnDegreesAbsolutePID(20);
+    // d.driveTilesPID(.55);
+    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
+    // d.driveTilesPID(1.5);
     //d.turnDegreesAbsolutePID(-90);
 
     // Rough draft for new skills route.
@@ -90,10 +90,10 @@ void autonomous(void) {
     d.driveTilesPID(.25);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
     d.turnDegreesAbsolutePID(-90);
-    d.driveTilesPID(1);
+    d.driveTilesPID(0.55);
     d.turnDegreesAbsolutePID(0);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(1.5);
+    d.driveTilesPID(1);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
     d.driveTilesPID(1.5);
     d.turnDegreesAbsolutePID(-20);
