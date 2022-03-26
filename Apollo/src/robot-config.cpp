@@ -20,8 +20,8 @@ motor leftDriveBottom = motor(PORT14, ratio6_1, true);
 
 // port 6 and 8 are broken
 //lift motors
-motor rightFrontMogoLift = motor(PORT18, ratio36_1, true);
-motor leftFrontMogoLift = motor(PORT9, ratio36_1, false);
+motor rightFrontMogoLift = motor(PORT9, ratio36_1, false);
+motor leftFrontMogoLift = motor(PORT6, ratio36_1, true);
 motor right6Bar = motor(PORT13, ratio18_1, true);
 motor left6Bar = motor(PORT17, ratio18_1, false);
 motor rightChainBar = motor(PORT12, ratio36_1, true);
