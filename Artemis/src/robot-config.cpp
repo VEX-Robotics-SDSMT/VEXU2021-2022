@@ -27,6 +27,8 @@ sonar rangeFinder = sonar(Brain.ThreeWirePort.G);
 
 pneumatics snakeJaw = pneumatics(Brain.ThreeWirePort.F);
 pneumatics hornClamp = pneumatics(Brain.ThreeWirePort.D);
+
+potV2 liftPot = potV2(Brain.ThreeWirePort.B);
 // VEXcode generated functions
 
 

@@ -16,6 +16,7 @@ void movePlungerPrep();
 void movePlungerPlunge();
 void plungeRing();
 void plungeUntilTime(int delay, int time, int startTime);
+double get6BarPots();
 
 void autoBalance(FourWheelDrive &drive, double distance, double speed);
 void chargeGoal(FourWheelDrive &drive, double dist);

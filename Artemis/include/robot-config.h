@@ -23,6 +23,8 @@ extern sonar rangeFinder;
 extern pneumatics snakeJaw;
 extern pneumatics hornClamp;
 
+extern potV2 liftPot;
+
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

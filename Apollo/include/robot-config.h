@@ -27,8 +27,6 @@ extern pneumatics backMogoPnumatics;
 extern pot rearMogoPot;
 extern pot left6BarPot;
 extern pot right6BarPot;
-extern pot leftChainPot;
-extern pot rightChainPot;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

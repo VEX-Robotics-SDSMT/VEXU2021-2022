@@ -164,12 +164,13 @@ void usercontrol(void) {
 
   d.setAllBrakeMode(brakeType::coast);
   lift.setStopping(brakeType::hold);
+  lift.setExternalPositionFunc(getPotPos);
 
   // User control code here, inside the loop
   while (1) {
     d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
 
-    if (Master.ButtonR1.pressing())
+    /*if (Master.ButtonR1.pressing())
     {
       lift.spin(directionType::fwd,100, percentUnits::pct);
 
@@ -181,14 +182,14 @@ void usercontrol(void) {
     else 
     {
       lift.stop();
-    }
+    }*/
 
     if (Master.ButtonDown.pressing() || Master.ButtonUp.pressing())
     {
       manualArmMovement = true;
     }
 
-    if (manualArmMovement)
+   /* if (manualArmMovement)
     {
       if (Master.ButtonUp.pressing())
       {
@@ -202,13 +203,13 @@ void usercontrol(void) {
       {
         tailMotor.stop();
       }
-    }
+    }*/
 
     //for testing purposes only
-    /*if (pressButton(Master.ButtonUp.pressing(), buttonUpDebounce))
+    if (pressButton(Master.ButtonUp.pressing(), buttonUpDebounce))
     {
       toggleFrontMogoLift(lift);
-    }*/
+    }
 
 
     wait(20, msec); // Sleep the task for a short amount of time to
