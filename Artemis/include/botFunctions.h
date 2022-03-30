@@ -1,5 +1,7 @@
 #include "globals.h"
 
+double getPotPos();
+
 void moveLiftToPosition(MinesMotorGroup &lift, double pos, double speed);
 void toggleFrontMogoLift(MinesMotorGroup&);
 void moveBackMogoArm(double pos, double speed);

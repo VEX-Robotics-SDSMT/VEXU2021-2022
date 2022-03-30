@@ -32,10 +32,8 @@ pneumatics plungerPneumatics = pneumatics(Brain.ThreeWirePort.C);
 pneumatics backMogoPnumatics = pneumatics(Brain.ThreeWirePort.F);
 
 pot rearMogoPot = pot(Brain.ThreeWirePort.G);
-pot left6BarPot = pot(Brain.ThreeWirePort.A);
-pot right6BarPot = pot(Brain.ThreeWirePort.H);
-pot leftChainPot = pot(Brain.ThreeWirePort.B);
-pot rightChainPot = pot(Brain.ThreeWirePort.E);
+pot left6BarPot = pot(Brain.ThreeWirePort.H);
+pot right6BarPot = pot(Brain.ThreeWirePort.A);
 
 inertial Inertial = inertial(PORT7);
 controller Master = controller();

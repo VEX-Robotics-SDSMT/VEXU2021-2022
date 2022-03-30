@@ -169,3 +169,13 @@ void chargeGoal(FourWheelDrive &drive, double dist)
   drive.setMotors(0);
   Brain.Screen.print(drive.getAllPosition());
 }
+
+double get6BarPots()
+{
+  double angle = right6BarPot.angle(rotationUnits::deg);
+  angle += left6BarPot.angle(rotationUnits::deg);
+  angle /= 2;
+
+  return angle;
+}
+

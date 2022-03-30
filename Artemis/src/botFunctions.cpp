@@ -6,17 +6,23 @@ bool backMogoLiftUp = true;
 bool jawOpen = false;
 bool hornClampOpen = false;
 
+double getPotPos()
+{
+  double pos = (POT_ADD + liftPot.value(analogUnits::range12bit)) * POT_MULT; 
+  return pos;
+}
+
 void toggleFrontMogoLift(MinesMotorGroup &lift)
 {
 
   if (frontMogoLiftOpen)
   {
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 50);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 50000, 5);
     frontMogoLiftOpen = false;
   }
   else
   {
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 50000, 5);
     frontMogoLiftOpen = true;
   }  
 }
