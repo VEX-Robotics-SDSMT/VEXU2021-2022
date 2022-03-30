@@ -53,13 +53,19 @@ void pre_auton(void) {
 void autonomous(void) {
   bool skills = true;
   //commented out for scrim until it has been tuned
-  
-  /*drive.setAllBrakeMode(brakeType::brake);
-  d.setTurnPIDConst(0.01, 0.01, 0.0001);
-  d.setDrivePIDConst(.8, 0, 0);
-  lift.setStopping(brakeType::hold);
-  tailMotor.setStopping(brakeType::hold);*/
+  MinesMotorGroup rightWheels(rightFront, rightTop, rightBack);
+  MinesMotorGroup leftWheels(leftFront, leftTop, leftBack);
+  FourWheelDrive driveBase(leftWheels, rightWheels, inertialSensor, master);
 
+  MinesMotorGroup backClamp(leftBackClamp, rightBackClamp);
+  MinesMotorGroup lift(leftLift, rightLift);
+
+  driveBase.setAllBrakeMode(brakeType::coast);
+  lift.setStopping(brakeType::hold);
+  backClamp.setStopping(brakeType::hold);
+  liftClamp.setStopping(brakeType::hold);
+  driveBase.setTurnPIDConst(0.01, 0.01, 0.0001);
+  driveBase.setDrivePIDConst(.8, 0, 0);
 
   if (skills)
   {
@@ -74,7 +80,6 @@ void autonomous(void) {
 
 
 void usercontrol(void) {
-  //driveBase.setAllBrakeMode(brakeType::coast);
   MinesMotorGroup rightWheels(rightFront, rightTop, rightBack);
   MinesMotorGroup leftWheels(leftFront, leftTop, leftBack);
   FourWheelDrive driveBase(leftWheels, rightWheels, inertialSensor, master);
@@ -82,9 +87,19 @@ void usercontrol(void) {
   MinesMotorGroup backClamp(leftBackClamp, rightBackClamp);
   MinesMotorGroup lift(leftLift, rightLift);
 
+  driveBase.setAllBrakeMode(brakeType::coast);
   lift.setStopping(brakeType::hold);
   backClamp.setStopping(brakeType::hold);
   liftClamp.setStopping(brakeType::hold);
+
+  driveBase.setTurnPIDConst(0.01, 0.01, 0.0001);
+  driveBase.setDrivePIDConst(.8, 0, 0);
+
+  //button debounces
+  bool upDebounce = false;
+  bool downDebounce = false;
+  bool leftDebounce = false;
+  bool rightDebounce = false;
 
   // User control code here, inside the loop
   while (1) {
@@ -97,16 +112,16 @@ void usercontrol(void) {
     else 
       {lift.stop();}
 
-    if (master.ButtonR1.pressing())
+    if (master.ButtonR2.pressing())
       {intake.spin(directionType::fwd,100, percentUnits::pct);}
-    else if (master.ButtonR2.pressing())
+    else if (master.ButtonR1.pressing())
       {intake.spin(directionType::rev,100, percentUnits::pct);}
     else 
       {intake.stop();}
 
-    if (master.ButtonB.pressing())
+    if (master.ButtonY.pressing())
       {backClamp.spin(directionType::fwd,100, percentUnits::pct);}
-    else if (master.ButtonY.pressing())
+    else if (master.ButtonB.pressing())
       {backClamp.spin(directionType::rev,100, percentUnits::pct);}
     else 
       {backClamp.stop();}
@@ -117,6 +132,26 @@ void usercontrol(void) {
       {liftClamp.spin(directionType::rev,100, percentUnits::pct);}
     else 
       {liftClamp.stop();}
+
+
+
+      //auton test
+    if (pressButton(master.ButtonUp.pressing(), upDebounce))
+    {
+      driveBase.driveTilesPID(1);
+    }
+    if (pressButton(master.ButtonDown.pressing(), downDebounce))
+    {
+      driveBase.driveTilesPID(-1);
+    }
+    if (pressButton(master.ButtonLeft.pressing(), leftDebounce))
+    {
+      driveBase.turnDegreesPID(-90);
+    }
+    if (pressButton(master.ButtonRight.pressing(), rightDebounce))
+    {
+      driveBase.turnDegreesPID(90);
+    }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
