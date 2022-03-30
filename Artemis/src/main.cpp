@@ -61,7 +61,7 @@ void autonomous(void) {
   MinesMotorGroup lift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setAllBrakeMode(brakeType::brake);
-  d.setTurnPIDConst(0.01, 0, 0);
+  d.setTurnPIDConst(0.01, 0.01, 0.0001);
   d.setDrivePIDConst(.8, 0, 0);
   lift.setStopping(brakeType::hold);
   tailMotor.setStopping(brakeType::hold);
@@ -69,51 +69,40 @@ void autonomous(void) {
 
   if (skills)
   {
-    // task::sleep(10000);
-    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    // d.driveTilesPID(.25);
-    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
-    // d.turnDegreesAbsolutePID(-48);
-    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    // d.driveTilesPID(1.3);
-    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
-    // d.driveTilesPID(-.75);
-    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    // d.turnDegreesAbsolutePID(20);
-    // d.driveTilesPID(.55);
-    // moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
-    // d.driveTilesPID(1.5);
-    //d.turnDegreesAbsolutePID(-90);
-
-    // Rough draft for new skills route.
+    tailMotor.stop();
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
     d.driveTilesPID(.25);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
-    d.turnDegreesAbsolutePID(-90);
-    d.driveTilesPID(0.55);
-    d.turnDegreesAbsolutePID(0);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50); //pick up first alliance mobile goal
+    d.turnDegreesAbsolutePID(-45);//90
+    d.driveTilesPID(1);//.55
+    d.turnDegreesAbsolutePID(25);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(1);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50);
-    d.driveTilesPID(1.5);
-    d.turnDegreesAbsolutePID(-20);
+    d.driveTilesPID(.35);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 100);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(.25);
+    d.driveTilesPID(1.1);
+    d.turnDegreesAbsolutePID(-50);
+    d.driveTilesPID(.65);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 50);
-    d.driveTilesPID(-.25);
-    d.turnDegreesAbsolutePID(0);
-    d.driveTilesPID(-.5);
-    d.turnDegreesAbsolutePID(180);
-    d.driveTilesPID(1);
+    d.driveTilesPID(-.45);
+    d.turnDegreesAbsolutePID(-170);
+    d.driveTilesPID(1.2);
+    d.turnDegreesAbsolutePID(-180);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(-.5);
-    d.turnDegreesAbsolutePID(90);
-    d.driveTilesPID(1);
+    d.turnDegreesAbsolutePID(-60);
+    d.driveTilesPID(.45);
+    toggleHornClamp();
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 100);
+    d.driveTilesPID(-.45);
+    d.turnDegreesAbsolutePID(24);
+    d.driveTilesPID(1.2);
     d.turnDegreesAbsolutePID(0);
-    d.driveTilesPID(1);
+    d.driveTilesPID(.5);
     d.turnDegreesAbsolutePID(-90);
-    d.driveTilesPID(1);
-    //Auto balance
+    d.driveTilesPID(-.5, 75);
+    d.driveTilesPID(.65, 50);
+    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    autoBalance(d, 1, 100);
   }
   else
   {

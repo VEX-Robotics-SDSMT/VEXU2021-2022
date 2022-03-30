@@ -255,10 +255,10 @@ void FourWheelDrive::turnDegreesAbsolutePID(float targetDegrees, float desiredSp
 
   float INTEGRATOR_MAX_MAGNITUDE = 1000;
   float DELTA_T = LOOP_DELAY / 1000.0;
-  const int STOP_LOOPS = 20;
-  const float TURN_TOLERANCE = 2;
+  const int STOP_LOOPS = 50;
+  const float TURN_TOLERANCE = 1;
   const float DESIRED_SPEED = 70;
-  const int MAX_RUN_TIME = ONE_SEC_IN_MS * 5;
+  const int MAX_RUN_TIME = ONE_SEC_IN_MS * 7.5;
   float endingDegrees = degreeBoundingHelper(targetDegrees);
   float currentDegrees = degreeBoundingHelper(inertialSensor->heading());
 

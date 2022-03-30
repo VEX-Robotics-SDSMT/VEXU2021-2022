@@ -4,7 +4,7 @@
 bool frontMogoLiftOpen = true;
 bool backMogoLiftUp = true;
 bool jawOpen = false;
-bool hornClampOpen = false;
+bool hornClampOpen = true;
 
 void toggleFrontMogoLift(MinesMotorGroup &lift)
 {
@@ -171,3 +171,4 @@ void chargeGoal(FourWheelDrive &drive, double dist, bool keepPulling)
   }
 
 }
+
