@@ -35,7 +35,7 @@ pot rearMogoPot = pot(Brain.ThreeWirePort.G);
 pot left6BarPot = pot(Brain.ThreeWirePort.H);
 pot right6BarPot = pot(Brain.ThreeWirePort.A);
 
-inertial Inertial = inertial(PORT7);
+inertial Inertial = inertial(PORT2);
 controller Master = controller();
 
 // VEXcode generated functions

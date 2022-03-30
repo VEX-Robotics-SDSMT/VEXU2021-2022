@@ -78,6 +78,7 @@ void autonomous(void) {
 
   if (skills)
   {
+    /*
     toggleBackMogoArm(false);
     d.driveTilesPID(-2.9);
     toggleBackMogoArm();
@@ -95,42 +96,57 @@ void autonomous(void) {
     toggleBackMogoArm();
     movePlungerOpen();
     d.driveTilesPID(0.4);
-    /*d.turnDegreesAbsolutePID(68);
+    //d.turnDegreesAbsolutePID(68);
     d.driveTilesPID(-0.35);
     toggleBackMogoArm();
     d.driveTilesPID(0.3);
     d.turnDegreesAbsolutePID(250);
-    toggleBackMogoArm(false);*/
+   // toggleBackMogoArm(false);
     plungeUntilTime(1500, 50000, matchTime);
     movePlungerScore();
     //d.driveTilesPID(0.43);
-    //autoBalance(d, 300, 30);
-
+    //autoBalance(d, 300, 30);*/
+  
     // Rough draft for new skills
+    toggleBackMogoArm(false);
     movePlungerOpen();
     toggleFrontMogoLift();
-    d.driveTilesPID(.5,30);
+    d.driveTilesPID(.9,30);
     toggleFrontMogoLift();
+    d.driveTilesPID(-1,30);
+    plungeRing();
+    wait(1, sec);
+    plungeRing();
+    wait(1, sec);
+    plungeRing();
+    wait(1, sec);
+    plungeRing();
+    movePlungerScore();
     movePlungerRest();
-    d.driveTilesPID(.35,30);
-    d.turnDegreesAbsolutePID(-74);
+    d.driveTilesPID(0.8,30);
+    d.turnDegreesAbsolutePID(-114);
     d.driveTilesPID(1,30);
     d.turnDegreesAbsolutePID(106);
     d.driveTilesPID(-1.9);
     toggleBackMogoArm();
-    d.driveTilesPID(-2.2);
+    d.driveTilesPID(-2.3);
+    d.driveTilesPID(0.1);
     toggleBackMogoArm();
     d.driveTilesPID(0.45);
     d.turnDegreesAbsolutePID(0);
+    d.driveTilesPID(0.45);
+    movePlungerOpen();
+    toggleFrontMogoLift();
+    d.driveTilesPID(-0.4);
+    d.turnDegreesAbsolutePID(210);
+    d.driveTilesPID(1.2,30);
+    d.driveTilesPID(0.3,30);
+    toggleFrontMogoLift();
     d.driveTilesPID(-1.8);
-    toggleBackMogoArm();
-    d.driveTilesPID(-1.8);
-    d.turnDegreesAbsolutePID(-106);
-    d.driveTilesPID(-2.5);
-    toggleBackMogoArm();
-    d.driveTilesPID(0.3);
-    d.turnDegreesAbsolutePID(74);
-    // Load rings
+    d.turnDegreesAbsolutePID(96);
+    d.driveTilesPID(2.5);
+    plungeUntilTime(1500, 41500, matchTime);
+    movePlungerScore();
 
 
 
