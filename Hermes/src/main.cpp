@@ -51,7 +51,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = true;
+  bool skills = false;
+  bool waitForCompletion;
   //commented out for scrim until it has been tuned
   MinesMotorGroup rightWheels(rightFront, rightTop, rightBack);
   MinesMotorGroup leftWheels(leftFront, leftTop, leftBack);
@@ -64,8 +65,8 @@ void autonomous(void) {
   lift.setStopping(brakeType::hold);
   backClamp.setStopping(brakeType::hold);
   liftClamp.setStopping(brakeType::hold);
-  driveBase.setTurnPIDConst(0.01, 0.01, 0.0001);
-  driveBase.setDrivePIDConst(.8, 0, 0);
+  driveBase.setTurnPIDConst(0.0092, 0.0001, 0.01);
+  driveBase.setDrivePIDConst(4, 0.01, 0.0003);
 
   if (skills)
   {
@@ -73,13 +74,31 @@ void autonomous(void) {
   }
   else
   {
+    
+    driveBase.driveTilesPID(.87, 80);
+    liftClamp.spinToPosition(FRONT_CLAMP_DOWN, degrees);
+    driveBase.driveTilesPID(-0.5);
+    driveBase.turnDegreesAbsolutePID(-45);
+    driveBase.driveTilesPID(-.6,30);
+    backClamp.spinToPosition(BACK_CLAMP_DOWN, degrees);
+    driveBase.driveTilesPID(-.2, 30);
+    lift.spinToPosition(80, degrees);
+    driveBase.turnDegreesAbsolutePID(32);
+    intake.spinFor(fwd, 100, seconds, false);
+    
+    driveBase.driveTilesPID(1,40);
+    driveBase.turnDegreesAbsolutePID(180);
+    driveBase.driveTilesPID(2);
+    
 
+    
   }
 }
 
 
 
 void usercontrol(void) {
+  //task::sleep(3000);
   MinesMotorGroup rightWheels(rightFront, rightTop, rightBack);
   MinesMotorGroup leftWheels(leftFront, leftTop, leftBack);
   FourWheelDrive driveBase(leftWheels, rightWheels, inertialSensor, master);
@@ -87,12 +106,12 @@ void usercontrol(void) {
   MinesMotorGroup backClamp(leftBackClamp, rightBackClamp);
   MinesMotorGroup lift(leftLift, rightLift);
 
-  driveBase.setAllBrakeMode(brakeType::brake);
+  driveBase.setAllBrakeMode(brakeType::coast);
   lift.setStopping(brakeType::hold);
   backClamp.setStopping(brakeType::hold);
   liftClamp.setStopping(brakeType::hold);
 
-  driveBase.setTurnPIDConst(0.005, .01, .001);
+  driveBase.setTurnPIDConst(0.0092, 0.0001, 0.01);
   driveBase.setDrivePIDConst(4, 0.01, 0.0003);
 
   //button debounces

@@ -8,6 +8,7 @@ using code = vision::code;
 brain  Brain;
 controller master = controller();
 
+//port 6 & 8 are broke
 // VEXcode device constructors
 motor rightFront = motor(PORT15, ratio18_1, true);
 motor rightTop = motor(PORT16, ratio18_1, true);
@@ -20,7 +21,7 @@ motor leftBackClamp = motor(PORT3, ratio36_1, false);
 motor rightLift = motor(PORT2, ratio36_1, false);
 motor leftLift = motor(PORT5, ratio36_1, true);
 motor intake = motor(PORT11, ratio6_1, true);
-motor liftClamp = motor(PORT6, ratio36_1, false);
+motor liftClamp = motor(PORT7, ratio36_1, false);
 
 inertial inertialSensor = inertial(PORT19);
 potV2 rightPot = potV2(Brain.ThreeWirePort.H);

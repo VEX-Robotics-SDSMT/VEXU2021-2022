@@ -11,7 +11,8 @@
 
 
 
-
+extern const double FRONT_CLAMP_DOWN;
+extern const double BACK_CLAMP_DOWN;
 
 
 
