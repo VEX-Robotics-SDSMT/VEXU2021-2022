@@ -87,13 +87,13 @@ void usercontrol(void) {
   MinesMotorGroup backClamp(leftBackClamp, rightBackClamp);
   MinesMotorGroup lift(leftLift, rightLift);
 
-  driveBase.setAllBrakeMode(brakeType::coast);
+  driveBase.setAllBrakeMode(brakeType::brake);
   lift.setStopping(brakeType::hold);
   backClamp.setStopping(brakeType::hold);
   liftClamp.setStopping(brakeType::hold);
 
-  driveBase.setTurnPIDConst(0.01, 0.01, 0.0001);
-  driveBase.setDrivePIDConst(.8, 0, 0);
+  driveBase.setTurnPIDConst(0.005, .01, .001);
+  driveBase.setDrivePIDConst(4, 0.01, 0.0003);
 
   //button debounces
   bool upDebounce = false;

@@ -182,7 +182,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
     float INTEGRATOR_MAX_MAGNITUDE = 1000;
     float DELTA_T = LOOP_DELAY / 1000.0;
     const int STOP_LOOPS = 35;
-    const float DEGREE_TOLERANCE = 0.5;
+    const float TILE_TOLERANCE = 0.01;
     // 4 Inches wheels, 600RPM motors, measured 222.22 ticks/rotation
     const double TICKS_PER_TILE = 1333.3;
     float currentDistance = 0;
@@ -233,7 +233,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
         task::sleep(LOOP_DELAY);
 
         if(fabs(degreeBoundingHelper(currentDistance) - degreeBoundingHelper(numTiles))
-                <= DEGREE_TOLERANCE)
+                <= TILE_TOLERANCE)
             { stopLoopCount++;}
         else
             {stopLoopCount = 0;}
