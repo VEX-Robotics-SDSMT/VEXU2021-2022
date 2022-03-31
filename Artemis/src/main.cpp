@@ -61,38 +61,39 @@ void autonomous(void) {
   MinesMotorGroup lift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setAllBrakeMode(brakeType::brake);
-  d.setTurnPIDConst(0.01, 0.01, 0.0001);
+  d.setTurnPIDConst(0.01, 0, 0.0005);
   d.setDrivePIDConst(.8, 0, 0);
   lift.setStopping(brakeType::hold);
   tailMotor.setStopping(brakeType::hold);
+  lift.setExternalPositionFunc(getPotPos);
 
 
   if (skills)
   {
     tailMotor.stop();
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 100);
     d.driveTilesPID(.25);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50); //pick up first alliance mobile goal
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 50); //pick up first alliance mobile goal
     d.turnDegreesAbsolutePID(-45);//90
-    d.driveTilesPID(1);//.55
-    d.turnDegreesAbsolutePID(25);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(.35);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 100);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(1.1);
-    d.turnDegreesAbsolutePID(-50);
-    d.driveTilesPID(.65);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 50);
-    d.driveTilesPID(-.45);
-    d.turnDegreesAbsolutePID(-170);
+    d.driveTilesPID(1.05);//.55
+    d.turnDegreesAbsolutePID(30);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 100);
+    d.driveTilesPID(.30);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 100);
     d.driveTilesPID(1.2);
+    d.turnDegreesAbsolutePID(-45);
+    d.driveTilesPID(.4);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_RING, 50);
+    d.driveTilesPID(-.55);
+    d.turnDegreesAbsolutePID(-152);
+    d.driveTilesPID(1.25);
     d.turnDegreesAbsolutePID(-180);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.turnDegreesAbsolutePID(-60);
-    d.driveTilesPID(.45);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 100);
+    d.turnDegreesAbsolutePID(-62);
+    d.driveTilesPID(.5);
     toggleHornClamp();
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_RING, 100);
     d.driveTilesPID(-.45);
     d.turnDegreesAbsolutePID(24);
     d.driveTilesPID(1.2);
@@ -101,7 +102,7 @@ void autonomous(void) {
     d.turnDegreesAbsolutePID(-90);
     d.driveTilesPID(-.5, 75);
     d.driveTilesPID(.65, 50);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 100);
     autoBalance(d, 1, 100);
   }
   else
@@ -115,12 +116,12 @@ void autonomous(void) {
     d.turnDegreesAbsolutePID(0);
     d.driveTilesPID(0.3);
     d.turnDegreesAbsolutePID(-95);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 80);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_RING, 80);
     d.turnDegreesAbsolutePID(-195);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN,80);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
     d.driveTilesPID(0.8);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 80);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN,80);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 80);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
 
     //toggleBackMogoArm();
     //d.setMotorsRelative(100, 100);

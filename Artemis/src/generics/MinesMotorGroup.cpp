@@ -61,6 +61,14 @@ void MinesMotorGroup::startMoveToPosition(double pos, double timeoutVal, double 
   runPIDToPosition(); //TODO needs to be task
 }
 
+void MinesMotorGroup::startMoveToPosition(double pos, double s)
+{
+  target = pos;
+  speed = s;
+
+  runPIDToPosition(); //TODO needs to be task
+}
+
 void MinesMotorGroup::startHoldPosition(double pos)
 {
   target = pos;
@@ -91,7 +99,7 @@ void MinesMotorGroup::runPIDToPosition()
   task::sleep(LOOP_DELAY * 1.5);
   runnningPId = true;
   //TODO timeout should perhaps be how long without progress
-  while (errorCount < toleranceTime && t < timeout && runnningPId)
+  while (errorCount < withinTargetTime && t < timeout && runnningPId)
   {
     PIDOneLoop(error, integral);
     t += LOOP_DELAY;
@@ -136,4 +144,4 @@ double MinesMotorGroup::bindToMagnitude(double value, double MAX_MAGNITUDE)
     value = -MAX_MAGNITUDE;
   }
   return value;
-}
+} 
