@@ -1,0 +1,10 @@
+#include "globals.h"
+
+<<<<<<< HEAD
+const double FRONT_CLAMP_DOWN = 460;
+const double BACK_CLAMP_DOWN = -510;
+
+=======
+//globals
+const int LOOP_DELAY = 20;
+>>>>>>> a21922946aa6dad2f783b1f2fb7fcecad11d8c65

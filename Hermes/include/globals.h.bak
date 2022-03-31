@@ -1,0 +1,24 @@
+#ifndef _GLOBALS_H
+#define _GLOBALS_H
+
+#include "generics/drive.h"
+#include "robot-config.h"
+
+
+//extern MinesMotorGroup rightWheels;
+//extern MinesMotorGroup leftWheels;
+//extern FourWheelDrive driveBase;
+
+
+<<<<<<< HEAD
+
+extern const double FRONT_CLAMP_DOWN;
+extern const double BACK_CLAMP_DOWN;
+=======
+extern const int LOOP_DELAY;
+
+>>>>>>> a21922946aa6dad2f783b1f2fb7fcecad11d8c65
+
+
+
+#endif

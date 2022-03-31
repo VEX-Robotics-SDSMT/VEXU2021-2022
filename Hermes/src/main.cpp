@@ -52,7 +52,6 @@ void pre_auton(void) {
 
 void autonomous(void) {
   bool skills = false;
-  bool waitForCompletion;
   //commented out for scrim until it has been tuned
   MinesMotorGroup rightWheels(rightFront, rightTop, rightBack);
   MinesMotorGroup leftWheels(leftFront, leftTop, leftBack);
@@ -74,23 +73,31 @@ void autonomous(void) {
   }
   else
   {
-    
+    backClamp.spinToPosition(30, degrees, false);
+    liftClamp.spinToPosition(390, degrees, false);
     driveBase.driveTilesPID(.87, 80);
     liftClamp.spinToPosition(FRONT_CLAMP_DOWN, degrees);
     driveBase.driveTilesPID(-0.5);
-    driveBase.turnDegreesAbsolutePID(-45);
+    driveBase.turnDegreesAbsolutePID(-55);
     driveBase.driveTilesPID(-.6,30);
-    backClamp.spinToPosition(BACK_CLAMP_DOWN, degrees);
+    backClamp.spinToPosition(BACK_CLAMP_DOWN, degrees, false);
     driveBase.driveTilesPID(-.2, 30);
-    lift.spinToPosition(80, degrees);
+    driveBase.driveTilesPID(.08, 30);
+    lift.spinToPosition(120, degrees);
     driveBase.turnDegreesAbsolutePID(32);
-    intake.spinFor(fwd, 100, seconds, false);
-    
-    driveBase.driveTilesPID(1,40);
-    driveBase.turnDegreesAbsolutePID(180);
-    driveBase.driveTilesPID(2);
-    
-
+    intake.spin(fwd,60,pct);
+    driveBase.driveTilesPID(.59,40);
+    driveBase.turnDegreesAbsolutePID(210);
+    lift.spinToPosition(180, degrees);
+    driveBase.driveTilesPID(.8);
+    driveBase.driveTilesPID(-.35);
+    driveBase.driveTilesPID(.35);
+    driveBase.driveTilesPID(-.35);
+    driveBase.driveTilesPID(.35);
+    driveBase.driveTilesPID(-.35);
+    driveBase.driveTilesPID(.35);
+    driveBase.driveTilesPID(-.35);
+    driveBase.driveTilesPID(.35);
     
   }
 }
