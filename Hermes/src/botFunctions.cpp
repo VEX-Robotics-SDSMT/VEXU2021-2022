@@ -10,7 +10,3 @@ void scoreWithDelay(int delay, double distance, FourWheelDrive driveBase)
     driveBase.driveTilesPID(-distance);
   }
 }
-void liftDown(bool waitForCompletion)
-{
-  liftClamp.spinToPosition(FRONT_CLAMP_DOWN, degrees, waitForCompletion);
-}

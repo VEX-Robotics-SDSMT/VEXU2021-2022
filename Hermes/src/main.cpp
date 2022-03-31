@@ -77,7 +77,7 @@ void autonomous(void) {
     liftClamp.spinToPosition(390, degrees, false);
     driveBase.driveTilesPID(.87, 80);
     liftClamp.spinToPosition(FRONT_CLAMP_DOWN, degrees);
-    driveBase.driveTilesPID(-0.5);
+    driveBase.driveTilesPID(-0.52);
     driveBase.turnDegreesAbsolutePID(-55);
     driveBase.driveTilesPID(-.6,30);
     backClamp.spinToPosition(BACK_CLAMP_DOWN, degrees, false);
@@ -91,14 +91,26 @@ void autonomous(void) {
     lift.spinToPosition(180, degrees);
     driveBase.driveTilesPID(.8);
     driveBase.driveTilesPID(-.35);
+    wait(.2, seconds);
     driveBase.driveTilesPID(.35);
     driveBase.driveTilesPID(-.35);
+    wait(.2, seconds);
     driveBase.driveTilesPID(.35);
     driveBase.driveTilesPID(-.35);
+    wait(.2, seconds);
     driveBase.driveTilesPID(.35);
     driveBase.driveTilesPID(-.35);
+    wait(.2, seconds);
     driveBase.driveTilesPID(.35);
-    
+     driveBase.driveTilesPID(-.35);
+    wait(.2, seconds);
+    driveBase.driveTilesPID(.35);
+    driveBase.driveTilesPID(-.35);
+    wait(.2, seconds);
+    driveBase.driveTilesPID(.35);
+    driveBase.driveTilesPID(-.35);
+    wait(.2, seconds);
+    driveBase.driveTilesPID(.35);
   }
 }
 
