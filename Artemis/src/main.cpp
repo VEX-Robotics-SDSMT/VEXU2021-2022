@@ -61,8 +61,8 @@ void autonomous(void) {
   MinesMotorGroup lift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
   d.setAllBrakeMode(brakeType::brake);
-  d.setTurnPIDConst(0.01, 0.01, 0.0001);
-  d.setDrivePIDConst(.8, 0, 0);
+  d.setDrivePIDConst(1.4, 0, 0);
+  d.setTurnPIDConst(0.0095, 0, 0.0001);
   lift.setStopping(brakeType::hold);
   tailMotor.setStopping(brakeType::hold);
 
@@ -71,36 +71,36 @@ void autonomous(void) {
   {
     tailMotor.stop();
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(.25);
+    d.driveTilesPID(0.3);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50); //pick up first alliance mobile goal
-    d.turnDegreesAbsolutePID(-45);//90
-    d.driveTilesPID(1);//.55
+    d.turnDegreesAbsolutePID(-50);//90
+    d.driveTilesPID(1.7);//.55
     d.turnDegreesAbsolutePID(25);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(.35);
+    d.driveTilesPID(0.35);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 100);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
-    d.driveTilesPID(1.1);
+    d.driveTilesPID(2.1);
     d.turnDegreesAbsolutePID(-50);
     d.driveTilesPID(.65);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 50);
-    d.driveTilesPID(-.45);
+    d.driveTilesPID(-.75);
     d.turnDegreesAbsolutePID(-170);
-    d.driveTilesPID(1.2);
+    d.driveTilesPID(3.5);
     d.turnDegreesAbsolutePID(-180);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
     d.turnDegreesAbsolutePID(-60);
-    d.driveTilesPID(.45);
+    d.driveTilesPID(.9);
     toggleHornClamp();
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 100);
-    d.driveTilesPID(-.45);
+    d.driveTilesPID(-.9);
     d.turnDegreesAbsolutePID(24);
-    d.driveTilesPID(1.2);
+    d.driveTilesPID(3.5);
     d.turnDegreesAbsolutePID(0);
-    d.driveTilesPID(.5);
+    d.driveTilesPID(1);
     d.turnDegreesAbsolutePID(-90);
-    d.driveTilesPID(-.5, 75);
-    d.driveTilesPID(.65, 50);
+    d.driveTilesPID(-1, 75);
+    d.driveTilesPID(1.2, 50);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
     autoBalance(d, 1, 100);
   }
@@ -159,18 +159,26 @@ void usercontrol(void) {
   MinesMotorGroup r(rightDrive1, rightDrive2, rightDrive3, rightDrive4);
   MinesMotorGroup lift(leftLiftMotor, rightLiftMotor);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
-  d.setDrivePIDConst(6.4, 0, 0.0024);
-  d.setTurnPIDConst(0.0064, 0, 0.0002);
+  //d.setDrivePIDConst(6.4, 0, 0.0024);
+  //d.setTurnPIDConst(0.0064, 0, 0.0002);
+  d.setDrivePIDConst(1.4, 0, 0);
+  d.setTurnPIDConst(0.0095, 0, 0.0001);
 
-  d.setAllBrakeMode(brakeType::coast);
+  d.setAllBrakeMode(brakeType::brake);
   lift.setStopping(brakeType::hold);
   lift.setExternalPositionFunc(getPotPos);
+
+    //button debounces
+  bool upDebounce = false;
+  bool downDebounce = false;
+  bool leftDebounce = false;
+  bool rightDebounce = false;
 
   // User control code here, inside the loop
   while (1) {
     d.arcadeLoopCall(Master.Axis3.position(), Master.Axis1.position());
 
-    /*if (Master.ButtonR1.pressing())
+    if (Master.ButtonR1.pressing())
     {
       lift.spin(directionType::fwd,100, percentUnits::pct);
 
@@ -182,7 +190,7 @@ void usercontrol(void) {
     else 
     {
       lift.stop();
-    }*/
+    }
 
     if (Master.ButtonDown.pressing() || Master.ButtonUp.pressing())
     {
@@ -205,12 +213,23 @@ void usercontrol(void) {
       }
     }*/
 
-    //for testing purposes only
-    if (pressButton(Master.ButtonUp.pressing(), buttonUpDebounce))
+          //auton test
+    if (pressButton(Master.ButtonUp.pressing(), upDebounce))
     {
-      toggleFrontMogoLift(lift);
+      d.driveTilesPID(2);
     }
-
+    if (pressButton(Master.ButtonDown.pressing(), downDebounce))
+    {
+      d.driveTilesPID(-2);
+    }
+    if (pressButton(Master.ButtonLeft.pressing(), leftDebounce))
+    {
+      d.turnDegreesPID(-90);
+    }
+    if (pressButton(Master.ButtonRight.pressing(), rightDebounce))
+    {
+      d.turnDegreesPID(90);
+    }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
