@@ -112,6 +112,7 @@ void autonomous(void) {
     // Rough draft for new skills
     toggleBackMogoArm(false);
     movePlungerOpen();
+    task::sleep(1000);
     toggleFrontMogoLift();
     d.driveTilesPID(.7,30);
     toggleFrontMogoLift();

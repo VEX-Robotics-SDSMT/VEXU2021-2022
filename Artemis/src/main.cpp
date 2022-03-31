@@ -52,8 +52,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = true;
-  bool keepPulling = true;
+  bool skills = false;
+  bool keepPulling = false;
   //commented out for scrim until it has been tuned
   
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
@@ -108,20 +108,18 @@ void autonomous(void) {
   else
   {
     chargeGoal(d, 95, keepPulling);
-    d.driveTilesPID(0.75);
+    d.driveTilesPID(0.40);
     toggleSnakeJaw();
     task::sleep(300);
     d.turnDegreesAbsolutePID(-30);
     moveBackMogoArm(BACK_MOGO_ARM_UP, 80);
-    d.turnDegreesAbsolutePID(0);
-    d.driveTilesPID(0.3);
-    d.turnDegreesAbsolutePID(-95);
+    d.turnDegreesAbsolutePID(-55);
     lift.startMoveToPosition(FRONT_MOGO_LIFT_RING, 80);
-    d.turnDegreesAbsolutePID(-195);
-    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
-    d.driveTilesPID(0.8);
-    lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 80);
-    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
+    //d.turnDegreesAbsolutePID(-195);
+    //lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
+    //d.driveTilesPID(0.8);
+    //lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 80);
+    //lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
 
     //toggleBackMogoArm();
     //d.setMotorsRelative(100, 100);
