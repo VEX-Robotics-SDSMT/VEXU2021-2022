@@ -14,15 +14,14 @@ motor rightDriveTop = motor(PORT1, ratio6_1, false);
 motor rightDriveMid = motor(PORT4, ratio6_1, true);
 motor rightDriveBottom = motor(PORT3, ratio6_1, false);
 
-motor leftDriveTop = motor(PORT19, ratio6_1, true);
+motor leftDriveTop = motor(PORT20, ratio6_1, true);
 motor leftDriveMid = motor(PORT21, ratio6_1, false);
-motor leftDriveBottom = motor(PORT14, ratio6_1, true);
+motor leftDriveBottom = motor(PORT19, ratio6_1, true);
 
-// port 6 and 8 are broken
 //lift motors
 motor rightFrontMogoLift = motor(PORT9, ratio36_1, false);
 motor leftFrontMogoLift = motor(PORT6, ratio36_1, true);
-motor right6Bar = motor(PORT13, ratio18_1, true);
+motor right6Bar = motor(PORT11, ratio18_1, true);
 motor left6Bar = motor(PORT17, ratio18_1, false);
 motor rightChainBar = motor(PORT12, ratio36_1, true);
 motor leftChainBar = motor(PORT15, ratio36_1, false);
@@ -32,8 +31,8 @@ pneumatics plungerPneumatics = pneumatics(Brain.ThreeWirePort.C);
 pneumatics backMogoPnumatics = pneumatics(Brain.ThreeWirePort.F);
 
 pot rearMogoPot = pot(Brain.ThreeWirePort.G);
-pot left6BarPot = pot(Brain.ThreeWirePort.H);
-pot right6BarPot = pot(Brain.ThreeWirePort.A);
+potV2 left6BarPot = potV2(Brain.ThreeWirePort.H);
+potV2 right6BarPot = potV2(Brain.ThreeWirePort.A);
 
 inertial Inertial = inertial(PORT2);
 controller Master = controller();

@@ -5,6 +5,12 @@ bool frontMogoLiftOpen = false;
 bool sixBarUp = true;
 bool backMogoLiftUp = false;
 
+double getPotPos()
+{
+  double pos = (POT_ADD + right6BarPot.value(analogUnits::range12bit)) * POT_MULT; 
+  return pos;
+}
+
 void toggleFrontMogoLift()
 {
   if (frontMogoLiftOpen)
@@ -55,7 +61,7 @@ void movePlungerPos(const double armPair[3], bool waitForCompletion)
 {
   if (armPair[2] >= 0)
   {
-    sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, 100, velocityUnits::pct, false);
+    sixBarLift->startMoveToPosition(armPair[0], 5000, 3);
     task::sleep(armPair[2]);
     chainLift->spinToPosition(armPair[1], rotationUnits::deg, 50, velocityUnits::pct, waitForCompletion);
   }
@@ -63,7 +69,7 @@ void movePlungerPos(const double armPair[3], bool waitForCompletion)
   {
     chainLift->spinToPosition(armPair[1], rotationUnits::deg, 50, velocityUnits::pct, false);
     task::sleep(armPair[2]);
-    sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, 100, velocityUnits::pct, waitForCompletion);
+    sixBarLift->startMoveToPosition(armPair[0], 5000, 3);
   }
 }
 
