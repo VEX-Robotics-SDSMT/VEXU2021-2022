@@ -61,7 +61,7 @@ void movePlungerPos(const double armPair[3], bool waitForCompletion)
 {
   if (armPair[2] >= 0)
   {
-    sixBarLift->startMoveToPosition(armPair[0], 5000, 3);
+    sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, 50, velocityUnits::pct, false);
     task::sleep(armPair[2]);
     chainLift->spinToPosition(armPair[1], rotationUnits::deg, 50, velocityUnits::pct, waitForCompletion);
   }
@@ -69,7 +69,7 @@ void movePlungerPos(const double armPair[3], bool waitForCompletion)
   {
     chainLift->spinToPosition(armPair[1], rotationUnits::deg, 50, velocityUnits::pct, false);
     task::sleep(armPair[2]);
-    sixBarLift->startMoveToPosition(armPair[0], 5000, 3);
+    sixBarLift->spinToPosition(armPair[0], rotationUnits::deg, 50, velocityUnits::pct, waitForCompletion);
   }
 }
 

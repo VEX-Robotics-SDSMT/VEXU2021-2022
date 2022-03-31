@@ -182,7 +182,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
     float INTEGRATOR_MAX_MAGNITUDE = 1000;
     float DELTA_T = LOOP_DELAY / 1000.0;
     const int STOP_LOOPS = 35;
-    const float TILE_TOLERANCE = 0.01;
+    const float TILE_TOLERANCE = 0.005;
     // 4 Inches wheels, 600RPM motors, measured 222.22 ticks/rotation
     const double TICKS_PER_TILE = 571.3;
     float currentDistance = 0;

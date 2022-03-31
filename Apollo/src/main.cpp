@@ -112,36 +112,35 @@ void autonomous(void) {
     // Rough draft for new skills
     toggleBackMogoArm(false);
     movePlungerOpen();
+    task::sleep(1000);
     toggleFrontMogoLift();
-    d.driveTilesPID(.7,30);
+    d.driveTilesPID(.55, 40);
     toggleFrontMogoLift();
-    d.driveTilesPID(-1,30);
-    plungeUntilTime(1500, 15000, matchTime);
+    d.driveTilesPID(-0.9, 85);
+    plungeUntilTime(1500, 18000, matchTime);
     movePlungerScore();
+
+    d.turnDegreesAbsolutePID(111, 75);
+    d.driveTilesPID(-2.45);
     movePlungerRest();
-    d.driveTilesPID(0.7,30);
-    d.turnDegreesAbsolutePID(-114);
-    d.driveTilesPID(1,30);
-    d.turnDegreesAbsolutePID(106);
-    d.driveTilesPID(-1.9);
     toggleBackMogoArm();
     d.driveTilesPID(-2.3);
-    d.driveTilesPID(0.1);
     toggleBackMogoArm();
+
     d.driveTilesPID(0.45);
-    d.turnDegreesAbsolutePID(0);
-    d.driveTilesPID(0.45);
+    d.turnDegreesAbsolutePID(-115);
+    d.driveTilesPID(1);
     movePlungerOpen();
     toggleFrontMogoLift();
-    d.driveTilesPID(-0.4);
-    d.turnDegreesAbsolutePID(210);
-    d.driveTilesPID(1.2,30);
-    d.driveTilesPID(0.3,30);
+    d.driveTilesPID(-0.8);
+
+    d.turnDegreesAbsolutePID(180);
+    d.driveTilesPID(1,30);
     toggleFrontMogoLift();
-    d.driveTilesPID(-1.8);
+    d.driveTilesPID(-1.5);
     d.turnDegreesAbsolutePID(96);
-    d.driveTilesPID(2.5);
-    plungeUntilTime(1500, 41500, matchTime);
+    d.driveTilesPID(2.8);
+    plungeUntilTime(1500, 58000, matchTime);
     movePlungerScore();
 
 
