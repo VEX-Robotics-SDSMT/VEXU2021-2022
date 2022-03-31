@@ -63,42 +63,44 @@ void autonomous(void) {
   d.setAllBrakeMode(brakeType::brake);
   d.setDrivePIDConst(1.4, 0, 0);
   d.setTurnPIDConst(0.0095, 0, 0.0001);
+
   lift.setStopping(brakeType::hold);
   tailMotor.setStopping(brakeType::hold);
+  lift.setExternalPositionFunc(getPotPos);
 
 
   if (skills)
   {
     tailMotor.stop();
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 100);
     d.driveTilesPID(0.3);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 50); //pick up first alliance mobile goal
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 50); //pick up first alliance mobile goal
     d.turnDegreesAbsolutePID(-50);//90
     d.driveTilesPID(1.7);//.55
     d.turnDegreesAbsolutePID(25);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 100);
     d.driveTilesPID(0.35);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 100);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 100);
     d.driveTilesPID(2.1);
     d.turnDegreesAbsolutePID(-50);
     d.driveTilesPID(.65);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 50);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_RING, 50);
     d.driveTilesPID(-.75);
     d.turnDegreesAbsolutePID(-170);
     d.driveTilesPID(3.5);
     d.turnDegreesAbsolutePID(-180);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN, 100);
     d.turnDegreesAbsolutePID(-60);
     d.driveTilesPID(.9);
-    toggleHornClamp();
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 100);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_RING, 100);
     d.driveTilesPID(-.9);
     d.turnDegreesAbsolutePID(24);
     d.driveTilesPID(3.5);
     d.turnDegreesAbsolutePID(0);
     d.driveTilesPID(1);
     d.turnDegreesAbsolutePID(-90);
+
     d.driveTilesPID(-1, 75);
     d.driveTilesPID(1.2, 50);
     moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN, 100);
@@ -115,12 +117,12 @@ void autonomous(void) {
     d.turnDegreesAbsolutePID(0);
     d.driveTilesPID(0.3);
     d.turnDegreesAbsolutePID(-95);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_RING, 80);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_RING, 80);
     d.turnDegreesAbsolutePID(-195);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN,80);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
     d.driveTilesPID(0.8);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_UP, 80);
-    moveLiftToPosition(lift, FRONT_MOGO_LIFT_DOWN,80);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 80);
+    lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
 
     //toggleBackMogoArm();
     //d.setMotorsRelative(100, 100);

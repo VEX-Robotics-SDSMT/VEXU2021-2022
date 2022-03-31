@@ -12,9 +12,9 @@ class MinesMotorGroup : public motor_group
   const int LOOP_DELAY = 20;
 
   double speed = 100;
-  double tolerance = 0.05;
-  double toleranceTime = 500; 
-  double timeout = -1;
+  double tolerance = 5;
+  double withinTargetTime = 20; 
+  double timeout = 5000;
   double target = 0;
   //TODO should be tuned PERFECTLY because it will be reused over and over again
   double kp = 0.005;
@@ -50,6 +50,7 @@ class MinesMotorGroup : public motor_group
     double getPosition();
 
     void startMoveToPosition(double pos, double timeout, double tolerance);
+    void startMoveToPosition(double pos, double s);
     void startHoldPosition(double pos);
 };
 
