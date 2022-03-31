@@ -2,23 +2,30 @@
 #define _MINES_MOTOR_GROUP
 
 #include "vex.h"
+#include <string>
+#include <iostream>
+
 
 class MinesMotorGroup : public motor_group 
 {
   const rotationUnits ROT_UNITS = rotationUnits::deg;
   const int LOOP_DELAY = 20;
-  float INTEGRATOR_MAX_MAGNITUDE = 1000;
 
-  double speed = 0;
+  double speed = 100;
   double tolerance = 0.05;
-  double toleranceTime = 500;
+  double toleranceTime = 500; 
   double timeout = -1;
   double target = 0;
-  double kp = 1;
+  //TODO should be tuned PERFECTLY because it will be reused over and over again
+  double kp = 0.005;
   double ki = 0;
-  double kd = 0.001;
+  double kd = 0.0001;
 
   bool runnningPId = false;
+
+  //function pointer
+  bool pointerFilled = false;
+  double (*externalPositionFunc)(void);
 
   private:
     void startPID();
@@ -36,13 +43,14 @@ class MinesMotorGroup : public motor_group
 
     void setPIDSpeed(double);
     void setPIDValues(double, double, double);
+    void setExternalPositionFunc(double (*func)());
 
     bool getTargetReached();
     bool getPIDRunning();
+    double getPosition();
 
     void startMoveToPosition(double pos, double timeout, double tolerance);
     void startHoldPosition(double pos);
-
 };
 
 #endif

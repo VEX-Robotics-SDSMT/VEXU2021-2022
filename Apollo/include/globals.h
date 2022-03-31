@@ -17,6 +17,9 @@ extern const double FRONT_MOGO_LIFT_IN;
 extern const double CHAIN_LIFT_IN;
 extern const double CHAIN_LIFT_OUT;
 
+extern const double POT_MULT;
+extern const double POT_ADD;
+
 
 //negative chain delay means chain goes first
 extern const double PLUNGE_HOME[3];
@@ -25,6 +28,7 @@ extern const double PLUNGE_REST[3];
 extern const double PLUNGE_PREP[3];
 extern const double PLUNGE_PLUNGE[3];
 extern const double PLUNGE_SCORE[3];
+
 
 //drive base class
 extern MinesMotorGroup *leftDriveMotors;

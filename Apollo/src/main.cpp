@@ -74,7 +74,9 @@ void autonomous(void) {
   d.setAllBrakeMode(vex::brakeType::brake);
   d.setLRBias(1);
   d.setTurnPIDConst(0.01, 0, 0);
-  d.setDrivePIDConst(.8, 0, 0);
+  d.setDrivePIDConst(1.5, 0, 0);
+
+  sixBarLift->setExternalPositionFunc(getPotPos);
 
   if (skills)
   {
@@ -111,19 +113,13 @@ void autonomous(void) {
     toggleBackMogoArm(false);
     movePlungerOpen();
     toggleFrontMogoLift();
-    d.driveTilesPID(.9,30);
+    d.driveTilesPID(.7,30);
     toggleFrontMogoLift();
     d.driveTilesPID(-1,30);
-    plungeRing();
-    wait(1, sec);
-    plungeRing();
-    wait(1, sec);
-    plungeRing();
-    wait(1, sec);
-    plungeRing();
+    plungeUntilTime(1500, 15000, matchTime);
     movePlungerScore();
     movePlungerRest();
-    d.driveTilesPID(0.8,30);
+    d.driveTilesPID(0.7,30);
     d.turnDegreesAbsolutePID(-114);
     d.driveTilesPID(1,30);
     d.turnDegreesAbsolutePID(106);
@@ -207,8 +203,10 @@ void usercontrol(void) {
   MinesMotorGroup l(leftDriveTop, leftDriveMid, leftDriveBottom);
   MinesMotorGroup r(rightDriveTop, rightDriveMid, rightDriveBottom);
   FourWheelDrive d(&l, &r, &Inertial, &Master);
-  d.setDrivePIDConst(0.8, 0, 0);
+  d.setDrivePIDConst(1.5, 0, 0);
   d.setTurnPIDConst(0.01, 0, 0);
+
+  sixBarLift->setExternalPositionFunc(getPotPos);
 
   l.setStopping(brakeType::coast);
   r.setStopping(brakeType::coast);
@@ -258,6 +256,17 @@ void usercontrol(void) {
     }
     //for testing purposes only 
     /*
+     if (pressButton(Master.ButtonX.pressing(), buttonXDebounce))
+    {
+      d.driveTilesPID(2);
+    }
+    
+    if (pressButton(Master.ButtonY.pressing(), buttonYDebounce))
+    {
+      d.driveTilesPID(-2);
+    }
+    */
+    /*
     if (pressButton(Master.ButtonX.pressing(), buttonXDebounce))
     {
       autoBalance(d, 800, 20);
@@ -269,6 +278,7 @@ void usercontrol(void) {
     }
     */
 
+    
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
