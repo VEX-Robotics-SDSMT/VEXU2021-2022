@@ -108,12 +108,12 @@ void autonomous(void) {
   else
   {
     chargeGoal(d, 95, keepPulling);
-    d.driveTilesPID(0.40);
+    d.driveTilesPID(1.3);
     toggleSnakeJaw();
     task::sleep(300);
     d.turnDegreesAbsolutePID(-30);
     moveBackMogoArm(BACK_MOGO_ARM_UP, 80);
-    d.turnDegreesAbsolutePID(-55);
+    d.turnDegreesAbsolutePID(-80);
     lift.startMoveToPosition(FRONT_MOGO_LIFT_RING, 80);
     //d.turnDegreesAbsolutePID(-195);
     //lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
@@ -196,7 +196,7 @@ void usercontrol(void) {
       manualArmMovement = true;
     }
 
-   /* if (manualArmMovement)
+   if (manualArmMovement)
     {
       if (Master.ButtonUp.pressing())
       {
@@ -210,24 +210,6 @@ void usercontrol(void) {
       {
         tailMotor.stop();
       }
-    }*/
-
-          //auton test
-    if (pressButton(Master.ButtonUp.pressing(), upDebounce))
-    {
-      d.driveTilesPID(2);
-    }
-    if (pressButton(Master.ButtonDown.pressing(), downDebounce))
-    {
-      d.driveTilesPID(-2);
-    }
-    if (pressButton(Master.ButtonLeft.pressing(), leftDebounce))
-    {
-      d.turnDegreesPID(-90);
-    }
-    if (pressButton(Master.ButtonRight.pressing(), rightDebounce))
-    {
-      d.turnDegreesPID(90);
     }
 
     wait(20, msec); // Sleep the task for a short amount of time to

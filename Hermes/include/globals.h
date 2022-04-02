@@ -13,6 +13,8 @@
 
 
 extern const double FRONT_CLAMP_DOWN;
+extern const double FRONT_CLAMP_UP;
+extern const double FRONT_CLAMP_CLEAR;
 extern const double BACK_CLAMP_DOWN;
 extern const int LOOP_DELAY;
 

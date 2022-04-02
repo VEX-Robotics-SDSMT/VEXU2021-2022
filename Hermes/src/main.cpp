@@ -52,6 +52,7 @@ void pre_auton(void) {
 
 void autonomous(void) {
   bool skills = false;
+  int matchTime = Brain.Timer.time();
   
   MinesMotorGroup rightWheels(rightFront, rightTop, rightBack);
   MinesMotorGroup leftWheels(leftFront, leftTop, leftBack);
@@ -73,25 +74,30 @@ void autonomous(void) {
   }
   else
   {
+    //get middle
     backClamp.spinToPosition(30, degrees, false);
-    liftClamp.spinToPosition(390, degrees, false);
+    liftClamp.spinToPosition(FRONT_CLAMP_UP, degrees, false);
     driveBase.driveTilesPID(.87, 80);
-    liftClamp.spinToPosition(FRONT_CLAMP_DOWN, degrees);
+    liftClamp.spinToPosition(FRONT_CLAMP_DOWN, degrees, true);
     driveBase.driveTilesPID(-0.52);
+    liftClamp.spinToPosition(FRONT_CLAMP_UP, degrees, true);
+    //get alliance
     driveBase.turnDegreesAbsolutePID(-55);
-    driveBase.driveTilesPID(-.6,30);
-    backClamp.spinToPosition(BACK_CLAMP_DOWN, degrees, false);
-    driveBase.driveTilesPID(-.2, 30);
-    driveBase.driveTilesPID(.08, 30);
+    driveBase.driveTilesPID(-0.6,30);
+    backClamp.spinToPosition(BACK_CLAMP_DOWN, degrees, true);
+    driveBase.driveTilesPID(0.16, 30);
+    //score field rings
     lift.spinToPosition(120, degrees);
     driveBase.turnDegreesAbsolutePID(32);
-    intake.spin(fwd,60,pct);
-    driveBase.driveTilesPID(.59,40);
+    intake.spin(fwd,100,pct);
+    driveBase.driveTilesPID(0.59,40);
+    driveBase.driveTilesPID(-0.5, 50);
+    //score match loads
     driveBase.turnDegreesAbsolutePID(210);
+    liftClamp.spinToPosition(FRONT_CLAMP_CLEAR, degrees, false);
     lift.spinToPosition(180, degrees);
-    driveBase.driveTilesPID(.8);
-    driveBase.driveTilesPID(-.35);
-    scoreWithDelay(1500, .35, driveBase);
+    scoreWithDelay(1500, .35, driveBase, 40000, matchTime);
+    driveBase.turnDegreesAbsolutePID(50);
   }
 }
 
