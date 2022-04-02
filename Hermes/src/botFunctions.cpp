@@ -1,6 +1,6 @@
 #include "botFunctions.h"
 
-void scoreWithDelay(int delay, double distance, FourWheelDrive driveBase)
+void scoreWithDelay(int delay, double distance, FourWheelDrive &driveBase)
 {
   intake.spin(directionType::fwd);
   while(true)

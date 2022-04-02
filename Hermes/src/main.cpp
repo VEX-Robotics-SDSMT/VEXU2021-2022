@@ -10,7 +10,7 @@
 #include "vex.h"
 #include "globals.h"
 #include "generics/helperFunctions.h"
-//#include "botFunctions.h"
+#include "botFunctions.h"
 using namespace vex;
 
 
@@ -52,7 +52,7 @@ void pre_auton(void) {
 
 void autonomous(void) {
   bool skills = false;
-  //commented out for scrim until it has been tuned
+  
   MinesMotorGroup rightWheels(rightFront, rightTop, rightBack);
   MinesMotorGroup leftWheels(leftFront, leftTop, leftBack);
   FourWheelDrive driveBase(leftWheels, rightWheels, inertialSensor, master);
@@ -91,33 +91,13 @@ void autonomous(void) {
     lift.spinToPosition(180, degrees);
     driveBase.driveTilesPID(.8);
     driveBase.driveTilesPID(-.35);
-    wait(.2, seconds);
-    driveBase.driveTilesPID(.35);
-    driveBase.driveTilesPID(-.35);
-    wait(.2, seconds);
-    driveBase.driveTilesPID(.35);
-    driveBase.driveTilesPID(-.35);
-    wait(.2, seconds);
-    driveBase.driveTilesPID(.35);
-    driveBase.driveTilesPID(-.35);
-    wait(.2, seconds);
-    driveBase.driveTilesPID(.35);
-     driveBase.driveTilesPID(-.35);
-    wait(.2, seconds);
-    driveBase.driveTilesPID(.35);
-    driveBase.driveTilesPID(-.35);
-    wait(.2, seconds);
-    driveBase.driveTilesPID(.35);
-    driveBase.driveTilesPID(-.35);
-    wait(.2, seconds);
-    driveBase.driveTilesPID(.35);
+    scoreWithDelay(1500, .35, driveBase);
   }
 }
 
 
 
 void usercontrol(void) {
-  //task::sleep(3000);
   MinesMotorGroup rightWheels(rightFront, rightTop, rightBack);
   MinesMotorGroup leftWheels(leftFront, leftTop, leftBack);
   FourWheelDrive driveBase(leftWheels, rightWheels, inertialSensor, master);
@@ -172,7 +152,7 @@ void usercontrol(void) {
       {liftClamp.stop();}
 
 
-
+/*
       //auton test
     if (pressButton(master.ButtonUp.pressing(), upDebounce))
     {
@@ -190,6 +170,7 @@ void usercontrol(void) {
     {
       driveBase.turnDegreesPID(90);
     }
+    */
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
