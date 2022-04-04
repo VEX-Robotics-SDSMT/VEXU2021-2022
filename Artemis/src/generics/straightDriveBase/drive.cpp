@@ -202,7 +202,7 @@ void FourWheelDrive::driveTilesPID(float numTiles, float desiredSpeed)
     int maxRunTime = max(ONE_SEC_IN_MS * 5, ONE_SEC_IN_MS * fabs(numTiles) * 2);
 
     Brain.Screen.print("preLoop");
-    while( stopLoopCount <= STOP_LOOPS /*&& runTime < maxRunTime*/)
+    while( stopLoopCount <= STOP_LOOPS && runTime < maxRunTime)
     {
         porportionalAmount = numTiles - currentDistance;
 

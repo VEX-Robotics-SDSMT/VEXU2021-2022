@@ -51,7 +51,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  bool skills = false;
+  bool yNot = true;
   int matchTime = Brain.Timer.time();
   
   MinesMotorGroup rightWheels(rightFront, rightTop, rightBack);
@@ -68,9 +68,15 @@ void autonomous(void) {
   driveBase.setTurnPIDConst(0.0092, 0.0001, 0.01);
   driveBase.setDrivePIDConst(4, 0.01, 0.0003);
 
-  if (skills)
+  if (yNot)
   {
-
+    //get middle
+    backClamp.spinToPosition(30, degrees, false);
+    liftClamp.spinToPosition(FRONT_CLAMP_UP, degrees, false);
+    driveBase.driveTilesPID(.75, 70);
+    liftClamp.spinToPosition(FRONT_CLAMP_DOWN, degrees, false);
+    task::sleep(1000);
+    driveBase.driveTilesPID(-0.52);
   }
   else
   {
@@ -78,13 +84,15 @@ void autonomous(void) {
     backClamp.spinToPosition(30, degrees, false);
     liftClamp.spinToPosition(FRONT_CLAMP_UP, degrees, false);
     driveBase.driveTilesPID(.87, 80);
-    liftClamp.spinToPosition(FRONT_CLAMP_DOWN, degrees, true);
+    liftClamp.spinToPosition(FRONT_CLAMP_DOWN, degrees, false);
+    task::sleep(1000);
     driveBase.driveTilesPID(-0.52);
     liftClamp.spinToPosition(FRONT_CLAMP_UP, degrees, true);
     //get alliance
     driveBase.turnDegreesAbsolutePID(-55);
     driveBase.driveTilesPID(-0.6,30);
-    backClamp.spinToPosition(BACK_CLAMP_DOWN, degrees, true);
+    backClamp.spinToPosition(BACK_CLAMP_DOWN, degrees, false);
+    task::sleep(1500); //to make sure the above doesn't stop the rest of the routine
     driveBase.driveTilesPID(0.16, 30);
     //score field rings
     lift.spinToPosition(120, degrees);
@@ -118,12 +126,6 @@ void usercontrol(void) {
 
   driveBase.setTurnPIDConst(0.0092, 0.0001, 0.01);
   driveBase.setDrivePIDConst(4, 0.01, 0.0003);
-
-  //button debounces
-  bool upDebounce = false;
-  bool downDebounce = false;
-  bool leftDebounce = false;
-  bool rightDebounce = false;
 
   // User control code here, inside the loop
   while (1) {

@@ -55,7 +55,6 @@ void autonomous(void) {
   bool skills = false;
   bool keepPulling = false;
   //commented out for scrim until it has been tuned
-  
   MinesMotorGroup l(leftDrive1, leftDrive2, leftDrive3, leftDrive4);
   MinesMotorGroup r(rightDrive1, rightDrive2, rightDrive3, rightDrive4);
   MinesMotorGroup lift(leftLiftMotor, rightLiftMotor);
@@ -108,26 +107,16 @@ void autonomous(void) {
   else
   {
     chargeGoal(d, 95, keepPulling);
-    d.driveTilesPID(1.3);
+    //tailMotor.spin(reverse, 100, velocityUnits::pct);
+    //d.driveTilesPID(-1.5);
+    //tailMotor.stop();
+    d.driveTilesPID(0.7);
     toggleSnakeJaw();
     task::sleep(300);
     d.turnDegreesAbsolutePID(-30);
     moveBackMogoArm(BACK_MOGO_ARM_UP, 80);
-    d.turnDegreesAbsolutePID(-80);
+    d.turnDegreesAbsolutePID(-90);
     lift.startMoveToPosition(FRONT_MOGO_LIFT_RING, 80);
-    //d.turnDegreesAbsolutePID(-195);
-    //lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
-    //d.driveTilesPID(0.8);
-    //lift.startMoveToPosition(FRONT_MOGO_LIFT_UP, 80);
-    //lift.startMoveToPosition(FRONT_MOGO_LIFT_DOWN,80);
-
-    //toggleBackMogoArm();
-    //d.setMotorsRelative(100, 100);
-    //d.turnDegreesPID(180);
-    //tailMotor.spinToPosition(0, rotationUnits::deg);
-    // toggleFrontMogoLift(lift);
-    // d.driveTilesPID(.5, 75);
-    // toggleFrontMogoLift(lift);
   }
 }
   
@@ -146,9 +135,6 @@ void autonomous(void) {
 
 
 void usercontrol(void) {
-  bool buttonUpDebounce = false;
-  bool manualArmMovement = false;
-
   Master.ButtonB.pressed(toggleBackMogoArm);
   Master.ButtonA.pressed(toggleSnakeJaw);
   Master.ButtonL1.pressed(toggleHornClamp);
@@ -166,12 +152,6 @@ void usercontrol(void) {
   d.setAllBrakeMode(brakeType::brake);
   lift.setStopping(brakeType::hold);
   lift.setExternalPositionFunc(getPotPos);
-
-    //button debounces
-  bool upDebounce = false;
-  bool downDebounce = false;
-  bool leftDebounce = false;
-  bool rightDebounce = false;
 
   // User control code here, inside the loop
   while (1) {
@@ -191,26 +171,12 @@ void usercontrol(void) {
       lift.stop();
     }
 
-    if (Master.ButtonDown.pressing() || Master.ButtonUp.pressing())
-    {
-      manualArmMovement = true;
-    }
-
-   if (manualArmMovement)
-    {
-      if (Master.ButtonUp.pressing())
-      {
-        tailMotor.spin(directionType::fwd, 50, percentUnits::pct);
-      }
-      else if (Master.ButtonDown.pressing())
-      {
-        tailMotor.spin(directionType::rev, 50, percentUnits::pct);
-      }
-      else
-      {
-        tailMotor.stop();
-      }
-    }
+    if (Master.ButtonUp.pressing())
+      {tailMotor.spin(directionType::fwd, 50, percentUnits::pct);}
+    else if (Master.ButtonDown.pressing())
+      {tailMotor.spin(directionType::rev, 50, percentUnits::pct);}
+    else
+      {tailMotor.stop();}
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
