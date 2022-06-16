@@ -19,9 +19,15 @@
 // Inertial             inertial      6               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
+#include "vex.h"
+#include "logger/screenLogger.h"
+#include "logger/fileLogger.h"
+#include "logger/nullLogger.h"
+#include <fstream>
 #include "globals.h"
 
 using namespace vex;
+using namespace std;
 
 
 
@@ -87,6 +93,10 @@ void usercontrol(void) {
   FourWheelDrive driveBase(leftDriveMotors, rightDriveMotors, Inertial, Master);
 
   // User control code here, inside the loop
+  controller *myController = new controller();
+  //FileLogger *logFile = new FileLogger("DrivebaseLog.txt");
+  ScreenLogger *logScreen = new ScreenLogger();
+
   while (1) {
     
     if (tankDrive)
@@ -106,6 +116,22 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
+    if(myController->ButtonX.pressing())
+    {
+        logScreen->AppendLine((char*)"short text");    
+    }
+    if(myController->ButtonY.pressing())
+    {
+        logScreen->WriteLine(1, (char*)"this text is relatively long");
+    }
+    if(myController->ButtonA.pressing())
+    {
+        logScreen->ClearLine(1);
+    }
+    if(myController->ButtonB.pressing())
+    {
+        logScreen->ClearAll();
+    }
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
@@ -125,6 +151,8 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
+
+
     wait(100, msec);
   }
 }

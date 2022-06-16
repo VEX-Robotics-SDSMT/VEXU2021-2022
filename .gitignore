@@ -1,0 +1,5 @@
+*.vs
+*.vscode
+*/build
+MyProject1/bin
+MyProject1/compile_commands.json
